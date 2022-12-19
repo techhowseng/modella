@@ -10,21 +10,120 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        String     @default(cuid()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+model User {
+  id              String   @id @default(cuid())
+  counter         Int      @default(autoincrement())
+  email           String   @unique
+  password        String
+  type            Type     @default(MODEL)
+  isDeleted       Boolean  @default(false)
+  isAuthenticated Boolean  @default(false)
+  createdAt       DateTime @default(now()) @map(name: "created_at")
+  updatedAt       DateTime @updatedAt @map(name: "updated_at")
+  model           Model?
+  client          Client?
+  Media           Media[]
+  UserToken       UserToken?
+
+  @@map(name: "users")
 }
 
-model User {
-  id            String       @default(cuid()) @id
-  name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  posts         Post[]
-  @@map(name: "users")
+enum Type {
+  MODEL
+  CLIENT
+}
+
+model UserToken {
+  userId    String            @unique
+  user      User              @relation(fields: [userId], references: [id])
+  token     String @unique
+  tokenType TokenType
+}
+
+enum TokenType {
+  SIGNUP
+  COMPLETED
+}
+
+model Model {
+  id              Int               @unique @default(autoincrement())
+  userId          String            @unique
+  user            User              @relation(fields: [userId], references: [id])
+  email           String
+  firstname       String?
+  lastname        String?
+  age             Int?
+  height          String?
+  DOB             String?
+  social          Json
+  state           String?
+  country         String?
+  address         String
+  isAvailable     Boolean           @default(true)
+  bio             String
+  contractedModel contractedModel[]
+  modelHistory    modelHistory[]
+}
+
+model Client {
+  id              Int               @unique @default(autoincrement())
+  user            User              @relation(fields: [userId], references: [id])
+  userId          String            @unique
+  companyName     String
+  email           String
+  phone           Json
+  social          Json
+  state           String?
+  country         String?
+  address         String
+  contractedModel contractedModel[]
+  clientJobs      clientJobs[]
+}
+
+model contractedModel {
+  id       Int    @unique @default(autoincrement())
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId Int
+  model    Model  @relation(fields: [modelId], references: [id])
+  modelId  Int
+  status   Status @default(ONGOING)
+}
+
+enum Status {
+  ONGOING
+  DONE
+}
+
+model modelHistory {
+  id          Int    @unique @default(autoincrement())  
+  model       Model  @relation(fields: [modelId], references: [id])
+  modelId     Int
+  job         String
+  description String
+}
+
+model clientJobs {
+  id              Int    @unique @default(autoincrement())
+  client          Client @relation(fields: [clientId], references: [id])
+  clientId        Int
+  jobRole         String
+  jobDescription  String
+  salary          String?
+  jobType         String?
+  jobLength       String?
+}
+
+model Media {
+  id          Int       @unique @default(autoincrement())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id])
+  content     Json[]
+  ContentType ContentType
+}
+
+enum ContentType {
+  DEFAULT
+  PROFILE
+  GALLERY
+  MISC
 }
