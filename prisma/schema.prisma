@@ -18,12 +18,14 @@ model User {
   type            Type     @default(MODEL)
   isDeleted       Boolean  @default(false)
   isAuthenticated Boolean  @default(false)
+  emailVerified   DateTime?
   createdAt       DateTime @default(now()) @map(name: "created_at")
   updatedAt       DateTime @updatedAt @map(name: "updated_at")
   model           Model?
   client          Client?
   Media           Media[]
-  UserToken       UserToken?
+  accounts      Account[]
+  sessions      Session[]
 
   @@map(name: "users")
 }
@@ -33,16 +35,42 @@ enum Type {
   CLIENT
 }
 
-model UserToken {
-  userId    String            @unique
-  user      User              @relation(fields: [userId], references: [id])
-  token     String @unique
-  tokenType TokenType
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
-enum TokenType {
-  SIGNUP
-  COMPLETED
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Model {
@@ -61,8 +89,8 @@ model Model {
   address         String
   isAvailable     Boolean           @default(true)
   bio             String
-  contractedModel contractedModel[]
-  modelHistory    modelHistory[]
+  contractedModel ContractedModel[]
+  modelHistory    ModelHistory[]
 }
 
 model Client {
@@ -76,11 +104,11 @@ model Client {
   state           String?
   country         String?
   address         String
-  contractedModel contractedModel[]
-  clientJobs      clientJobs[]
+  contractedModel ContractedModel[]
+  clientJobs      ClientJobs[]
 }
 
-model contractedModel {
+model ContractedModel {
   id       Int    @unique @default(autoincrement())
   client   Client @relation(fields: [clientId], references: [id])
   clientId Int
@@ -94,7 +122,7 @@ enum Status {
   DONE
 }
 
-model modelHistory {
+model ModelHistory {
   id          Int    @unique @default(autoincrement())  
   model       Model  @relation(fields: [modelId], references: [id])
   modelId     Int
@@ -102,7 +130,7 @@ model modelHistory {
   description String
 }
 
-model clientJobs {
+model ClientJobs {
   id              Int    @unique @default(autoincrement())
   client          Client @relation(fields: [clientId], references: [id])
   clientId        Int
@@ -111,6 +139,7 @@ model clientJobs {
   salary          String?
   jobType         String?
   jobLength       String?
+  isOpen            Boolean           @default(true)
 }
 
 model Media {
