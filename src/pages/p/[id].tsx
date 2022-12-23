@@ -1,38 +1,51 @@
 import React from "react"
 import { GetServerSideProps } from "next"
 import ReactMarkdown from "react-markdown"
+import Router from 'next/router';
 import Layout from "../../components/Layout"
-import { PostProps } from "../../components/Post"
+import { ModelProps } from "../../components/Model"
+import { useSession } from 'next-auth/react';
 import prisma from '../../lib/prisma';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const post = await prisma.post.findUnique({
+  const model = await prisma.model.findUnique({
     where: {
-      id: String(params?.id),
-    },
-    include: {
-      author: {
-        select: { name: true },
-      },
+      id: Number(params?.id),
     },
   });
   return {
-    props: post,
+    props: model,
   }
 }
 
-const Post: React.FC<PostProps> = (props) => {
-  let title = props.title
-  if (!props.published) {
-    title = `${title} (Draft)`
+async function updateModel(id: Number): Promise<void> {
+  await fetch(`/api/model/${id}`, {
+    method: 'PUT',
+  });
+  await Router.push('/');
+}
+
+const Model: React.FC<ModelProps> = (props) => {
+  const { data: session, status } = useSession();
+  if (status === 'loading') {
+    return <div>Authenticating ...</div>;
   }
+  const userHasValidSession = Boolean(session);
+  const postBelongsToUser = session?.user?.email === props.email;
+
+  let title = props.email
+  const modelName = props.firstname ? props.lastname : "Name not given";
+
 
   return (
     <Layout>
       <div>
         <h2>{title}</h2>
-        <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown children={props.content} />
+        <p>By {modelName}</p>
+        <ReactMarkdown children={props.bio} />
+        {userHasValidSession && postBelongsToUser && (
+          <button onClick={() => updateModel(props.id)}>Update</button>
+        )}
       </div>
       <style jsx>{`
         .page {
@@ -59,4 +72,4 @@ const Post: React.FC<PostProps> = (props) => {
   )
 }
 
-export default Post
+export default Model
