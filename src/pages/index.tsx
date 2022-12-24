@@ -5,7 +5,8 @@ import Model, { ModelProps } from "../components/Model"
 import prisma from '../lib/prisma';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.model.findMany();
+  // @ts-ignore
+  const feed = prisma?.model ? await prisma?.model.findMany() : [];
   return { 
     props: { feed }, 
     revalidate: 10 
