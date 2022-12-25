@@ -11,21 +11,21 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(cuid())
-  counter         Int      @default(autoincrement())
-  email           String   @unique
+  id              String    @id @default(cuid())
+  counter         Int       @default(autoincrement())
+  email           String    @unique
   password        String
-  type            Type     @default(MODEL)
-  isDeleted       Boolean  @default(false)
-  isAuthenticated Boolean  @default(false)
+  type            Type      @default(MODEL)
+  isDeleted       Boolean   @default(false)
+  isAuthenticated Boolean   @default(false)
   emailVerified   DateTime?
-  createdAt       DateTime @default(now()) @map(name: "created_at")
-  updatedAt       DateTime @updatedAt @map(name: "updated_at")
+  createdAt       DateTime  @default(now()) @map(name: "created_at")
+  updatedAt       DateTime  @updatedAt @map(name: "updated_at")
   model           Model?
   client          Client?
   Media           Media[]
-  accounts      Account[]
-  sessions      Session[]
+  accounts        Account[]
+  sessions        Session[]
 
   @@map(name: "users")
 }
@@ -123,7 +123,7 @@ enum Status {
 }
 
 model ModelHistory {
-  id          Int    @unique @default(autoincrement())  
+  id          Int    @unique @default(autoincrement())
   model       Model  @relation(fields: [modelId], references: [id])
   modelId     Int
   job         String
@@ -131,21 +131,21 @@ model ModelHistory {
 }
 
 model ClientJobs {
-  id              Int    @unique @default(autoincrement())
-  client          Client @relation(fields: [clientId], references: [id])
-  clientId        Int
-  jobRole         String
-  jobDescription  String
-  salary          String?
-  jobType         String?
-  jobLength       String?
-  isOpen            Boolean           @default(true)
+  id             Int     @unique @default(autoincrement())
+  client         Client  @relation(fields: [clientId], references: [id])
+  clientId       Int
+  jobRole        String
+  jobDescription String
+  salary         String?
+  jobType        String?
+  jobLength      String?
+  isOpen         Boolean @default(true)
 }
 
 model Media {
-  id          Int       @unique @default(autoincrement())
-  userId      String    @unique
-  user        User      @relation(fields: [userId], references: [id])
+  id          Int         @unique @default(autoincrement())
+  userId      String      @unique
+  user        User        @relation(fields: [userId], references: [id])
   content     Json[]
   ContentType ContentType
 }
