@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
+import UserRepository from "./repository";
 
 export default async function handle(
   req: NextApiRequest,
@@ -9,10 +10,10 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      //       res.status(200).json(todos);
       break;
     case "POST":
-      //       res.status(200).json(todos);
+      const userRes = await UserRepository.createUser(req.body);
+      res.json(userRes);
       break;
     case "PUT":
       break;
