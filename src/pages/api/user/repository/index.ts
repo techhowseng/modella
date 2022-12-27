@@ -3,15 +3,19 @@ import prisma from "lib/prisma";
 import UserServices, { TUser } from "../service";
 
 export default class UserRepository {
-    prisma: PrismaClient;
-    static prisma: PrismaClient;
+  prisma: PrismaClient;
+  static prisma: PrismaClient;
 
-    constructor() {
-        this.prisma = prisma;
-    }
+  constructor() {
+    this.prisma = prisma;
+  }
 
-    static async createUser(data: TUser) {
-        const user = await UserServices.createUser(data);
-        return user;
+  static async createUser(data: TUser) {
+    try {
+      const user = await UserServices.createUser(data);
+      return user;
+    } catch (error) {
+      throw new Error(error);
     }
+  }
 }
