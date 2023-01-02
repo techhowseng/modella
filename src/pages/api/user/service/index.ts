@@ -9,35 +9,28 @@ export type TAccount = PrismaClient["account"]["create"]["data"];
 export type TSession = PrismaClient["session"]["create"]["data"];
 
 export default class UserServices {
-  prisma: PrismaClient;
-  static prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = prisma;
-  }
+  static prisma: PrismaClient = prisma;
 
   static async createUser(data: TUser) {
-    const user = await this.prisma.user.create({
-      data,
-    });
+    const user = await prisma.user.create(data);
     return user;
   }
 
-  async getUser(id: string) {
+  static async getUser(id: string) {
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
     return user;
   }
 
-  async getUserByEmail(email?: string) {
+  static async getUserByEmail(email?: string) {
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
     return user;
   }
 
-  async updateUser(data: TUser) {
+  static async updateUser(data: TUser) {
     const updatedUser = await this.prisma.user.update({
       where: { id: data.id },
       data: {
@@ -48,7 +41,7 @@ export default class UserServices {
     return updatedUser;
   }
 
-  async deleteUser(userId: string) {
+  static async deleteUser(userId: string) {
     const user = await this.prisma.user.update({
       where: { id: userId },
       data: {
@@ -58,7 +51,7 @@ export default class UserServices {
     return user;
   }
 
-  async linkAccount(
+  static async linkAccount(
     userId: string,
     provider: string,
     type: string,
@@ -97,7 +90,7 @@ export default class UserServices {
   //     return account;
   //   }
 
-  async createSession(user: TUser) {
+  static async createSession(user: TUser) {
     const session = await this.prisma.session.create({
       //  @ts-ignore
       data: {
@@ -110,7 +103,7 @@ export default class UserServices {
     return session;
   }
 
-  async getSession(sessionToken: string | null) {
+  static async getSession(sessionToken: string | null) {
     if (!sessionToken) return null;
     const session = await this.prisma.session.findUnique({
       where: { sessionToken },
@@ -119,7 +112,7 @@ export default class UserServices {
     return session;
   }
 
-  async updateSession(session: TSession, force?: boolean) {
+  static async updateSession(session: TSession, force?: boolean) {
     const expires = new Date();
     const updatedSession = await this.prisma.session.update({
       where: { id: session.id },
@@ -130,19 +123,16 @@ export default class UserServices {
     return updatedSession;
   }
 
-  async deleteSession(sessionToken: string) {
+  static async deleteSession(sessionToken: string) {
     const session = await this.prisma.session.delete({
       where: { sessionToken },
     });
     return session;
   }
 
-  async createVerificationToken(
+  static async createVerificationToken(
     identifier: string,
-    url: string,
     token: string,
-    secret: string,
-    provider: string
   ) {
     const verificationToken = await this.prisma.verificationToken.create({
       data: {
@@ -154,14 +144,14 @@ export default class UserServices {
     return verificationToken;
   }
 
-  async getVerificationToken(token: string) {
+  static async getVerificationToken(token: string) {
     const verificationToken = await this.prisma.verificationToken.findUnique({
       where: { token },
     });
     return verificationToken;
   }
 
-  async deleteVerificationToken(token: string) {
+  static async deleteVerificationToken(token: string) {
     const verificationToken = await this.prisma.verificationToken.delete({
       where: { token },
     });
