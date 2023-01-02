@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   //   return { props: { models: [] } };
   // }
 
-  const models = await prisma.model.findMany();
+  const models = prisma?.model ? await prisma?.model.findMany() : [];
   return {
     props: { models },
   };
@@ -25,7 +25,6 @@ type Props = {
 const Models: React.FC<Props> = (props) => {
   const { data: session } = useSession();
 
-  console.log("props>>>>>>>", props)
   // if (!session) {
   //   return (
   //     <Layout>

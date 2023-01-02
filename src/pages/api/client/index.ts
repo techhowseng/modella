@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
-import ModelRepository from "./repository/index";
-import prisma from "../../../lib/prisma";
+import ClientRepository from "./repository/index";
 
 export default async function handle(
   req: NextApiRequest,
@@ -10,14 +8,13 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      if (req.body.id) res.json(await ModelRepository.getModel(req.body.id));
-      if (!req.body.id) res.json(await ModelRepository.getAllModels());
+      res.json(await ClientRepository.getClient(req.body.id));
       break;
     case "POST":
-      res.json(await ModelRepository.createModel(req.body));
+      res.json(await ClientRepository.createClient(req.body));
       break;
     case "PUT":
-      res.json(await ModelRepository.updateModel(req.body));
+      res.json(await ClientRepository.updateClient(req.body));
       break;
     case "PATCH":
       break;

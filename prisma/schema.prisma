@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -36,17 +37,17 @@ enum Type {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
+  id                 String     @id @default(cuid())
+  userId             String     @map("user_id")
   type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String?
-  access_token       String?
+  provider           String?
+  providerAccountId  String?    @map("provider_account_id")
+  refresh_token      String?    @db.Text
+  access_token       String?    @db.Text
   expires_at         DateTime?
   token_type         String?
   scope              String?
-  id_token           String?
+  id_token           String?     @db.Text
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
@@ -135,7 +136,7 @@ model ClientJobs {
   client         Client  @relation(fields: [clientId], references: [id])
   clientId       Int
   jobRole        String
-  jobDescription String
+  jobDescription String @db.Text
   salary         String?
   jobType        String?
   jobLength      String?
@@ -146,8 +147,8 @@ model Media {
   id          Int         @unique @default(autoincrement())
   userId      String      @unique
   user        User        @relation(fields: [userId], references: [id])
-  content     Json[]
-  ContentType ContentType
+  content     Json
+  contentType ContentType
 }
 
 enum ContentType {
