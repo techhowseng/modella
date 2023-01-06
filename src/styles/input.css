@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+  --font-family: "Plus Jakarta Sans", sans-serif;
+  --base-color: #006ef6;
+  --base-light-color: #cfe5ff;
+  --base-blue: #04a4f4;
+  --base-red: #ff4d5e;
+  --neutral-black: #222638;
+  --base-yellow: #ffbb54;
+  --off-white: #fcfcfc;
+  --base-grey: #9c9ca4;
+
+  --font-size: 16px;
+  --font-weight: 400;
+  --line-height: 1.6;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  color: var(--neutral-black);
+  background-color: var(--off-white);
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+.base-color,
+.hover\:base-color:hover {
+  color: var(--base-color);
+}
+.base-bg-color,
+.hover\:base-bg-color:hover {
+  background-color: var(--base-color);
+}
+.base-border-color,
+.hover\:base-border-color:hover {
+  border-color: var(--base-color);
+}
+
+.base-light-color,
+.hover\:base-light-color:hover {
+  color: var(--base-light-color);
+}
+.base-light-bg-color,
+.hover\:base-light-bg-color:hover {
+  background-color: var(--base-light-color);
+}
+.base-light-border-color,
+.hover\:base-light-border-color:hover {
+  border-color: var(--base-light-color);
+}
+
+.base-grey,
+.hover\:base-grey:hover {
+  color: var(--base-grey);
+}
+.base-grey-bg-color,
+.hover\:base-grey-bg-color:hover {
+  background-color: var(--base-grey);
+}
+.base-grey-border-color,
+.hover\:base-grey-border-color:hover {
+  border-color: var(--base-grey);
+}
+
+.base-light-color,
+.hover\:base-light-color:hover {
+  color: var(--base-light-color);
+}
+.base-light-bg-color,
+.hover\:base-light-bg-color:hover {
+  background-color: var(--base-light-color);
+}
+.base-light-border-color,
+.hover\:base-light-border-color:hover {
+  border-color: var(--base-light-color);
+}
+
+.base-blue,
+.hover\:base-blue:hover {
+  color: var(--base-blue);
+}
+.base-bg-blue,
+.hover\:base-bg-blue:hover {
+  background-color: var(--base-blue);
+}
+.base-border-blue,
+.hover\:base-border-blue:hover {
+  border-color: var(--base-blue);
+}
+
+.base-red,
+.hover\:base-red:hover {
+  color: var(--base-red);
+}
+.base-bg-red,
+.hover\:base-bg-red:hover {
+  background-color: var(--base-red);
+}
+.base-border-red,
+.hover\:base-border-red:hover {
+  border-color: var(--base-red);
+}
+
+.neutral-black,
+.hover\:neutral-black:hover {
+  color: var(--neutral-black);
+}
+.neutral-bg-black,
+.hover\:neutral-bg-black:hover {
+  background-color: var(--neutral-black);
+}
+.neutral-border-black,
+.hover\:neutral-border-black {
+  border-color: var(--neutral-black);
+}
+
+.base-yellow,
+.hover\:base-yellow:hover {
+  color: var(--base-yellow);
+}
+.base-bg-yellow,
+.hover\:base-bg-yellow:hover {
+  background-color: var(--base-yellow);
+}
+.base-border-yellow,
+.hover\:base-border-yellow:hover {
+  border-color: var(--base-yellow);
+}
+
+/*---------Base---------*/
+@tailwind base;
+
+/*---------Components---------*/
+@tailwind components;
+
+/*---------Utilities---------*/
+@tailwind utilities;
