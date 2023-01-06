@@ -10,7 +10,7 @@ function Login() {
     <div className="flex flex-col-reverse sm:flex-col-reverse md:flex-col-reverse lg:flex-row sm:h-fit lg:h-screen">
       <SideDisplay />
 
-      <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-48 md:px-20 h-full flex flex-col justify-start">
+      <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center">
         <div className="flex flex-col">
           <h1 className="text-5xl mb-10 font-bold">Sign In</h1>
           <div className="flex flex-row">
@@ -27,13 +27,13 @@ function Login() {
             <input
               type="email"
               placeholder="abc@mail.com"
-              className="base-input w-full p-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+              className="base-input 2xl:w-1/2 w-full p-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
             />
           </div>
 
           <div className="flex flex-col mt-10">
             <label className="mb-2">Password</label>
-            <div className="relative">
+            <div className="relative w-full 2xl:w-1/2">
               <input
                 type="password"
                 placeholder="Input your Password"
@@ -43,7 +43,7 @@ function Login() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-col lg:flex-row mt-10 justify-between items-center">
+          <div className="w-full 2xl:w-1/2 flex flex-col md:flex-col lg:flex-row mt-10 justify-between items-center">
             <p className="base-grey mb-10">Forget Password?</p>
             <Button onClick={() => {}}>
               <p className="text-white">Sign In</p>
