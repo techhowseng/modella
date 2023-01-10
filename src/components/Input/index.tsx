@@ -22,7 +22,7 @@ function Input({
   className = "",
 }: InputProps) {
   return (
-    <div className="flex flex-col mt-10">
+    <div className="flex flex-col mt-5 md:mt-8 lg:mt-10">
       <label className="mb-2">{label}</label>
       <input
         type={type}

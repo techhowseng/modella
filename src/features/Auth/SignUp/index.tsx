@@ -3,6 +3,8 @@ import Button from "components/Button";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
 import React from "react";
+import ClientSignupForm from "./components/ClientSignupForm";
+import CreatorSignUpForm from "./components/CreatorSignUpForm";
 import ProfessionalAssetsComponent from "./components/ProfessionalAssetsComponent";
 import RegistrationSteps from "./components/RegistrationSteps";
 import SetUpProfile from "./components/SetUpProfile";
@@ -13,10 +15,9 @@ function SignUp() {
     <div className="flex flex-col-reverse sm:flex-col-reverse md:flex-col-reverse lg:flex-row sm:h-fit lg:h-screen">
       <SideDisplay />
 
-      <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center">
-        <SetUpProfile />
-
-        <RegistrationSteps />
+      <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center scroll-smooth overflow-y-scroll">
+        <CreatorSignUpForm />
+        {/* <ClientSignupForm /> */}
 
         {/* <div className="flex flex-col">
           <h1 className="text-5xl mb-10 font-bold">Create an Account</h1>
@@ -58,17 +59,7 @@ function SignUp() {
           </div>
 
           <div className="w-full 2xl:w-1/2 flex items-center justify-between mt-10">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 base-color focus:ring-indigo-500"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
+              <CheckBox>
                 By clicking Sign Up, I agree that I have read and accepted the{" "}
                 <span className="base-blue">
                   <Link href={APP_ROUTES.tos}>Terms of Use</Link>
@@ -78,10 +69,10 @@ function SignUp() {
                   <Link href={APP_ROUTES.privacy}>Privacy Policy</Link>
                 </span>
                 .
-              </label>
-            </div>
+              </CheckBox>
           </div>
         </div> */}
+        {/* <RegistrationSteps /> */}
 
         {/* <!---dskdlksld---> */}
       </div>
