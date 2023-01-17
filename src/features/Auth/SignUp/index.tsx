@@ -1,6 +1,7 @@
 import SideDisplay from "components/Auth/SideDisplay";
 import Button from "components/Button";
 import { APP_ROUTES } from "lib/routes";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import ClientSignupForm from "./components/ClientSignupForm";

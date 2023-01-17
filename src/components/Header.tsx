@@ -1,9 +1,6 @@
 import { Fragment } from "react";
 import { Popover, Transition, Menu } from "@headlessui/react";
-import {
-  Bars3Icon,
-  BellIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import { LinkButton, Logo } from "components";
 import { classNames } from "lib/functions";
 
@@ -33,16 +30,19 @@ export default function Header() {
               Sign in
             </a>
 
-            <LinkButton className="ml-8" href={"#"}>Sign up</LinkButton>
+            <LinkButton className="ml-8" href={"#"}>
+              Sign up
+            </LinkButton>
           </div>
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               type="button"
-              className="rounded-full p-1 text-gray-400 hover:base-color focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-500"
+              className="relative rounded-full p-1 text-gray-400 hover:base-color focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-500"
             >
               <span className="sr-only">View notifications</span>
               <BellIcon className="h-6 w-6" aria-hidden="true" />
+              <span className="top-0 left-4 absolute w-3.5 h-3.5 bg-red-400 border-2 border-white rounded-full"></span>
             </button>
 
             {/* Profile dropdown */}

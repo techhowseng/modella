@@ -7,7 +7,7 @@ function AuthPage() {
   return (
     <>
       <Head>
-        <title>Sign In</title>
+        <title>Sign In | Modella</title>
       </Head>
       <Auth />
     </>

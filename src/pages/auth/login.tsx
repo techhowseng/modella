@@ -7,7 +7,7 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Login | Modella</title>
       </Head>
       <Login />
     </>
