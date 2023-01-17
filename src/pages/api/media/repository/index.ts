@@ -10,8 +10,10 @@ export default class MediaRepository {
 		this.prisma = prisma;
 	}
 
-	static async createMedia(data: TMedia) {
+	static async createMedia(req, res) {
+		const data = req.body;
 		const media = await MediaServices.createMedia(
+			res,
       data.userId,
       data.content,
       data.contentType
@@ -19,28 +21,33 @@ export default class MediaRepository {
 		return media;
 	}
 
-	static async getMedia(id: number) {
-		const media = await MediaServices.getMedia(id);
+	static async getMedia(req, res) {
+		const { id } = req.body.data;
+		const media = await MediaServices.getMedia(res, id);
 		return media;
 	}
 
-	static async getMediaByUser(userId: string) {
-		const media = await MediaServices.getMediaByUser(userId);
+	static async getMediaByUser(req, res) {
+		const { userId } = req.body.data;
+		const media = await MediaServices.getMediaByUser(res, userId);
 		return media;
 	}
 
-	static async deleteMedia(id: number) {
-		const deleteMedia = await MediaServices.deleteMedia(id);
+	static async deleteMedia(req, res) {
+		const { id } = req.body.data;
+		const deleteMedia = await MediaServices.deleteMedia(res, id);
 		return deleteMedia;
 	}
 
-	static async updateMedia(data: TMedia) {
-			const updatedMedia = await MediaServices.updateMedia(data);
+	static async updateMedia(req, res) {
+		const { data } = req.body
+			const updatedMedia = await MediaServices.updateMedia(res, data);
 			return updatedMedia;
 	}
 
-  static async getMediaByType(userId: string, type: ContentType) {
-    const updatedMedia = await MediaServices.getMediaByType(userId, type);
+  static async getMediaByType(req, res) {
+		const { userId, type } = req.body
+    const updatedMedia = await MediaServices.getMediaByType(res, userId, type);
     return updatedMedia;
   }
 }

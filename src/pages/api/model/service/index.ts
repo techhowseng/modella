@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 
 // @ts-ignore
@@ -13,6 +14,7 @@ export default class UserServices {
   }
 
   static async createModel(
+    res,
     userId: string,
     email: string,
     firstname: string,
@@ -26,45 +28,62 @@ export default class UserServices {
     address: string,
     bio: string
   ) {
-    const model = await this.prisma.model.create({
-      data: {
-        email,
-        firstname,
-        lastname,
-        age,
-        height,
-        DOB,
-        social,
-        state,
-        country,
-        address,
-        bio,
-        user: {
-          connect: { id: userId },
+    try {
+      const model = await this.prisma.model.create({
+        data: {
+          email,
+          firstname,
+          lastname,
+          age,
+          height,
+          DOB,
+          social,
+          state,
+          country,
+          address,
+          bio,
+          user: {
+            connect: { id: userId },
+          },
         },
-      },
-    });
-    return model;
+      });
+      return model;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
 
-  static async getModel(id: number) {
-    const model = await this.prisma.model.findUnique({
-      where: { id },
-    });
-    return model;
+  static async getModel(res, id: number) {
+    try {
+      const model = await this.prisma.model.findUnique({
+        where: { id },
+      });
+      return model;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async getAllModels() {
-    const model = await this.prisma.model.findMany();
-    return model;
+  static async getAllModels(res) {
+    try {
+      const model = await this.prisma.model.findMany();
+      return model;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async updateModel(data: TModel) {
-    const updatedModel = await this.prisma.model.update({
-      where: { id: data.id },
-      data
-    });
-    return updatedModel;
+  static async updateModel(req, res) {
+    try {
+      const { bpdy: data } = req;
+      const updatedModel = await this.prisma.model.update({
+        where: { id: data.id },
+        data
+      });
+      return updatedModel;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 }
