@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 import ContractServices, { TContract } from "../service";
 
@@ -10,31 +11,60 @@ export default class ClientRepository {
       this.prisma = prisma;
   }
 
-  static async createContract(data: TContract) {
-    const contract = await ContractServices.createContract(
-      data.clientId,
-      data.modelId
-    );;
-    return contract;
+  static async createContract(req, res) {
+    try {
+      const { clientId, modelId } = req.body;
+      const contract = await ContractServices.createContract(
+        res,
+        clientId,
+        modelId
+      );
+      return contract;
+    } catch (err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async updateContract(id: number) {
-    const contract = await ContractServices.updateContract(id);
-		return contract;
+  static async updateContract(req, res) {
+    try {
+      const { id } = req.body;
+      const contract = await ContractServices.updateContract(res, id);
+      return contract;
+
+    } catch(err) {
+
+    }
   }
 
-  static async getContract(id: number) {
-    const contract = await ContractServices.getContract(id);
-		return contract;
+  static async getContract(req, res) {
+    try {
+      const { id } = req.body;
+      const contract = await ContractServices.getContract(res, id);
+      return contract;
+
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async getAllModelContracts(id: number) {
-    const contract = await ContractServices.getAllModelContracts(id);
-		return contract;
+  static async getAllModelContracts(req, res) {
+    try {
+      const { id } = req.body;
+      const contract = await ContractServices.getAllModelContracts(res, id);
+      return contract;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async getAllClientContracts(id: number) {
-    const contract = await ContractServices.getAllClientContracts(id);
-		return contract;
+  static async getAllClientContracts(req, res) {
+    try {
+      const { id } = req.body;
+      const contract = await ContractServices.getAllClientContracts(res, id);
+      return contract;
+
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 import JobsServices, { TJobs } from "../service";
 
@@ -10,45 +11,87 @@ export default class JobsRepository {
       this.prisma = prisma;
   }
 
-  static async createJob(data: TJobs) {
-    const contract = await JobsServices.createJob(
-      data.clientId,
-      data.jobRole,
-      data.jobDescription,
-      data.salary,
-      data.jobType,
-      data.jobLength
-    );
-    return contract;
+  static async createJob(req, res) {
+    try {
+      const {
+        clientId,
+        jobRole,
+        jobDescription,
+        salary,
+        jobType,
+        jobLength
+      } = req.body;
+      const contract = await JobsServices.createJob(
+        res,
+        clientId,
+        jobRole,
+        jobDescription,
+        salary,
+        jobType,
+        jobLength
+      );
+      return contract;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async updateJob(id: number) {
-    const contract = await JobsServices.updateJob(id);
-		return contract;
+  static async updateJob(req, res) {
+    try {
+      const { body } = req;
+      const contract = await JobsServices.updateJob(res, body);
+      return contract;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async getJob(id: number) {
-    const contract = await JobsServices.getJob(id);
-		return contract;
+  static async getJob(req, res) {
+    try {
+      const { id } = req.body;
+      const contract = await JobsServices.getJob(res, id);
+      return contract;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async getAllClientJobs(id: number) {
-    const contract = await JobsServices.getAllClientJobs(id);
-		return contract;
+  static async getAllClientJobs(req, res) {
+    try {
+      const { id } = req.body;
+      const contract = await JobsServices.getAllClientJobs(res, id);
+      return contract;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async getJobs() {
-    const contract = await JobsServices.getJobs();
-		return contract;
+  static async getJobs(res) {
+    try {
+      const contract = await JobsServices.getJobs(res);
+      return contract;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }  
   
-  static async searchJobs(query: string | string[]) {
-    const contract = await JobsServices.searchJobs(query);
-		return contract;
+  static async searchJobs(req, res) {
+    try {
+      const { query } = req.body
+      const contract = await JobsServices.searchJobs(res, query);
+      return contract;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
-  static async deleteJob(id: number) {
-    const contract = await JobsServices.deleteJob(id);
-		return contract;
+  static async deleteJob(req, res) {
+    try {
+      const { id } = req.body;
+      const contract = await JobsServices.deleteJob(res, id);
+      return contract;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 }
