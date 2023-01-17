@@ -10,22 +10,26 @@ export default class HistoryRepository {
 		this.prisma = prisma;
 	}
 
-	static async createHistory(data: TModelHistory) {
+	static async createHistory(req, res) {
+		const { modelId, job, description } = req.body;
 		const user = await HistoryServices.createHistory(
-      data.modelId,
-      data.job,
-      data.description
+			res,
+      modelId,
+      job,
+      description
     );
 		return user;
 	}
 
-	static async getHistory(id: number) {
-		const user = await HistoryServices.getHistory(id);
+	static async getHistory(req, res) {
+		const { id } = req.body;
+		const user = await HistoryServices.getHistory(res, id);
 		return user;
 	}
 
-	static async updateHistory(data: TModelHistory) {
-			const user = await HistoryServices.updateHistory(data);
+	static async updateHistory(req, res) {
+		const { body } = req;
+			const user = await HistoryServices.updateHistory(res, body);
 			return user;
 	}
 }

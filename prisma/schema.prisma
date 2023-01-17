@@ -90,6 +90,7 @@ model Model {
   address         String
   isAvailable     Boolean           @default(true)
   bio             String
+  phone           Json
   contractedModel ContractedModel[]
   modelHistory    ModelHistory[]
 }

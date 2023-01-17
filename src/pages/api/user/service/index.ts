@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
+import { ResponseService } from "../../../../helper/ResponseService";
 
 // @ts-ignore
 export type TUser = PrismaClient["user"]["create"]["data"];
@@ -11,9 +12,22 @@ export type TSession = PrismaClient["session"]["create"]["data"];
 export default class UserServices {
   static prisma: PrismaClient = prisma;
 
-  static async createUser(data: TUser) {
-    const user = await prisma.user.create(data);
-    return user;
+  static async createUser(
+    res,
+    email: string,
+    password: string
+  ) {
+    try {
+      const user = await prisma.user.create({
+        data: {
+          email,
+          password,
+        }
+      });
+      return user;
+    } catch(err) {
+      return ResponseService.json(res, err);
+    }
   }
 
   static async getUser(id: string) {

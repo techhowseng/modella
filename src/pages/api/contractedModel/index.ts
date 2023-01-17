@@ -1,4 +1,7 @@
+import { ResponseService } from "helper/ResponseService";
+import { validationResult } from 'express-validator';
 import { NextApiRequest, NextApiResponse } from "next";
+import { validateContract } from "./contractValidation";
 import ContractRepository from "./repository";
 
 export default async function handle(
@@ -8,15 +11,22 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      if (req.body.id) res.json(await ContractRepository.getContract(req.body.id));
-      else if (req.body.modelId) res.json(await ContractRepository.getAllModelContracts(req.body.modelId));
-      else if (req.body.clientId) res.json(await ContractRepository.getAllClientContracts(req.body.clientId));
+      if (req.body.id) res.json(await ContractRepository.getContract(req, res));
+      else if (req.body.modelId) res.json(await ContractRepository.getAllModelContracts(req, res));
+      else if (req.body.clientId) res.json(await ContractRepository.getAllClientContracts(req, res));
+      ResponseService.json(res, "custom_400");
       break;
     case "POST":
-      res.json(await ContractRepository.createContract(req.body));
+      await validateContract(req, res)
+      const createErrors = validationResult(req)
+      if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+      res.json(await ContractRepository.createContract(req, res));
       break;
     case "PUT":
-      res.json(await ContractRepository.updateContract(req.body.id));
+      await validateContract(req, res)
+      const updateErrors = validationResult(req)
+      if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
+      res.json(await ContractRepository.updateContract(req, res));
       break;
     case "PATCH":
       break;

@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import jobsRepository from "./repository";
+import { validationResult } from 'express-validator';
+import { validateJob } from "./jobsValidation";
+import JobsRepository from "./repository";
 
 export default async function handle(
   req: NextApiRequest,
@@ -8,21 +10,27 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      if (req.body.id) res.json(await jobsRepository.getJob(req.body.id));
-      else if (req.body.clientId) res.json(await jobsRepository.getAllClientJobs(req.body.clientId));
-      else if (req.query) res.json(await jobsRepository.searchJobs(req.query.q));
-      else res.json(await jobsRepository.getJobs());
+      if (req.body.id) res.json(await JobsRepository.getJob(req, res));
+      else if (req.body.clientId) res.json(await JobsRepository.getAllClientJobs(req, res));
+      else if (req.query) res.json(await JobsRepository.searchJobs(req, res));
+      else res.json(await JobsRepository.getJobs(res));
       break;
     case "POST":
-      res.json(await jobsRepository.createJob(req.body));
+      await validateJob(req, res)
+      const createErrors = validationResult(req)
+      if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+      res.json(await JobsRepository.createJob(req, res));
       break;
     case "PUT":
-      res.json(await jobsRepository.updateJob(req.body.id));
+      await validateJob(req, res)
+      const updateErrors = validationResult(req)
+      if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
+      res.json(await JobsRepository.updateJob(req, res));
       break;
     case "PATCH":
       break;
     case "DELETE":
-      res.json(await jobsRepository.deleteJob(req.body.id));
+      res.json(await JobsRepository.deleteJob(req, res));
       break;
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
