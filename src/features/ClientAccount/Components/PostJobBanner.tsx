@@ -5,7 +5,7 @@ import bannerBG from "assets/bannerBg.svg";
 
 function PostJobBanner() {
   return (
-    <div className="z-10 shadow-lg rounded-lg flex item-center bg-white w-full mx-auto py-6 sm:px-6 lg:px-8 justify-between relative overflow-hidden">
+    <div className="z-10 border rounded-lg flex item-center bg-white w-full mx-auto py-6 sm:px-6 lg:px-8 justify-between relative overflow-hidden">
       <div className="flex space-x-6">
         <div className="flex items-center">
           <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-800 dark:text-blue-200">

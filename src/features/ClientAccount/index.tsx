@@ -16,7 +16,7 @@ function ClientAccountScreen() {
           <PostJobBanner />
           {/* end of code snippet */}
 
-          <div className="flex flex-col item-center bg-white w-full mx-auto py-6 sm:px-6 lg:px-8 justify-between relative overflow-hidden">
+          <div className="flex flex-col item-center bg-white w-full mx-auto py-6 sm:px-6 lg:px-8 justify-between relative overflow-hidden mt-5 rounded-lg border">
             <h3 className="text-lg font-semibold">Posted Jobs</h3>
             <div className="flex flex-col py-5">
 
