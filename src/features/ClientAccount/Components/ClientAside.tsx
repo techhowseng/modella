@@ -4,7 +4,7 @@ import DashMenuList from "./DashMenuList";
 function ClientAside() {
   return (
     <div>
-      <div className="image w-40 h-40 rounded-full mx-auto bg-gray-300">
+      <div className="image w-40 h-40 rounded-full mx-auto bg-gray-300 border">
         <img
           className="w-full rounded-full"
           srcSet="https://randomuser.me/api/portraits/women/12.jpg"

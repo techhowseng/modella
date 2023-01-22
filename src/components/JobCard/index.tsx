@@ -1,12 +1,13 @@
 import Link from "next/link";
 import React from "react";
+import { Button } from "..";
 
 function JobCard() {
   return (
     <div className="flex flex-col p-6 bg-white rounded-lg border">
-      <div className="flex space-x-3">
+      <div className="flex space-x-3 items-center">
         <img
-          className="rounded-full w-9 h-9"
+          className="rounded-full w-10 h-10"
           src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
           alt="profile picture"
         />
@@ -47,6 +48,9 @@ function JobCard() {
         >
           +99 people applied
         </Link>
+      </div>
+      <div className="mt-5">
+        <Button type="button" className="!base-bg-color !w-full" onClick={() => {}}>Apply</Button>
       </div>
     </div>
   );

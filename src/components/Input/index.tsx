@@ -2,7 +2,7 @@ import React from "react";
 
 interface InputProps {
   id?: string;
-  label: string;
+  label?: string;
   name: string;
   placeholder?: string;
   type: string;
@@ -29,7 +29,7 @@ function Input({
 }: InputProps) {
   return (
     <div className="flex flex-col">
-      <label className="mb-2">{label}</label>
+      {label && <label className="mb-2">{label}</label>}
       {type === "textarea" ? (
         <textarea
           id={id}
@@ -41,8 +41,7 @@ function Input({
             error ? "base-border-red" : "border-gray-200"
           } focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
           placeholder={placeholder}
-        >
-        </textarea>
+        ></textarea>
       ) : (
         <input
           id={id}
