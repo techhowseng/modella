@@ -46,9 +46,9 @@ const CREATOR_SIGNUP_FORM = [
 
 function CreatorSignUpForm() {
   return (
-    <div className="flex-1 py-10 lg:py-20 md:py-24 px-5 lg:px-38 md:px-20 h-full flex flex-col justify-center">
+    <div className="flex-1 w-full py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
       <div className="flex flex-col">
-        <h1 className="text-5xl mb-10 font-bold">Welcome</h1>
+        <h1 className="text-3xl mb-5 font-bold">Welcome</h1>
         <p className="mr-1 text-xl">Please fill out the form</p>
       </div>
 

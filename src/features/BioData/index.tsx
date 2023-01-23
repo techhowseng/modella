@@ -4,7 +4,7 @@ import React from "react";
 
 function BioDataForm() {
   return (
-    <div className="flex flex-col justify-center min-h-screen p-2 w-9/12 my-0 mx-auto">
+    <div className="flex flex-col justify-center min-h-screen p-2 w-full lg:w-9/12 my-0 mx-auto">
       <div className="mt-10 sm:mt-0">
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">

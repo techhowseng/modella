@@ -7,12 +7,12 @@ import { HiOutlineDocumentSearch } from "react-icons/hi";
 function Jobs() {
   const [sortValue, setSortValue] = useState("");
   return (
-    <div className="flex flex-col justify-center min-h-screen p-2 w-9/12 my-0 mx-auto relative">
+    <div className="flex flex-col justify-center min-h-screen p-2 w-12/12 lg:w-9/12 my-0 mx-auto relative">
         <SearchBar />
       <div className="flex flex-col item-center w-full mx-auto py-6 sm:px-6 lg:px-8 relative overflow-hidden mt-5 rounded-lg ">
         <div className="flex flex-row justify-between">
-          <h3 className="text-lg font-semibold">Showing 20 of 100 Jobs</h3>
-          <div className="flex flex-row items-center space-x-2">
+          <h3 className="flex text-sm lg:text-lg font-semibold items-center">Showing 20 of 100 Jobs</h3>
+          <div className="flex flex-row items-center space-x-2 text-sm lg:text-lg">
             <p>Sort by: </p>
             <Select
               type="default"

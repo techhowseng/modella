@@ -6,17 +6,17 @@ import PostJobBanner from "./Components/PostJobBanner";
 
 function ClientAccountScreen() {
   return (
-    <div className="flex flex-row justify-center min-h-screen p-2 w-9/12 my-0 mx-auto">
-      <div className="flex flex-col w-4/12 bg-white p-10 border rounded-lg">
+    <div className="flex flex-row min-h-screen p-2 w-full lg:w-9/12 my-0 mx-auto relative">
+      {/* <div className="flex flex-col w-4/12 bg-white p-10 border rounded-lg hidden lg:block">
         <ClientAside />
-      </div>
-      <div className="flex flex-col w-10/12 px-5">
+      </div> */}
+      <div className="flex flex-col w-full lg:w-10/12 px-0 lg:px-5">
         <main>
           {/* Begin */}
           <PostJobBanner />
           {/* end of code snippet */}
 
-          <div className="flex flex-col item-center bg-white w-full mx-auto py-6 sm:px-6 lg:px-8 relative overflow-hidden mt-5 rounded-lg border">
+          <div className="flex flex-col item-center bg-white w-full mx-auto py-6 px-6 lg:px-8 relative overflow-hidden mt-5 rounded-lg border">
             <h3 className="text-lg font-semibold">Posted Jobs</h3>
             <div className="flex flex-col py-5">
 

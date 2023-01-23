@@ -5,9 +5,9 @@ import { CiImageOn } from "react-icons/ci";
 
 function SetUpProfile() {
   return (
-    <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center">
+    <div className="flex-1 py-20 md:py-30 lg:py-36 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
       <div className="flex flex-col">
-        <h1 className="text-5xl mb-10 font-bold">Congratulations</h1>
+        <h1 className="text-3xl mb-5 font-bold">Congratulations</h1>
         <p className="mr-1 text-lg">Welcome on board</p>
       </div>
 

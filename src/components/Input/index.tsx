@@ -28,7 +28,7 @@ function Input({
   autoComplete,
 }: InputProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {label && <label className="mb-2">{label}</label>}
       {type === "textarea" ? (
         <textarea
@@ -37,9 +37,9 @@ function Input({
           rows={4}
           // value={value || ""}
           onChange={onChange}
-          className={`base-input w-full p-4 rounded-lg border-2 ${
+          className={`base-input p-4 rounded-lg border-2 ${
             error ? "base-border-red" : "border-gray-200"
-          } focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
+          } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
           placeholder={placeholder}
         ></textarea>
       ) : (
@@ -54,7 +54,7 @@ function Input({
           onChange={onChange}
           className={`base-input w-full p-4 rounded-lg border-2 ${
             error ? "base-border-red" : "border-gray-200"
-          } focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
+          } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
         />
       )}
       <p className="base-red">{error}</p>

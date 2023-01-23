@@ -5,7 +5,7 @@ import bannerBG from "assets/bannerBg.svg";
 
 function PostJobBanner() {
   return (
-    <div className="z-10 border rounded-lg flex item-center bg-white w-full mx-auto py-6 sm:px-6 lg:px-8 justify-between relative overflow-hidden">
+    <div className="z-10 border rounded-lg flex flex-col lg:flex-row item-center bg-white w-full mx-auto py-6 px-6 lg:px-8 justify-between relative overflow-hidden">
       <div className="flex space-x-6">
         <div className="flex items-center">
           <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-800 dark:text-blue-200">
@@ -28,17 +28,20 @@ function PostJobBanner() {
 
         <div className="flex flex-col justify-center">
           <h1 className="text-2xl">Welcome back, Joyce</h1>
-          <h3 className="text-md">You haven't posted a job in a while now. Create a Job</h3>
+          <h3 className="text-md">
+            You haven't posted a job in a while now. Create a Job
+          </h3>
         </div>
       </div>
 
-      <div className="flex flex-row z-10">
+      <div className="flex flex-row z-10 mt-4 lg:mt-0">
         <Button
           type="button"
           onClick={() => console.log("Post a job")}
-          className="bg-transparent text-white hover:bg-transparent md:w-[0px] lg:w-[0px] mr-10"
+          className="flex items-center text-white !w-full p-1 md:w-[0px] lg:w-[0px] mr-10 text-white lg:text-white space-x-2"
         >
           <MdAddCircleOutline size={54} />
+          <p className="block lg:block">Create a Job</p>
         </Button>
       </div>
 

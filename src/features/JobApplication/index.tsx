@@ -4,7 +4,7 @@ import React from "react";
 
 function JobApplicationForm() {
   return (
-    <div className="flex flex-col min-h-screen p-5 w-9/12 my-0 mx-auto">
+    <div className="flex flex-col min-h-screen p-5 w-full lg:w-9/12 my-0 mx-auto">
       <div className="mt-10 sm:mt-0">
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">

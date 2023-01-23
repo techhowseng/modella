@@ -6,7 +6,7 @@ import ProfileImage from "./components/ProfileImage";
 
 function JobDetails() {
   return (
-    <div className="flex flex-col min-h-screen p-2 w-12/12 lg:w-9/12 my-0 mx-auto relative">
+    <div className="flex flex-col min-h-screen p-2 w-full lg:w-9/12 my-0 mx-auto relative">
       <div>
         <div className="bg-white border border-gray-200 rounded-lg">
           <img

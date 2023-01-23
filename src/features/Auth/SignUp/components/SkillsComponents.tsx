@@ -20,7 +20,7 @@ const Skill = () => {
 
 function SkillsComponents() {
   return (
-    <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center">
+    <div className="flex-1 py-20 md:py-30 lg:py-36 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
       <div className="flex flex-col">
         <h1 className="text-5xl mb-10 font-bold">
           Welcome, Great step to showcase your skill.
