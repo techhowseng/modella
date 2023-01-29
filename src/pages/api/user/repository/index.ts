@@ -3,7 +3,9 @@ import prisma from "lib/prisma";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import UserServices, { TUser } from "../service";
-import { checkExistingUser } from "../helper"
+import SessionServices from "../../session/service";
+import { randomStringGenerator } from "../../../../helper/util";
+import { checkExistingUser, existsInDB } from "../helper"
 import { ResponseService } from "../../../../helper/ResponseService";
 import { EntityExistsError } from "helper/errors";
 
@@ -20,10 +22,8 @@ export default class UserRepository {
 	static async createUser(req, res) {
 		try {
 			const inputs = req.body;
-
       inputs.email = inputs.email.toLowerCase();
-      inputs.password = inputs.password;
-
+			// this should be in service
 			const existingEmail = await prisma.user.findFirst({
 				where: { email: inputs.email }
 			});
@@ -33,44 +33,67 @@ export default class UserRepository {
 					new EntityExistsError('user', inputs.email)
 				);
 			}
-			return await UserServices.createUser(
+
+			const newUser = await UserServices.createUser(
 				res,
 				inputs.email,
-				bcrypt.hashSync(inputs.password, 8)
+				bcrypt.hashSync(inputs.password, 8),
+				inputs.type
+			);
+
+			let newVerification;
+			if (newUser) {
+				const verificationToken = randomStringGenerator();
+				newVerification = await UserServices.createVerificationToken(
+					newUser.id,
+					verificationToken
+				);
+			}
+			let responseObj = {
+				...newUser,
+				...newVerification
+			}
+      return ResponseService.json(
+				res,
+				200,
+				'Please verify your email address within 10 minutes', 
+				responseObj
 			);
 		} catch(err) {
-			return ResponseService.json(res, err);
-		}
+      return ResponseService.sendError(err, res);
+    }
+	}
+
+	static async updateUser(req, res) {
+		try {
+			const { id, email, password, type } = req.body;
+			const emailLowercase = email.toLowerCase();
+			const passwordEncrypt = bcrypt.hashSync(password, 8)
+			const user = await UserServices.updateUser(res, id, emailLowercase, passwordEncrypt, type);
+			return user;
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
 	static async getUser(req, res) {
 		try {		
 			const { id } = req.body;
-			const user = await UserServices.getUser(id);
+			const user = await UserServices.getUser(res, id);
 			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
 	static async getUserByEmail(req, res) {
 		try {
 			const { email } = req.body;
-			const user = await UserServices.getUserByEmail(email);
+			const user = await UserServices.getUserByEmail(res, email);
 			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
-	}
-
-	static async updateUser(req, res) {
-		try {
-			const { body } = req;
-			const user = await UserServices.updateUser(body);
-			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
 	static async deleteUser(req, res) {
@@ -79,63 +102,42 @@ export default class UserRepository {
 
 			const user = await UserServices.deleteUser(id);
 			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
-	}
-
-	static async createSession(req, res) {
-		try {
-			const { body } = req;
-			const user = await UserServices.createSession(body);
-			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
 	static async getSession(req, res) {
 		try {
 			const { token } = req.body;
-			const user = await UserServices.getSession(token);
+			const user = await SessionServices.getSession(res, token);
 			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
 	static async updateSession(req, res) {
 		try {
 			const { token } = req.body;
-			const user = await UserServices.updateSession(token);
+			const user = await SessionServices.updateSession(res, token);
 			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
-	}
-
-	static async deleteSession(req, res) {
-		try {
-			const { token } = req.body;
-			const user = await UserServices.deleteSession(token);
-			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
 	static async createVerificationToken(req, res) {
 		try {
 			const { token, identifier } = req.body;
-
 			const user = await UserServices.createVerificationToken(
 				identifier,
 				token
 		);
 		return user;
-		} catch (err) {
-
-		}
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
 	static async getVerificationToken(req, res) {
@@ -143,19 +145,31 @@ export default class UserRepository {
 			const { token } = req.body;
 			const user = await UserServices.getVerificationToken(token);
 			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
-	static async deleteVerificationToken(req, res) {
+	static async verifyUser(req, res) {
 		try {
-			const { token } = req.body;
-
-			const user = await UserServices.deleteVerificationToken(token);
-			return user;
-		} catch (err) {
-			return ResponseService.json(res, err);
-		}
+			const { verifyToken, email } = req.body;
+			let userDetails = {};
+			const verifiedUser = await UserServices.verifyToken(res, verifyToken, email);
+			if (verifiedUser) {
+				const user = await UserServices.verifyUser(res, email);
+				await UserServices.deleteVerificationToken(res, email);
+				const jwtToken = jwt.sign(user, JWT_KEY,{
+					expiresIn: 31556926, // 1 year in seconds
+				});
+        const session = user ? await SessionServices.createSession(res, user.id, jwtToken) :  "";
+				userDetails = {
+					...user,
+					...session
+				}
+			return userDetails
+			}
+		} catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 }

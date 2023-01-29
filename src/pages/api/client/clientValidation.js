@@ -1,6 +1,6 @@
 import { check, validationResult } from 'express-validator';
-import initMiddleware from "../../../lib/init-middleware";
-import validateMiddleware from "../../../lib/validate-middleware";
+import initMiddleware from "../../../lib/middlewares/init-middleware";
+import validateMiddleware from "../../../lib/middlewares/validate-middleware";
 
 export const validateClient = initMiddleware(
   validateMiddleware([
@@ -12,6 +12,5 @@ export const validateClient = initMiddleware(
       check('phone').isObject(),
       check('phone.number_1').isMobilePhone().optional({ nullable: true }),
       check('companyName').isLength({min:2}),
-      check('type').isIn(['MODEL','CLIENT']).optional({ nullable: true }),
   ], validationResult)
 )

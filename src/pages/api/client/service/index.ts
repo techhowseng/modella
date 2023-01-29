@@ -6,12 +6,7 @@ import prisma from "lib/prisma";
 export type TClient = PrismaClient["client"]["create"]["data"];
 
 export default class ClientServices {
-  prisma: PrismaClient;
-  static prisma: PrismaClient;
-  
-  constructor() {
-  this.prisma = prisma;
-  }
+  static prisma: PrismaClient = prisma;
 
   static async createClient(
     res,
@@ -41,7 +36,7 @@ export default class ClientServices {
       });
       return client;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -53,7 +48,7 @@ export default class ClientServices {
       });
       return client;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -62,19 +57,20 @@ export default class ClientServices {
       const client = await this.prisma.client.findMany();
       return client;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
-  static async updateClient(res, data: TClient) {
+  static async updateClient(res, userId, data: TClient) {
     try {
       const updatedClient = await this.prisma.client.update({
-        where: { id: data.id },
+        where: { userId},
         data
       });
       return updatedClient;
     } catch(err) {
-      return ResponseService.json(res, err);
+      console.log("err------", err)
+      return ResponseService.sendError({message: "There was an error updating the client information."}, res);
     }
   }
 }

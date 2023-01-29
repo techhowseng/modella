@@ -8,3 +8,14 @@ export const checkExistingUser = async (email: string) => {
   console.log("existing email----------", Boolean(existingEmail))
   return Boolean(existingEmail)
 }
+
+export const existsInDB = async (data, model, columnName) => {
+  console.log("very sexy")
+  console.log("data, model, columnName--------", data, model, columnName)
+  const existingValue = await prisma[model].findFirst({
+    where: {
+      [columnName]: data
+    }
+  })
+  return existingValue
+}

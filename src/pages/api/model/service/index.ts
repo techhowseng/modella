@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Types, PrismaClient } from "@prisma/client";
 import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 
@@ -6,12 +6,7 @@ import prisma from "lib/prisma";
 export type TModel = PrismaClient["model"]["create"]["data"];
 
 export default class UserServices {
-  prisma: PrismaClient;
-  static prisma: PrismaClient;
-  
-  constructor() {
-  this.prisma = prisma;
-  }
+  static prisma: PrismaClient = prisma;
 
   static async createModel(
     res,
@@ -19,14 +14,22 @@ export default class UserServices {
     email: string,
     firstname: string,
     lastname: string,
-    age: number,
     height: string,
+    bust: string,
+    waist: string,
+    hip: string,
+    shoeSize: string,
+    weight: string,
+    complexion: string,
     DOB: string,
     social: object,
     state: string,
     country: string,
+    phone: object,
     address: string,
-    bio: string
+    isAvailable: boolean,
+    types: Types,
+    bio: string,
   ) {
     try {
       const model = await this.prisma.model.create({
@@ -34,13 +37,21 @@ export default class UserServices {
           email,
           firstname,
           lastname,
-          age,
           height,
+          bust,
+          waist,
+          hip,
+          shoeSize,
+          weight,
+          complexion,
           DOB,
           social,
           state,
           country,
+          phone,
           address,
+          isAvailable,
+          types,
           bio,
           user: {
             connect: { id: userId },
@@ -49,7 +60,8 @@ export default class UserServices {
       });
       return model;
     } catch(err) {
-      return ResponseService.json(res, err);
+      console.log("err-----------", err)
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -61,7 +73,7 @@ export default class UserServices {
       });
       return model;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -70,20 +82,19 @@ export default class UserServices {
       const model = await this.prisma.model.findMany();
       return model;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
-  static async updateModel(req, res) {
+  static async updateModel(res, userId, data) {
     try {
-      const { bpdy: data } = req;
       const updatedModel = await this.prisma.model.update({
-        where: { id: data.id },
+        where: { userId },
         data
       });
       return updatedModel;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError({message: "Error updating models information."}, res);
     }
   }
 }

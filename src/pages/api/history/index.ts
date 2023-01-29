@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { validationResult } from 'express-validator';
 import HistoryRepository from "./respository";
-import { validateModelHistory } from "./modelHistoryValidation";
-import { ResponseService } from "helper/ResponseService";
+import { validateModelHistory } from "./historyValidation";
 
 export default async function handle(
   req: NextApiRequest,

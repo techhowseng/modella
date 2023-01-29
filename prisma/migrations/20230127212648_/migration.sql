@@ -1,11 +1,14 @@
 -- CreateEnum
-CREATE TYPE "Type" AS ENUM ('MODEL', 'CLIENT');
+CREATE TYPE "Type" AS ENUM ('Model', 'Client');
 
 -- CreateEnum
-CREATE TYPE "Status" AS ENUM ('ONGOING', 'DONE');
+CREATE TYPE "Types" AS ENUM ('All', 'FashionEditorial', 'FashionCatalog', 'Commercial', 'Mature', 'Runway', 'Swimsuit', 'Lingerie', 'Fitness', 'Fit', 'Parts', 'Promotional', 'Glamour', 'Child', 'Petite', 'PlusSize', 'Freelance', 'Print', 'Other');
 
 -- CreateEnum
-CREATE TYPE "ContentType" AS ENUM ('DEFAULT', 'PROFILE', 'GALLERY', 'MISC');
+CREATE TYPE "Status" AS ENUM ('Ongoing', 'Done');
+
+-- CreateEnum
+CREATE TYPE "ContentType" AS ENUM ('Thumbnail', 'ProfileImages', 'Gallery', 'Misc');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -13,7 +16,7 @@ CREATE TABLE "users" (
     "counter" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "type" "Type" NOT NULL DEFAULT 'MODEL',
+    "type" "Type" NOT NULL DEFAULT 'Model',
     "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "isAuthenticated" BOOLEAN NOT NULL DEFAULT false,
     "emailVerified" TIMESTAMP(3),
@@ -28,11 +31,11 @@ CREATE TABLE "Account" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "type" TEXT NOT NULL,
-    "provider" TEXT NOT NULL,
-    "provider_account_id" TEXT NOT NULL,
+    "provider" TEXT,
+    "provider_account_id" TEXT,
     "refresh_token" TEXT,
     "access_token" TEXT,
-    "expires_at" INTEGER,
+    "expires_at" TIMESTAMP(3),
     "token_type" TEXT,
     "scope" TEXT,
     "id_token" TEXT,
@@ -68,17 +71,27 @@ CREATE TABLE "Model" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "firstname" TEXT,
-    "lastname" TEXT,
-    "age" INTEGER,
+    "firstname" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
     "height" TEXT,
-    "DOB" TEXT,
-    "social" JSONB NOT NULL,
+    "bust" TEXT,
+    "waist" TEXT,
+    "hip" TEXT,
+    "shoeSize" TEXT,
+    "weight" TEXT,
+    "complexion" TEXT NOT NULL,
+    "DOB" TEXT NOT NULL,
+    "social" JSONB,
     "state" TEXT,
     "country" TEXT,
-    "address" TEXT NOT NULL,
+    "address" TEXT,
     "isAvailable" BOOLEAN NOT NULL DEFAULT true,
-    "bio" TEXT NOT NULL
+    "bio" TEXT NOT NULL,
+    "phone" JSONB,
+    "types" "Types",
+    "unavailableDays" TEXT,
+
+    CONSTRAINT "Model_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -91,7 +104,9 @@ CREATE TABLE "Client" (
     "social" JSONB NOT NULL,
     "state" TEXT,
     "country" TEXT,
-    "address" TEXT NOT NULL
+    "address" TEXT NOT NULL,
+
+    CONSTRAINT "Client_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -99,7 +114,15 @@ CREATE TABLE "ContractedModel" (
     "id" SERIAL NOT NULL,
     "clientId" INTEGER NOT NULL,
     "modelId" INTEGER NOT NULL,
-    "status" "Status" NOT NULL DEFAULT 'ONGOING'
+    "status" "Status" NOT NULL DEFAULT 'Ongoing',
+    "locations" JSONB NOT NULL,
+    "startDate" TEXT,
+    "startTime" TEXT,
+    "hours" TEXT,
+    "days" TEXT,
+    "fee" TEXT,
+
+    CONSTRAINT "ContractedModel_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -107,7 +130,9 @@ CREATE TABLE "ModelHistory" (
     "id" SERIAL NOT NULL,
     "modelId" INTEGER NOT NULL,
     "job" TEXT NOT NULL,
-    "description" TEXT NOT NULL
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "ModelHistory_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -119,15 +144,19 @@ CREATE TABLE "ClientJobs" (
     "salary" TEXT,
     "jobType" TEXT,
     "jobLength" TEXT,
-    "isOpen" BOOLEAN NOT NULL DEFAULT true
+    "isOpen" BOOLEAN NOT NULL DEFAULT true,
+
+    CONSTRAINT "ClientJobs_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Media" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
-    "content" JSONB[],
-    "ContentType" "ContentType" NOT NULL
+    "content" JSONB NOT NULL,
+    "contentType" "ContentType" NOT NULL,
+
+    CONSTRAINT "Media_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -146,28 +175,10 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Model_id_key" ON "Model"("id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Model_userId_key" ON "Model"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Client_id_key" ON "Client"("id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Client_userId_key" ON "Client"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ContractedModel_id_key" ON "ContractedModel"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ModelHistory_id_key" ON "ModelHistory"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ClientJobs_id_key" ON "ClientJobs"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Media_id_key" ON "Media"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Media_userId_key" ON "Media"("userId");

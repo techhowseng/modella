@@ -1,4 +1,4 @@
-import { BaseError } from "../helper/errors";
+import { BaseError, createCustomError } from "./errors";
 import { getObjectVal, isEmptyObject } from "./util";
 
 
@@ -55,11 +55,7 @@ export const ResponseService = {
 
     let status = statusOrError;
 
-    if (error == "custom_400") {
-      responseObj.code = "bad_request";
-      responseObj.message = "Bad Request";
-      responseObj.status = "400";
-    } else if (error) {
+    if (error) {
       const errorObj = parse(error);
       responseObj.code = errorObj.code;
       responseObj.message = errorObj.message;

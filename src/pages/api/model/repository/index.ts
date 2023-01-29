@@ -1,6 +1,11 @@
 import { PrismaClient } from "@prisma/client";
+import { ResponseService } from "helper/ResponseService";
+import SessionService from "../../session/service";
 import prisma from "lib/prisma";
 import ModelServices, { TModel } from "../service";
+
+// @ts-ignore
+export type TUser = PrismaClient["session"]["create"]["data"];
 
 export default class ModelRepository {
 	prisma: PrismaClient;
@@ -12,41 +17,71 @@ export default class ModelRepository {
 
 	static async createModel(req, res) {
 		const {
-      userId,
       email,
       firstname,
       lastname,
-      age,
       height,
+      bust,
+      waist,
+      hip,
+      shoeSize,
+      weight,
+      complexion,
       DOB,
       social,
       state,
       country,
+      phone,
       address,
+      isAvailable,
+      types,
       bio
 		} = req.body;
-		const user = await ModelServices.createModel(
-			res,
-      userId,
-      email,
-      firstname,
-      lastname,
-      age,
-      height,
-      DOB,
-      social,
-      state,
-      country,
-      address,
-      bio
-    );
-		return user;
+    try {
+      let token: string;
+			const { authorization } = req.headers;
+      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
+      const session = await SessionService.getSession(res, token)
+      if (session) {
+        const user = await ModelServices.createModel(
+          res,
+          session.userId,
+          email,
+          firstname,
+          lastname,
+          height,
+          bust,
+          waist,
+          hip,
+          shoeSize,
+          weight,
+          complexion,
+          DOB,
+          social,
+          state,
+          country,
+          phone,
+          address,
+          isAvailable,
+          types,
+          bio
+        );
+        return user;
+      }
+
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
 	static async getModel(req, res) {
-		const { id } = req.data;
-		const user = await ModelServices.getModel(res, id);
-		return user;
+    try {
+      const { id } = req.body;
+      const user = await ModelServices.getModel(res, ~~id);
+      return user;
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 
   static async getAllModels(res) {
@@ -55,8 +90,19 @@ export default class ModelRepository {
 	}
 
 	static async updateModel(req, res) {
-		const { data } = req.body
-			const user = await ModelServices.updateModel(res,data);
-			return user;
+    try {
+      const data = req.body
+
+      let token: string;
+			const { authorization } = req.headers;
+      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
+      const session = await SessionService.getSession(res, token)
+      if (session) {
+        const user = await ModelServices.updateModel(res, session.userId, data);
+        return user;
+      }
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
 }

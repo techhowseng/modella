@@ -6,12 +6,7 @@ import prisma from "lib/prisma";
 export type TModelHistory = PrismaClient["modelHistory"]["create"]["data"];
 
 export default class HistoryServices {
-  prisma: PrismaClient;
-  static prisma: PrismaClient;
-  
-  constructor() {
-  this.prisma = prisma;
-  }
+  static prisma: PrismaClient = prisma;
 
   static async createHistory(
     res,
@@ -30,31 +25,31 @@ export default class HistoryServices {
         },
       });
       return modelHistory;
-    } catch (err) {
-      return ResponseService.json(res, err);
+    } catch(err) {
+      return ResponseService.sendError(err, res);
     }
   }
 
   static async getHistory(res, modelId: number) {
     try {
       const modelHistory = await this.prisma.modelHistory.findMany({
-        where: { modelId: modelId },
+        where: { modelId },
       });
       return modelHistory;
-    } catch (err) {
-      return ResponseService.json(res, err);
+    } catch(err) {
+      return ResponseService.sendError(err, res);
     }
   }
 
-  static async updateHistory(res, data: TModelHistory) {
+  static async updateHistory(res, id: number, data: TModelHistory) {
     try {
       const updatedJobHistory = await this.prisma.modelHistory.update({
-        where: { id: data.id },
+        where: { id },
         data
       });
       return updatedJobHistory;
-    } catch (err) {
-      return ResponseService.json(res, err);
+    } catch(err) {
+      return ResponseService.sendError(err, res);
     }
   }
 }
