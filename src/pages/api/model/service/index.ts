@@ -60,7 +60,6 @@ export default class UserServices {
       });
       return model;
     } catch(err) {
-      console.log("err-----------", err)
       return ResponseService.sendError(err, res);
     }
   }

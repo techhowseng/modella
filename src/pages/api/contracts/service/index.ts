@@ -21,7 +21,6 @@ export default class ContractServices {
     status: Status
   ) {
     try {
-      console.log
       const contractedModel = await this.prisma.contractedModel.create({
         data: {
           client: {
@@ -36,7 +35,6 @@ export default class ContractServices {
       return contractedModel;
 
     } catch(err) {
-      console.log("err=----------", err.meta.cause)
       return ResponseService.sendError(err, res);
     }
   }
@@ -50,7 +48,6 @@ export default class ContractServices {
       return contractedModel;
 
     } catch(err) {
-      console.log("err2222222222222", err)
       return ResponseService.sendError(err, res);
     }
   }

@@ -69,7 +69,6 @@ export default class ClientServices {
       });
       return updatedClient;
     } catch(err) {
-      console.log("err------", err)
       return ResponseService.sendError({message: "There was an error updating the client information."}, res);
     }
   }

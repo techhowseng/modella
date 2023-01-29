@@ -22,7 +22,6 @@ export default async function handle(
       res.json(await UserRepository.createUser(req, res));
       break;
     case "PUT":
-      console.log("hererr")
       await validateUser(req, res)
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });

@@ -20,12 +20,6 @@ export default async (req: Request, res: NextApiResponse) => {
 
   try {
     if (token && passedMethod.includes(reqMethod)) {
-      // jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
-      //   if (decoded.expiredAt < Date.now() && decoded.email == req.body.email) {
-      //     return NextResponse.next();
-      //   }
-      // });
-
       const decoded = await verify(token, process.env.JWT_KEY);
       if (decoded && Math.floor(Date.now()/1000) < decoded.exp) {
         return NextResponse.next();

@@ -29,7 +29,7 @@ export default class SessionRepository {
       const validPassword = await bcrypt.compare(req.body.password, user.password);
       if (validPassword) {
         const jwtToken = jwt.sign(user, process.env.JWT_KEY,{
-          expiresIn: "1hr", // 1 year in seconds
+          expiresIn: "1hr",
         });
         const session = user ? await SessionServices.createSession(res, user.id, jwtToken) :  "";
         return session;

@@ -14,9 +14,9 @@ export default async function handle(
       res.json(await ClientRepository.getAllClients(res));
       break;
     case "POST":
-      // await validateClient(req, res)
-      // const createErrors = validationResult(req)
-      // if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+      await validateClient(req, res)
+      const createErrors = validationResult(req)
+      if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
       res.json(await ClientRepository.createClient(req, res));
       break;
     case "PUT":

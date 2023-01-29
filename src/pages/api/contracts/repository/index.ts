@@ -49,7 +49,6 @@ export default class ClientRepository {
       return contract;
 
     } catch(err) {
-      console.log("errrr111111111", err)
       return ResponseService.sendError(err, res);
     }
   }
