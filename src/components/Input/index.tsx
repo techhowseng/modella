@@ -1,17 +1,22 @@
 import React from "react";
 
 interface InputProps {
-  label: string;
+  id?: string;
+  label?: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   type: string;
   value?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  autoComplete?: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   error?: string;
   className?: string;
 }
 
 function Input({
+  id,
   label,
   name,
   placeholder,
@@ -20,21 +25,38 @@ function Input({
   onChange,
   error = "",
   className = "",
+  autoComplete,
 }: InputProps) {
   return (
-    <div className="flex flex-col mt-5 md:mt-8 lg:mt-10">
-      <label className="mb-2">{label}</label>
-      <input
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        defaultValue={value}
-        onChange={onChange}
-        className={`base-input w-full p-4 rounded-lg border-2 ${
-          error ? "base-border-red" : "border-gray-200"
-        } focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
-      />
+    <div className="flex flex-col w-full">
+      {label && <label className="mb-2">{label}</label>}
+      {type === "textarea" ? (
+        <textarea
+          id={id}
+          name={name}
+          rows={4}
+          // value={value || ""}
+          onChange={onChange}
+          className={`base-input p-4 rounded-lg border-2 ${
+            error ? "base-border-red" : "border-gray-200"
+          } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
+          placeholder={placeholder}
+        ></textarea>
+      ) : (
+        <input
+          id={id}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          autoComplete={autoComplete}
+          defaultValue={value}
+          onChange={onChange}
+          className={`base-input w-full p-4 rounded-lg border-2 ${
+            error ? "base-border-red" : "border-gray-200"
+          } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
+        />
+      )}
       <p className="base-red">{error}</p>
     </div>
   );

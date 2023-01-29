@@ -12,7 +12,7 @@ function Auth() {
 
       <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-48 md:px-20 h-full flex flex-col justify-start">
         <div className="flex flex-col">
-          <h1 className="text-5xl mb-10 font-bold">Create an Account</h1>
+          <h1 className="text-3xl mb-5 font-bold">Create an Account</h1>
           <div className="flex flex-row">
             <p className="mr-1">What do u wish to sign up as?</p>
           </div>

@@ -37,9 +37,17 @@ button {
 .hover\:base-bg-color:hover {
   background-color: var(--base-color);
 }
+.\!base-bg-color,
+.\!hover\:base-bg-color:hover {
+  background-color: var(--base-color) !important;
+}
 .base-border-color,
 .hover\:base-border-color:hover {
   border-color: var(--base-color);
+}
+.\!base-border-color,
+.\!hover\:base-border-color:hover {
+  border-color: var(--base-color) !important;
 }
 
 .base-light-color,

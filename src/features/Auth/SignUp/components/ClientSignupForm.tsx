@@ -47,7 +47,7 @@ const CLIENT_SIGNUP_FORM = [
 
 function ClientSignupForm() {
   return (
-    <div className="flex-1 py-10 lg:py-20 md:py-30 px-5 lg:px-38 md:px-20 h-full flex flex-col justify-center">
+    <div className="flex-1 py-10 lg:py-20 md:py-30 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
       <div className="flex flex-col">
         {/* <h1 className="text-5xl mb-10 font-bold">Congratulations</h1> */}
         <p className="mr-1 text-2xl">
