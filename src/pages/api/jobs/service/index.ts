@@ -6,12 +6,7 @@ import prisma from "lib/prisma";
 export type TJobs = PrismaClient["clientJobs"]["create"]["data"];
 
 export default class JobServices {
-  prisma: PrismaClient;
-  static prisma: PrismaClient;
-  
-  constructor() {
-  this.prisma = prisma;
-  }
+  static prisma: PrismaClient = prisma;
 
   static async createJob(
     res,
@@ -20,7 +15,8 @@ export default class JobServices {
     jobDescription: string,
     salary: string,
     jobType: string,
-    jobLength: string
+    jobLength: string,
+    isOpen: boolean | null
   ) {
     try {
       const job = await this.prisma.clientJobs.create({
@@ -30,6 +26,7 @@ export default class JobServices {
           salary,
           jobType,
           jobLength,
+          isOpen,
           client: {
             connect: { id: clientId },
           },
@@ -37,7 +34,7 @@ export default class JobServices {
       });
       return job;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -48,7 +45,7 @@ export default class JobServices {
       });
       return job;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -57,7 +54,7 @@ export default class JobServices {
       const job = await this.prisma.clientJobs.findMany();
       return job;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -68,7 +65,7 @@ export default class JobServices {
       });
       return job;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -83,7 +80,7 @@ export default class JobServices {
       });
       return job;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -95,7 +92,7 @@ export default class JobServices {
       });
       return updatedJob;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -106,7 +103,7 @@ export default class JobServices {
       });
       return job;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 }

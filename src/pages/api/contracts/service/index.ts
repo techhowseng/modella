@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Status, PrismaClient } from "@prisma/client";
 import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 
@@ -6,17 +6,19 @@ import prisma from "lib/prisma";
 export type TContract = PrismaClient["contractedModel"]["create"]["data"];
 
 export default class ContractServices {
-  prisma: PrismaClient;
-  static prisma: PrismaClient;
-  
-  constructor() {
-  this.prisma = prisma;
-  }
+  static prisma: PrismaClient = prisma;
 
   static async createContract(
     res,
     clientId: number,
-    modelId: number
+    modelId: number,
+    locations: object,
+    startDate: string,
+    startTime: string,
+    hours: string,
+    days: string,
+    fee: string,
+    status: Status
   ) {
     try {
       const contractedModel = await this.prisma.contractedModel.create({
@@ -26,13 +28,14 @@ export default class ContractServices {
           },
           model: {
             connect: { id: modelId },
-          }
+          },
+          locations, startDate, startTime, hours, days, fee, status
         },
       });
       return contractedModel;
 
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -45,21 +48,19 @@ export default class ContractServices {
       return contractedModel;
 
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
-  static async updateContract(res, id: number) {
+  static async updateContract(res, id: number, data: object) {
     try {
       const updatedContract = await this.prisma.contractedModel.update({
         where: { id },
-        data: {
-          status: "DONE"
-        }
+        data
       });
       return updatedContract;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -70,7 +71,7 @@ export default class ContractServices {
       });
       return modelContracts;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -81,7 +82,7 @@ export default class ContractServices {
       });
       return modelContracts;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 }

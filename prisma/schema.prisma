@@ -16,7 +16,7 @@ model User {
   counter         Int       @default(autoincrement())
   email           String    @unique
   password        String
-  type            Type      @default(MODEL)
+  type            Type      @default(Model)
   isDeleted       Boolean   @default(false)
   isAuthenticated Boolean   @default(false)
   emailVerified   DateTime?
@@ -32,8 +32,8 @@ model User {
 }
 
 enum Type {
-  MODEL
-  CLIENT
+  Model
+  Client
 }
 
 model Account {
@@ -75,28 +75,57 @@ model VerificationToken {
 }
 
 model Model {
-  id              Int               @unique @default(autoincrement())
+  id              Int               @id @default(autoincrement())
   userId          String            @unique
   user            User              @relation(fields: [userId], references: [id])
   email           String
-  firstname       String?
-  lastname        String?
-  age             Int?
+  firstname       String
+  lastname        String
   height          String?
-  DOB             String?
-  social          Json
+  bust            String?
+  waist           String?
+  hip             String?
+  shoeSize        String?
+  weight          String?
+  complexion      String
+  DOB             String
+  social          Json?
   state           String?
   country         String?
-  address         String
+  address         String?
   isAvailable     Boolean           @default(true)
   bio             String
-  phone           Json
-  contractedModel ContractedModel[]
-  modelHistory    ModelHistory[]
+  phone           Json?
+  types           Types?
+  unavailableDays String?
+  contracts       Contracts[]
+  history         History[]
+}
+
+enum Types {
+  All
+  FashionEditorial
+  FashionCatalog
+  Commercial
+  Mature
+  Runway
+  Swimsuit
+  Lingerie
+  Fitness
+  Fit
+  Parts
+  Promotional
+  Glamour
+  Child
+  Petite
+  PlusSize
+  Freelance
+  Print
+  Other
 }
 
 model Client {
-  id              Int               @unique @default(autoincrement())
+  id              Int               @id @default(autoincrement())
   user            User              @relation(fields: [userId], references: [id])
   userId          String            @unique
   companyName     String
@@ -106,38 +135,45 @@ model Client {
   state           String?
   country         String?
   address         String
-  contractedModel ContractedModel[]
-  clientJobs      ClientJobs[]
+  contracts       Contracts[]
+  jobs            Jobs[]
 }
 
-model ContractedModel {
-  id       Int    @unique @default(autoincrement())
-  client   Client @relation(fields: [clientId], references: [id])
-  clientId Int
-  model    Model  @relation(fields: [modelId], references: [id])
-  modelId  Int
-  status   Status @default(ONGOING)
+model       Contracts {
+  id        Int    @id @default(autoincrement())
+  client    Client @relation(fields: [clientId], references: [id])
+  clientId  Int
+  model     Model  @relation(fields: [modelId], references: [id])
+  modelId   Int
+  status    Status @default(Ongoing)
+  locations Json
+  startDate String?
+  startTime String?
+  hours     String?
+  days      String?
+  fee       String?
 }
 
 enum Status {
-  ONGOING
-  DONE
+  Ongoing
+  Done
 }
 
-model ModelHistory {
-  id          Int    @unique @default(autoincrement())
+model History {
+  id          Int    @id @default(autoincrement())
   model       Model  @relation(fields: [modelId], references: [id])
   modelId     Int
   job         String
   description String
 }
 
-model ClientJobs {
-  id             Int     @unique @default(autoincrement())
+model Jobs {
+  id             Int     @id @default(autoincrement())
   client         Client  @relation(fields: [clientId], references: [id])
   clientId       Int
   jobRole        String
   jobDescription String @db.Text
+  location       String
   salary         String?
   jobType        String?
   jobLength      String?
@@ -145,7 +181,7 @@ model ClientJobs {
 }
 
 model Media {
-  id          Int         @unique @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   userId      String      @unique
   user        User        @relation(fields: [userId], references: [id])
   content     Json
@@ -153,8 +189,8 @@ model Media {
 }
 
 enum ContentType {
-  DEFAULT
-  PROFILE
-  GALLERY
-  MISC
+  Thumbnail
+  ProfileImages
+  Gallery
+  Misc
 }

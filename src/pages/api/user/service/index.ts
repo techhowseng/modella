@@ -1,6 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { Type, PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
 import { ResponseService } from "../../../../helper/ResponseService";
+import {
+  TEN_MINUTES_FROM_NOW,
+  TWENTY_FOUR_HOURS_FROM_NOW
+} from "../../../../helper/constants";
 
 // @ts-ignore
 export type TUser = PrismaClient["user"]["create"]["data"];
@@ -15,44 +19,59 @@ export default class UserServices {
   static async createUser(
     res,
     email: string,
-    password: string
+    password: string,
+    type: Type
   ) {
     try {
       const user = await prisma.user.create({
         data: {
           email,
           password,
+          type
         }
       });
       return user;
-    } catch(err) {
-      return ResponseService.json(res, err);
+    } catch (err) {
+      return ResponseService.sendError(err, res);
     }
   }
 
-  static async getUser(id: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-    });
-    return user;
+  static async getUser(res, id: string) {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id },
+      });
+      return user;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
   }
 
-  static async getUserByEmail(email?: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { email },
-    });
-    return user;
+  static async getUserByEmail(res, email: string) {
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: { email },
+      });
+      return user;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
   }
 
-  static async updateUser(data: TUser) {
-    const updatedUser = await this.prisma.user.update({
-      where: { id: data.id },
-      data: {
-        email: data.email,
-        emailVerified: data.emailVerified || null,
-      },
-    });
-    return updatedUser;
+  static async updateUser(res, id, email, password, type) {
+    try {
+      const updatedUser = await this.prisma.user.update({
+        where: { id },
+        data: {
+          email,
+          type,
+          password
+        },
+      });
+      return updatedUser;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
   }
 
   static async deleteUser(userId: string) {
@@ -104,45 +123,6 @@ export default class UserServices {
   //     return account;
   //   }
 
-  static async createSession(user: TUser) {
-    const session = await this.prisma.session.create({
-      //  @ts-ignore
-      data: {
-        expires: new Date(),
-        user: {
-          connect: { id: user.id },
-        },
-      },
-    });
-    return session;
-  }
-
-  static async getSession(sessionToken: string | null) {
-    if (!sessionToken) return null;
-    const session = await this.prisma.session.findUnique({
-      where: { sessionToken },
-      include: { user: true },
-    });
-    return session;
-  }
-
-  static async updateSession(session: TSession, force?: boolean) {
-    const expires = new Date();
-    const updatedSession = await this.prisma.session.update({
-      where: { id: session.id },
-      data: {
-        expires,
-      },
-    });
-    return updatedSession;
-  }
-
-  static async deleteSession(sessionToken: string) {
-    const session = await this.prisma.session.delete({
-      where: { sessionToken },
-    });
-    return session;
-  }
 
   static async createVerificationToken(
     identifier: string,
@@ -152,7 +132,7 @@ export default class UserServices {
       data: {
         identifier,
         token,
-        expires: new Date(),
+        expires: TEN_MINUTES_FROM_NOW,
       },
     });
     return verificationToken;
@@ -165,10 +145,43 @@ export default class UserServices {
     return verificationToken;
   }
 
-  static async deleteVerificationToken(token: string) {
-    const verificationToken = await this.prisma.verificationToken.delete({
-      where: { token },
-    });
-    return verificationToken;
+  static async deleteVerificationToken(res, email: string) {
+    try {
+      const deleteVerifications = await prisma.verificationToken.deleteMany({
+        where: { identifier: email },
+      })
+      return deleteVerifications;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async verifyToken(res, verifyToken: string, identifier: string) {
+    try {
+      const verifiedUser = await this.prisma.verificationToken.findUnique({
+        where: {
+          token: verifyToken,
+          // identifier,
+        },
+      });
+      return verifiedUser;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async verifyUser(res, email: string) {
+    try {
+      const verifiedUser = await this.prisma.user.update({
+        where: { email },
+        data: {
+          emailVerified: TWENTY_FOUR_HOURS_FROM_NOW,
+          isAuthenticated: true
+        },
+      });
+      return verifiedUser;
+    } catch (err) {
+      return ResponseService.json(res, err);
+    }
   }
 }

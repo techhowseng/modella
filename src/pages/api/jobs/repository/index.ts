@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import SessionServices from "../../session/service";
 import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 import JobsServices, { TJobs } from "../service";
@@ -14,25 +15,33 @@ export default class JobsRepository {
   static async createJob(req, res) {
     try {
       const {
-        clientId,
         jobRole,
         jobDescription,
         salary,
         jobType,
-        jobLength
+        jobLength,
+        isOpen
       } = req.body;
+      let token;
+      const { authorization } = req.headers;
+      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
+      const session = await SessionServices.getClientSession(res, token)
+      if (session) {
       const contract = await JobsServices.createJob(
         res,
-        clientId,
+        session.id,
         jobRole,
         jobDescription,
         salary,
         jobType,
-        jobLength
+        jobLength,
+        isOpen
       );
+      
       return contract;
+      }
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -42,7 +51,7 @@ export default class JobsRepository {
       const contract = await JobsServices.updateJob(res, body);
       return contract;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -52,7 +61,7 @@ export default class JobsRepository {
       const contract = await JobsServices.getJob(res, id);
       return contract;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -62,7 +71,7 @@ export default class JobsRepository {
       const contract = await JobsServices.getAllClientJobs(res, id);
       return contract;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -71,7 +80,7 @@ export default class JobsRepository {
       const contract = await JobsServices.getJobs(res);
       return contract;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }  
   
@@ -81,7 +90,7 @@ export default class JobsRepository {
       const contract = await JobsServices.searchJobs(res, query);
       return contract;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -91,7 +100,7 @@ export default class JobsRepository {
       const contract = await JobsServices.deleteJob(res, id);
       return contract;
     } catch(err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 }

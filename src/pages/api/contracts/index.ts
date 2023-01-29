@@ -11,10 +11,10 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      if (req.body.id) res.json(await ContractRepository.getContract(req, res));
-      else if (req.body.modelId) res.json(await ContractRepository.getAllModelContracts(req, res));
-      else if (req.body.clientId) res.json(await ContractRepository.getAllClientContracts(req, res));
-      ResponseService.json(res, "custom_400");
+      if (req.body.id) return res.json(await ContractRepository.getContract(req, res));
+      else if (req.body.modelId) return res.json(await ContractRepository.getAllModelContracts(req, res));
+      else if (req.body.clientId) return res.json(await ContractRepository.getAllClientContracts(req, res));
+      ResponseService.sendError({ message: "Bad request"}, res);
       break;
     case "POST":
       await validateContract(req, res)
