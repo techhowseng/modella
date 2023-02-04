@@ -1,53 +1,56 @@
 import Button from "components/Button";
 import CheckBox from "components/CheckBox";
 import Input from "components/Input";
+import { useRegistrationUserType } from "features/Auth/hooks";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import queryString from "query-string";
+import React, { useEffect } from "react";
 
 const CLIENT_SIGNUP_FORM = [
   {
     label: "Full Name",
     type: "text",
     name: "fullname",
-    placeholder: "Please enter your Full Name",
+    // placeholder: "Enter your Full Name",
   },
   {
     label: "Company name",
     type: "text",
     name: "companyName",
-    placeholder: "Please enter your Company name",
+    // placeholder: "Company's name",
   },
   {
     label: "Email",
     type: "email",
     name: "email",
-    placeholder: "Please enter your Email Address",
+    // placeholder: "Enter your Email Address",
   },
   {
     label: "Country",
     type: "select",
     name: "country",
-    placeholder: "Please select your Country",
+    // placeholder: "Select your Country",
     options: [],
   },
   {
     label: "Password",
     type: "password",
     name: "password",
-    placeholder: "Please enter your Password",
+    // placeholder: "Enter your Password",
   },
   {
     label: "Confirm Password",
     type: "password",
     name: "confirmPassword",
-    placeholder: "Please enter your Confirm Password",
+    // placeholder: "Confirm Password",
   },
 ];
 
 function ClientSignupForm() {
   return (
-    <div className="flex-1 py-10 lg:py-20 md:py-30 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
+    <div className="flex-1 w-full py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
       <div className="flex flex-col">
         {/* <h1 className="text-5xl mb-10 font-bold">Congratulations</h1> */}
         <p className="mr-1 text-2xl">
@@ -65,7 +68,7 @@ function ClientSignupForm() {
             <Input
               label={field.label}
               name={field.name}
-              placeholder={field.placeholder}
+              // placeholder={field.placeholder}
               type={field.type}
               onChange={() => {}}
             />

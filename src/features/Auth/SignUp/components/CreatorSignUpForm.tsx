@@ -1,46 +1,49 @@
 import Button from "components/Button";
 import CheckBox from "components/CheckBox";
 import Input from "components/Input";
+import { useRegistrationUserType } from "features/Auth/hooks";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import queryString from "query-string";
+import React, { useEffect } from "react";
 
 const CREATOR_SIGNUP_FORM = [
-  {
-    label: "First Name",
-    type: "text",
-    name: "firstName",
-    placeholder: "Please enter your First Name",
-  },
-  {
-    label: "Last name",
-    type: "text",
-    name: "lastName",
-    placeholder: "Please enter your Last name",
-  },
+  // {
+  //   label: "First Name",
+  //   type: "text",
+  //   name: "firstName",
+  //   placeholder: "Please enter your First Name",
+  // },
+  // {
+  //   label: "Last name",
+  //   type: "text",
+  //   name: "lastName",
+  //   placeholder: "Please enter your Last name",
+  // },
   {
     label: "Email",
     type: "email",
     name: "email",
-    placeholder: "Please enter your Email Address",
+    // placeholder: "Please enter your Email Address",
   },
-  {
-    label: "Phone Number",
-    type: "phone",
-    name: "phoneNumber",
-    placeholder: "Please enter your Phone Number",
-  },
+  // {
+  //   label: "Phone Number",
+  //   type: "phone",
+  //   name: "phoneNumber",
+  //   placeholder: "Please enter your Phone Number",
+  // },
   {
     label: "Password",
     type: "password",
     name: "password",
-    placeholder: "Please enter your Password",
+    // placeholder: "Please enter your Password",
   },
   {
     label: "Confirm Password",
     type: "password",
     name: "confirmPassword",
-    placeholder: "Please enter your Confirm Password",
+    // placeholder: "Please enter your Confirm Password",
   },
 ];
 
@@ -53,12 +56,13 @@ function CreatorSignUpForm() {
       </div>
 
       <div className="flex flex-col mt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
           {CREATOR_SIGNUP_FORM.map((field) => (
             <Input
+              key={field.name}
               label={field.label}
               name={field.name}
-              placeholder={field.placeholder}
+              // placeholder={field.placeholder}
               type={field.type}
               onChange={() => {}}
             />

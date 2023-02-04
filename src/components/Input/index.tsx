@@ -20,7 +20,7 @@ function Input({
   label,
   name,
   placeholder,
-  type,
+  type = "input", 
   value,
   onChange,
   error = "",
