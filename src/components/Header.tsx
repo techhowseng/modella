@@ -3,6 +3,8 @@ import { Popover, Transition, Menu } from "@headlessui/react";
 import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import { LinkButton, Logo } from "components";
 import { classNames } from "lib/functions";
+import { APP_ROUTES } from "lib/routes";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -10,10 +12,10 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="#">
+            <Link href={APP_ROUTES.home}>
               <span className="sr-only">Modella</span>
               <Logo />
-            </a>
+            </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
             <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -23,14 +25,14 @@ export default function Header() {
           </div>
 
           <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a
-              href="#"
+            <Link
+              href={APP_ROUTES.login}
               className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
             >
               Sign in
-            </a>
+            </Link>
 
-            <LinkButton className="ml-8" href={"#"}>
+            <LinkButton className="ml-8" href={APP_ROUTES.signup}>
               Sign up
             </LinkButton>
           </div>
@@ -70,7 +72,7 @@ export default function Header() {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        href="#"
+                        href={APP_ROUTES.profile}
                         className={classNames(
                           active ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-700"
@@ -83,7 +85,7 @@ export default function Header() {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        href="#"
+                        href={APP_ROUTES.settings}
                         className={classNames(
                           active ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-700"

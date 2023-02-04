@@ -17,6 +17,6 @@ export const APP_ROUTES = {
   unauthorized: "/unauthorized",
   forbidden: "/forbidden",
   emailVerification: "/email-verification",
-  emailVerificationSuccess: "/email-verification-success",
-  emailVerificationFailed: "/email-verification-failed",
+  emailVerificationSuccess: "/email-verification/success",
+  emailVerificationFailed: "/email-verification/failed",
 };

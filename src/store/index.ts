@@ -1,10 +1,12 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import kanyeReducer from "features/Auth/kanyeSlice";
 import authReducer from "features/Auth/slice";
 
 export const store = configureStore({
   reducer: {
     // reference reducers here
     auth: authReducer,
+    kanyeQuote: kanyeReducer,
   },
 });
 
