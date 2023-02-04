@@ -4,8 +4,9 @@ import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
 import React from "react";
 import { FaUserCheck, FaUserFriends } from "react-icons/fa";
+import { AuthComponenetType } from "./types";
 
-function Auth() {
+function Auth({ user }: AuthComponenetType) {
   return (
     <div className="flex flex-col-reverse sm:flex-col-reverse md:flex-col-reverse lg:flex-row sm:h-fit lg:h-screen">
       <SideDisplay />
