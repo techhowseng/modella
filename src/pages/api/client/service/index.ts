@@ -40,7 +40,6 @@ export default class ClientServices {
     }
   }
 
-
   static async getClient(res, id: number) {
     try {
       const client = await this.prisma.client.findUnique({
@@ -61,10 +60,10 @@ export default class ClientServices {
     }
   }
 
-  static async updateClient(res, userId, data: TClient) {
+  static async updateClient(res, userId: string, data: TClient) {
     try {
       const updatedClient = await this.prisma.client.update({
-        where: { userId},
+        where: { userId },
         data
       });
       return updatedClient;

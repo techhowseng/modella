@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { validationResult } from 'express-validator';
-import ClientRepository from "./repository/index";
-import { validateClient } from "./clientValidation";
+import ModelRepository from "./repository/index";
 
 export default async function handle(
   req: NextApiRequest,
@@ -10,15 +8,12 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await ClientRepository.getAllClients(res));
+      res.json(await ModelRepository.getModel(req, res));
       break;
     case "POST":
-      await validateClient(req, res)
-      const createErrors = validationResult(req)
-      if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
-      res.json(await ClientRepository.createClient(req, res));
       break;
     case "PUT":
+      res.json(await ModelRepository.updateModel(req, res));
       break;
     case "PATCH":
       break;

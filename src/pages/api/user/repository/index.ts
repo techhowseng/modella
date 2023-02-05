@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import UserServices, { TUser } from "../service";
 import SessionServices from "../../session/service";
-import { randomStringGenerator } from "../../../../helper/util";
+import { getUser, randomStringGenerator } from "../../../../helper/util";
 import { checkExistingUser, existsInDB } from "../helper"
 import { ResponseService } from "../../../../helper/ResponseService";
 import { EntityExistsError } from "helper/errors";
@@ -45,7 +45,7 @@ export default class UserRepository {
 			if (newUser) {
 				const verificationToken = randomStringGenerator();
 				newVerification = await UserServices.createVerificationToken(
-					newUser.id,
+					newUser,
 					verificationToken
 				);
 			}
@@ -65,12 +65,26 @@ export default class UserRepository {
 	}
 
 	static async updateUser(req, res) {
+		interface Input {
+			email?: string,
+			password?: string,
+			type?: string,
+		}
+
 		try {
-			const { id, email, password, type } = req.body;
-			const emailLowercase = email.toLowerCase();
-			const passwordEncrypt = bcrypt.hashSync(password, 8)
-			const user = await UserServices.updateUser(res, id, emailLowercase, passwordEncrypt, type);
-			return user;
+			const { email, password, type } = req.body;
+			let { pid } = req.query;
+
+			const user = await getUser(req);
+      if (user) {
+        pid = user.type == "Admin" ? pid : user.id
+			}
+			let input: Input = {};
+			email ? input.email = email.toLowerCase() : null;
+			password ? input.password = bcrypt.hashSync(password, 8) : null;
+			type ? input.type = type : null;
+			const updatedUser = await UserServices.updateUser(res, pid, input);
+			return updatedUser;
 		} catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -78,8 +92,8 @@ export default class UserRepository {
 
 	static async getUser(req, res) {
 		try {		
-			const { id } = req.body;
-			const user = await UserServices.getUser(res, id);
+			const { pid } = req.query;
+			const user = await UserServices.getUser(res, pid);
 			return user;
 		} catch(err) {
       return ResponseService.sendError(err, res);
@@ -98,10 +112,13 @@ export default class UserRepository {
 
 	static async deleteUser(req, res) {
 		try {
-			const { id } = req.body;
-
-			const user = await UserServices.deleteUser(id);
-			return user;
+			let { pid } = req.query;
+			const user = await getUser(req);
+      if (user) {
+        pid = user.type == "Admin" ? pid : user.id
+			}
+			const deletedUser = await UserServices.deleteUser(pid);
+			return deletedUser;
 		} catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -152,22 +169,22 @@ export default class UserRepository {
 
 	static async verifyUser(req, res) {
 		try {
-			const { verifyToken, email } = req.body;
+			const { pid } = req.query;
 			let userDetails = {};
-			const verifiedUser = await UserServices.verifyToken(res, verifyToken, email);
+			const verifiedUser = await UserServices.verifyToken(res, pid);
 			if (verifiedUser) {
-				const user = await UserServices.verifyUser(res, email);
-				await UserServices.deleteVerificationToken(res, email);
-				const jwtToken = jwt.sign(user, JWT_KEY,{
-					expiresIn: 31556926, // 1 year in seconds
+				await UserServices.verifyUser(res, verifiedUser.email);
+				await UserServices.deleteVerificationToken(res, verifiedUser.email);
+				const jwtToken = jwt.sign(verifiedUser, JWT_KEY,{
+					expiresIn: "24hr",
 				});
-        const session = user ? await SessionServices.createSession(res, user.id, jwtToken) :  "";
+        const session = await SessionServices.createSession(res, verifiedUser.id, jwtToken);
 				userDetails = {
-					...user,
+					...verifiedUser,
 					...session
 				}
 			return userDetails
-			}
+			} else return ResponseService.sendError({message: "Token has expired or has already been verified"}, res);
 		} catch(err) {
       return ResponseService.sendError(err, res);
     }

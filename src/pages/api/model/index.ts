@@ -11,8 +11,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      if (req.body.id) res.json(await ModelRepository.getModel(req, res));
-      if (!req.body.id) res.json(await ModelRepository.getAllModels(res));
+      res.json(await ModelRepository.getAllModels(res));
       break;
     case "POST":
       await validateModel(req, res)
@@ -21,7 +20,6 @@ export default async function handle(
       res.json(await ModelRepository.createModel(req, res));
       break;
     case "PUT":
-      res.json(await ModelRepository.updateModel(req, res));
       break;
     case "PATCH":
       break;

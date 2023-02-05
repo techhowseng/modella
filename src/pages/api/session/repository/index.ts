@@ -45,8 +45,8 @@ export default class SessionRepository {
       let token: string;
 			const { authorization } = req.headers;
       if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-			const user = await SessionServices.deleteSession(res, token);
-			return user;
+			await SessionServices.deleteSession(res, token);
+			return ResponseService.json(res, 200, "This user has been logged out.");
 		} catch(err) {
       return ResponseService.sendError(err, res);
     }

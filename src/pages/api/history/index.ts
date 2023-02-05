@@ -19,10 +19,6 @@ export default async function handle(
       res.json(await HistoryRepository.createHistory(req, res));
       break;
     case "PUT":
-      await validateModelHistory(req, res)
-      const updateErrors = validationResult(req)
-      if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
-      res.json(await HistoryRepository.updateHistory(req, res));
       break;
     case "PATCH":
       break;

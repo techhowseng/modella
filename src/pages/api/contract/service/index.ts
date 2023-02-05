@@ -3,7 +3,7 @@ import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 
 // @ts-ignore
-export type TContract = PrismaClient["contractedModel"]["create"]["data"];
+export type TContract = PrismaClient["contract"]["create"]["data"];
 
 export default class ContractServices {
   static prisma: PrismaClient = prisma;
@@ -21,7 +21,7 @@ export default class ContractServices {
     status: Status
   ) {
     try {
-      const contractedModel = await this.prisma.contractedModel.create({
+      const contractedModel = await this.prisma.contract.create({
         data: {
           client: {
             connect: { id: clientId },
@@ -33,7 +33,6 @@ export default class ContractServices {
         },
       });
       return contractedModel;
-
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -42,7 +41,7 @@ export default class ContractServices {
 
   static async getContract(res, id: number) {
     try {
-      const contractedModel = await this.prisma.contractedModel.findUnique({
+      const contractedModel = await this.prisma.contract.findUnique({
         where: { id },
       });
       return contractedModel;
@@ -54,7 +53,7 @@ export default class ContractServices {
 
   static async updateContract(res, id: number, data: object) {
     try {
-      const updatedContract = await this.prisma.contractedModel.update({
+      const updatedContract = await this.prisma.contract.update({
         where: { id },
         data
       });
@@ -66,7 +65,7 @@ export default class ContractServices {
 
   static async getAllModelContracts(res, id: number) {
     try {
-      const modelContracts = await this.prisma.contractedModel.findMany({
+      const modelContracts = await this.prisma.contract.findMany({
         where: { modelId: id },
       });
       return modelContracts;
@@ -75,10 +74,12 @@ export default class ContractServices {
     }
   }
 
-  static async getAllClientContracts(res, id: number) {
+  static async getUserContracts(res, id: number, col) {
     try {
-      const modelContracts = await this.prisma.contractedModel.findMany({
-        where: { clientId: id },
+      const modelContracts = await this.prisma.contract.findMany({
+        where: { 
+          [col]: id
+        },
       });
       return modelContracts;
     } catch(err) {
