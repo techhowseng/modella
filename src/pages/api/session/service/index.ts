@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ResponseService } from "helper/ResponseService";
+import { TWENTY_FOUR_HOURS_FROM_NOW } from "helper/constants";
 import prisma from "lib/prisma";
 
 // @ts-ignore
@@ -14,10 +15,12 @@ export default class SessionServices {
         where: {
           sessionToken,
         },
-        update: {},
+        update: {
+          expires: TWENTY_FOUR_HOURS_FROM_NOW,
+        },
         create: {
           sessionToken,
-          expires: new Date(),
+          expires: TWENTY_FOUR_HOURS_FROM_NOW,
           user: {
             connect: { id },
           },
@@ -67,7 +70,7 @@ export default class SessionServices {
 
   static async updateSession(res, session: TSession, force?: boolean) {
     try {
-      const expires = new Date();
+      const expires = TWENTY_FOUR_HOURS_FROM_NOW;
       const updatedSession = await this.prisma.session.update({
         where: { id: session.id },
         data: {

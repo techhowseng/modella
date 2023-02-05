@@ -10,7 +10,6 @@ export const validateClient = initMiddleware(
       check('country').isLength({min:2}),
       check('address').isLength({min:5}),
       check('phone').isObject(),
-      check('phone.number_1').isMobilePhone().optional({ nullable: true }),
       check('companyName').isLength({min:2}),
   ], validationResult)
 )

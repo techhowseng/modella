@@ -1,5 +1,4 @@
 import { ContentType, PrismaClient } from "@prisma/client";
-import cloudinary from "../../../../helper/cloudinary";
 import prisma from "lib/prisma";
 import { ResponseService } from "helper/ResponseService";
 
@@ -20,12 +19,6 @@ export default class MediaServices {
     //@ts-ignore
     const { image } = content;
     try {
-      //@ts-ignore
-      const result = await cloudinary.uploader.upload(image, {
-        folder: contentType
-      })
-      content["url"] = result.secure_url;
-      content["public_id"] = result.public_id;
       const media = await this.prisma.media.create({
         data: {
           content,
@@ -125,6 +118,7 @@ export default class MediaServices {
 
   static async getMediaByUser(res, userId: string) {
     try {
+      console.log("user id---", userId)
       const media = await this.prisma.media.findMany({
         where: { userId },
       });
@@ -137,22 +131,6 @@ export default class MediaServices {
 
   static async updateMedia(res, id: number, content: TContent, contentType: ContentType) {
     try {
-      //@ts-ignore
-      await cloudinary.uploader.destroy(content[public_id]);
-      const details = {
-        width: content.width,
-        height: content.height,
-        crop: content.crop
-      }
-
-      //@ts-ignore
-      const result = await cloudinary.uploader.upload(image, {
-        folder: contentType,
-        ...details
-      })
-      content["url"] = result.secure_url;
-      content["public_id"] = result.public_id;
-
       const updatedMedia = await this.prisma.media.update({
         where: { id },
         data: {
@@ -166,12 +144,13 @@ export default class MediaServices {
     }
   }
 
-  static async deleteMedia(res, id: number, cloudinaryId: number) {
+  static async deleteMedia(res, id: number, userId: string) {
     try {
-      //@ts-ignore
-      const imgId = await cloudinary.uploader.destroy(cloudinaryId)
       const deletedMedia = await this.prisma.media.delete({
-        where: { id }
+        where: { 
+          id,
+          userId
+        }
       });
       return deletedMedia;
     } catch(err) {

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ResponseService } from "helper/ResponseService";
+import { getUser } from "helper/util";
 import SessionService from "../../session/service";
 import prisma from "lib/prisma";
 import ModelServices, { TModel } from "../service";
@@ -38,14 +39,11 @@ export default class ModelRepository {
       bio
 		} = req.body;
     try {
-      let token: string;
-			const { authorization } = req.headers;
-      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-      const session = await SessionService.getSession(res, token)
+      const session = await getUser(req);
       if (session) {
         const user = await ModelServices.createModel(
           res,
-          session.userId,
+          session.id,
           email,
           firstname,
           lastname,
@@ -68,7 +66,6 @@ export default class ModelRepository {
         );
         return user;
       }
-
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -76,8 +73,8 @@ export default class ModelRepository {
 
 	static async getModel(req, res) {
     try {
-      const { id } = req.body;
-      const user = await ModelServices.getModel(res, ~~id);
+      const { pid } = req.query;
+      const user = await ModelServices.getModel(res, ~~pid);
       return user;
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -92,14 +89,12 @@ export default class ModelRepository {
 	static async updateModel(req, res) {
     try {
       const data = req.body
-
-      let token: string;
-			const { authorization } = req.headers;
-      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-      const session = await SessionService.getSession(res, token)
-      if (session) {
-        const user = await ModelServices.updateModel(res, session.userId, data);
-        return user;
+      let { pid } = req.query;
+      const user = await getUser(req);
+      if (user) {
+        const userId = user.type == "Admin" ? pid : user.id
+        const model = await ModelServices.updateModel(res, userId, data);
+        return model;
       }
     } catch(err) {
       return ResponseService.sendError(err, res);
