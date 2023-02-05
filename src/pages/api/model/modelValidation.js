@@ -21,7 +21,6 @@ export const validateModel = initMiddleware(
     check('address').isLength({min:7}),
     check('isAvailable').isBoolean(),
     check('phone').isObject(),
-    check('phone.number_1').isMobilePhone().optional({ nullable: true }),
     check('bio').isLength({min:10}).optional({ nullable: true }),
   ], validationResult)
 )

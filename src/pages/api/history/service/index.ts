@@ -3,7 +3,7 @@ import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 
 // @ts-ignore
-export type TModelHistory = PrismaClient["modelHistory"]["create"]["data"];
+export type THistory = PrismaClient["history"]["create"]["data"];
 
 export default class HistoryServices {
   static prisma: PrismaClient = prisma;
@@ -15,7 +15,7 @@ export default class HistoryServices {
     description: string
   ) {
     try {
-      const modelHistory = await this.prisma.modelHistory.create({
+      const history = await this.prisma.history.create({
         data: {
           job,
           description,
@@ -24,7 +24,7 @@ export default class HistoryServices {
           }
         },
       });
-      return modelHistory;
+      return history;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -32,7 +32,7 @@ export default class HistoryServices {
 
   static async getHistory(res, modelId: number) {
     try {
-      const modelHistory = await this.prisma.modelHistory.findMany({
+      const modelHistory = await this.prisma.history.findMany({
         where: { modelId },
       });
       return modelHistory;
@@ -41,9 +41,9 @@ export default class HistoryServices {
     }
   }
 
-  static async updateHistory(res, id: number, data: TModelHistory) {
+  static async updateHistory(res, id: number, data: THistory) {
     try {
-      const updatedJobHistory = await this.prisma.modelHistory.update({
+      const updatedJobHistory = await this.prisma.history.update({
         where: { id },
         data
       });

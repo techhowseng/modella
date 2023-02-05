@@ -24,10 +24,23 @@ const types = [
   "Other"
 ];
 
-export const validateJob = initMiddleware(
+export const validateCreateJob = initMiddleware(
   validateMiddleware([
       check('jobRole').isLength({min:2}),
       check('jobDescription').isLength({min:5}),
+      check('locations').isObject(),
+      check('salary').isLength({min:5}).optional({ nullable: true }),
+      check('jobType').isIn(types).optional({ nullable: true }),
+      check('jobLength').isLength({min:2}).optional({ nullable: true }),
+      check('isOpen').isBoolean().optional({ nullable: true })
+  ], validationResult)
+)
+
+export const validateUpdateJob = initMiddleware(
+  validateMiddleware([
+      check('jobRole').isLength({min:2}).optional({ nullable: true }),
+      check('jobDescription').isLength({min:5}).optional({ nullable: true }),
+      check('locations').isObject().optional({ nullable: true }),
       check('salary').isLength({min:5}).optional({ nullable: true }),
       check('jobType').isIn(types).optional({ nullable: true }),
       check('jobLength').isLength({min:2}).optional({ nullable: true }),

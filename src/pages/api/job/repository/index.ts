@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import SessionServices from "../../session/service";
 import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
-import JobsServices, { TJobs } from "../service";
+import JobsServices, { TJob } from "../service";
 
 export default class JobsRepository {
   prisma: PrismaClient;
@@ -17,6 +17,7 @@ export default class JobsRepository {
       const {
         jobRole,
         jobDescription,
+        locations,
         salary,
         jobType,
         jobLength,
@@ -32,6 +33,7 @@ export default class JobsRepository {
         session.id,
         jobRole,
         jobDescription,
+        locations,
         salary,
         jobType,
         jobLength,
@@ -57,8 +59,10 @@ export default class JobsRepository {
 
   static async getJob(req, res) {
     try {
-      const { id } = req.body;
-      const contract = await JobsServices.getJob(res, id);
+      const { pid } = req.query;
+      console.log("query--------", req.query)
+      if (pid[1]) return this.getAllClientJobs(req, res);
+      const contract = await JobsServices.getJob(res, ~~pid[0]);
       return contract;
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -67,16 +71,17 @@ export default class JobsRepository {
 
   static async getAllClientJobs(req, res) {
     try {
-      const { id } = req.body;
-      const contract = await JobsServices.getAllClientJobs(res, id);
+			let { pid } = req.query;
+      const contract = await JobsServices.getAllClientJobs(res, ~~pid[0]);
       return contract;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async getJobs(res) {
+  static async getJobs(req, res) {
     try {
+      if (req.query) return this.searchJobs(req, res);
       const contract = await JobsServices.getJobs(res);
       return contract;
     } catch(err) {
@@ -86,7 +91,7 @@ export default class JobsRepository {
   
   static async searchJobs(req, res) {
     try {
-      const { query } = req.body
+      const { query } = req
       const contract = await JobsServices.searchJobs(res, query);
       return contract;
     } catch(err) {
@@ -96,8 +101,8 @@ export default class JobsRepository {
 
   static async deleteJob(req, res) {
     try {
-      const { id } = req.body;
-      const contract = await JobsServices.deleteJob(res, id);
+      const { pid } = req.query;
+      const contract = await JobsServices.deleteJob(res, ~~pid);
       return contract;
     } catch(err) {
       return ResponseService.sendError(err, res);

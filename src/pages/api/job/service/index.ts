@@ -3,7 +3,7 @@ import { ResponseService } from "helper/ResponseService";
 import prisma from "lib/prisma";
 
 // @ts-ignore
-export type TJobs = PrismaClient["clientJobs"]["create"]["data"];
+export type TJob = PrismaClient["job"]["create"]["data"];
 
 export default class JobServices {
   static prisma: PrismaClient = prisma;
@@ -13,16 +13,18 @@ export default class JobServices {
     clientId: number,
     jobRole: string,
     jobDescription: string,
+    locations: object,
     salary: string,
     jobType: string,
     jobLength: string,
     isOpen: boolean | null
   ) {
     try {
-      const job = await this.prisma.clientJobs.create({
+      const job = await this.prisma.job.create({
         data: {
           jobRole,
           jobDescription,
+          locations,
           salary,
           jobType,
           jobLength,
@@ -40,7 +42,7 @@ export default class JobServices {
 
   static async getJob(res, id: number) {
     try {
-      const job = await this.prisma.clientJobs.findUnique({
+      const job = await this.prisma.job.findUnique({
         where: { id },
       });
       return job;
@@ -51,7 +53,7 @@ export default class JobServices {
 
   static async getJobs(res ) {
     try {
-      const job = await this.prisma.clientJobs.findMany();
+      const job = await this.prisma.job.findMany();
       return job;
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -60,8 +62,8 @@ export default class JobServices {
 
   static async getAllClientJobs(res, clientId: number) {
     try {
-      const job = await this.prisma.clientJobs.findMany({
-        where: { clientId: clientId },
+      const job = await this.prisma.job.findMany({
+        where: { clientId },
       });
       return job;
     } catch(err) {
@@ -71,7 +73,7 @@ export default class JobServices {
 
   static async searchJobs(res, query: string | string[]) {
     try {
-      const job = await this.prisma.clientJobs.findMany({
+      const job = await this.prisma.job.findMany({
         where: { 
           jobDescription: {
             search: `${query}`,
@@ -84,9 +86,9 @@ export default class JobServices {
     }
   }
 
-  static async updateJob(res, data: TJobs) {
+  static async updateJob(res, data: TJob) {
     try {
-      const updatedJob = await this.prisma.clientJobs.update({
+      const updatedJob = await this.prisma.job.update({
         where: { id: data.id },
         data
       });
@@ -98,7 +100,7 @@ export default class JobServices {
 
   static async deleteJob(res, id: number) {
     try {
-      const job = await this.prisma.clientJobs.delete({
+      const job = await this.prisma.job.delete({
         where: { id },
       });
       return job;

@@ -1,7 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { Type, PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
 import SessionService from "../../session/service";
 import { ResponseService } from "helper/ResponseService";
+import { getUser, getClient } from "helper/util";
 import ClientServices, { TClient } from "../service";
 
 export default class ClientRepository {
@@ -23,23 +24,20 @@ export default class ClientRepository {
         country,
         address
       } = req.body;
-      let token: string;
-			const { authorization } = req.headers;
-      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-      const session = await SessionService.getSession(res, token)
-      if (session) {
-      const user = await ClientServices.createClient(
-        res,
-        session.id,
-        companyName,
-        email,
-        phone,
-        social,
-        state,
-        country,
-        address
-      );;
-      return user;
+      const user = await getUser(req);
+      if (user) {
+        const client = await ClientServices.createClient(
+          res,
+          user.id,
+          companyName,
+          email,
+          phone,
+          social,
+          state,
+          country,
+          address
+        );
+      return client;
     }
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -47,16 +45,13 @@ export default class ClientRepository {
   }
 
   static async updateClient(req, res) {
-
     try {
-      const { body } = req;
-      let token: string;
-			const { authorization } = req.headers;
-      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-      const session = await SessionService.getSession(res, token)
-      if (session) {
-      const user = await ClientServices.updateClient(res, session.id, body);
-      return user;
+      let { pid } = req.query;
+      const user = await getUser(req);
+      if (user) {
+        const userId = user.type == "Admin" ? pid : user.id
+        const updatedClient = await ClientServices.updateClient(res, userId, req.body);
+        return updatedClient;
       }
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -65,8 +60,8 @@ export default class ClientRepository {
 
   static async getClient(req, res) {
     try {
-      const { id } = req.body;
-      const user = await ClientServices.getClient(res, ~~id);
+      const { pid } = req.query;
+      const user = await ClientServices.getClient(res, ~~pid);
       return user;
     } catch(err) {
       return ResponseService.sendError(err, res);

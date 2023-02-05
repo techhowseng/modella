@@ -58,15 +58,11 @@ export default class UserServices {
     }
   }
 
-  static async updateUser(res, id, email, password, type) {
+  static async updateUser(res, id, data) {
     try {
       const updatedUser = await this.prisma.user.update({
         where: { id },
-        data: {
-          email,
-          type,
-          password
-        },
+        data
       });
       return updatedUser;
     } catch (err) {
@@ -125,14 +121,17 @@ export default class UserServices {
 
 
   static async createVerificationToken(
-    identifier: string,
+    user: TUser,
     token: string,
   ) {
     const verificationToken = await this.prisma.verificationToken.create({
       data: {
-        identifier,
+        identifier: user.email,
         token,
         expires: TEN_MINUTES_FROM_NOW,
+        user: {
+          connect: { id: user.id },
+        },
       },
     });
     return verificationToken;
@@ -156,14 +155,16 @@ export default class UserServices {
     }
   }
 
-  static async verifyToken(res, verifyToken: string, identifier: string) {
+  static async verifyToken(res, token: string) {
     try {
-      const verifiedUser = await this.prisma.verificationToken.findUnique({
+      const verifiedUser = await this.prisma.verificationToken.findFirst({
         where: {
-          token: verifyToken,
-          // identifier,
+          token,
+          expires: {
+            gte: new Date(),
+          },
         },
-      });
+      }).user();
       return verifiedUser;
     } catch (err) {
       return ResponseService.sendError(err, res);
