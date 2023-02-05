@@ -35,7 +35,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-markdown": "8.0.0",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "^17.0.14",
