@@ -25,6 +25,7 @@ export const useRegistrationUserType = () => {
 export const useForm = (initialValues: any, cb: any) => {
   const [formData, setFormData] = useState(initialValues);
   const [errorMessage, setErrorMessage] = React.useState("");
+  const [successMessage, setSuccessMessage] = React.useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -36,6 +37,7 @@ export const useForm = (initialValues: any, cb: any) => {
   // handle submit
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setErrorMessage("");
     // validate data and dispatch action to register user here ...
     // confirm password and confirmPassword match
     signUpFormDataSchema.validate(formData).catch((err) => {
@@ -54,5 +56,7 @@ export const useForm = (initialValues: any, cb: any) => {
     handleSubmit,
     errorMessage,
     setErrorMessage,
+    setSuccessMessage,
+    successMessage,
   };
 };

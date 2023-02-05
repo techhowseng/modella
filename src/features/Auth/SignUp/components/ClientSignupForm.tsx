@@ -8,16 +8,22 @@ import { getAuthUser } from "features/Auth/slice";
 import { AuthRegistrationFormType } from "features/Auth/types";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { CLIENT_SIGNUP_FORM } from "../../formFieldData";
 
 function ClientSignupForm() {
   const { type } = useRegistrationUserType();
   const dispatch = useAppDispatch();
-  const [successMessage, setSuccessMessage] = React.useState<string>("");
   const { data, loading, error, message } = useAppSelector(getAuthUser);
-  const { handleChange, handleSubmit, errorMessage, setErrorMessage } = useForm(
+  const {
+    handleChange,
+    handleSubmit,
+    errorMessage,
+    setErrorMessage,
+    successMessage,
+    setSuccessMessage,
+  } = useForm(
     {
       email: "",
       password: "",
