@@ -2,15 +2,15 @@ import SignUp from "features/Auth/SignUp";
 import Head from "next/head";
 import React from "react";
 
-function SignIn() {
+function SignUpPage() {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Registration | Modella</title>
       </Head>
       <SignUp />
     </>
   );
 }
 
-export default SignIn;
+export default SignUpPage;

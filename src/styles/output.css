@@ -2354,6 +2354,10 @@ select{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .lg\:grid-cols-1{
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
   .lg\:flex-row{
     flex-direction: row;
   }
@@ -2402,5 +2406,9 @@ select{
 @media (min-width: 1536px){
   .\32xl\:w-1\/2{
     width: 50%;
+  }
+
+  .\32xl\:w-6{
+    width: 1.5rem;
   }
 }
