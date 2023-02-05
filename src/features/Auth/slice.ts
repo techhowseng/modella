@@ -7,6 +7,7 @@ const initialState: UserState = {
   data: { user: {} },
   loading: false,
   error: false,
+  message: "",
 };
 
 export const userSlice = createSlice({
@@ -25,11 +26,16 @@ export const userSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
         state.loading = false;
-        state.data = payload;
+        state.data.user = payload.data;
+        state.message = payload.message;
+        if (payload.error) {
+          state.error = true;
+        }
       })
-      .addCase(registerUser.rejected, (state) => {
+      .addCase(registerUser.rejected, (state, payload) => {
         state.loading = false;
         state.error = true;
+        state.message = payload.error.message;
       });
   },
   name: "user",

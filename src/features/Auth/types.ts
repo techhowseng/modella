@@ -9,6 +9,7 @@ export interface UserState {
   data: { user: User | {} };
   loading: boolean;
   error: boolean;
+  message: string;
 }
 
 export type AuthComponenetType = {

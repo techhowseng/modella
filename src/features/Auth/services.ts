@@ -6,8 +6,11 @@ import { AuthRegistrationFormType } from "./types";
 export const registerUser = createAsyncThunk(
   "register/user",
   async (data: AuthRegistrationFormType) => {
-    const response = await axiosInstance.post("/api/user", data);
-
-    return response.data;
+    try {
+      const response = await axiosInstance.post("/api/user", data);
+      return response.data;
+    } catch (error) {
+      return { ...error.response.data, error: true };
+    }
   }
 );

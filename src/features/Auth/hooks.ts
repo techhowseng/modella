@@ -53,5 +53,6 @@ export const useForm = (initialValues: any, cb: any) => {
     handleChange,
     handleSubmit,
     errorMessage,
+    setErrorMessage,
   };
 };
