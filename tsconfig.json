@@ -27,5 +27,5 @@
     }
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/helper/errors.js"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/helper/errors.js", "src/services/MailService.ts"]
 }

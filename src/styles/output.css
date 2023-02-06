@@ -1656,14 +1656,14 @@ select{
   padding-right: 0px;
 }
 
-.py-4{
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 .py-10{
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+}
+
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .pr-2{
@@ -2400,15 +2400,5 @@ select{
   .lg\:text-white{
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
-  }
-}
-
-@media (min-width: 1536px){
-  .\32xl\:w-1\/2{
-    width: 50%;
-  }
-
-  .\32xl\:w-6{
-    width: 1.5rem;
   }
 }

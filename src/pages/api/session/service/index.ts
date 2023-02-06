@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { ResponseService } from "helper/ResponseService";
+import { ResponseService } from "../../../../services/ResponseService";
 import { TWENTY_FOUR_HOURS_FROM_NOW } from "helper/constants";
 import prisma from "lib/prisma";
 

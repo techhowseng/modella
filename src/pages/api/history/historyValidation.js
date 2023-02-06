@@ -4,9 +4,11 @@ import validateMiddleware from "../../../lib/middlewares/validate-middleware";
 
 export const validateModelHistory = initMiddleware(
   validateMiddleware([
-      check('job').isLength({ min: 3 }),
+      check('job')
+      .isLength({ min: 3 })
+      .withMessage('input is too short.'),
       check('description')
       .isLength({ min:5 })
-      .withMessage('must be at least 5 chars long'),
+      .withMessage('must be more detailed.'),
   ], validationResult)
 )

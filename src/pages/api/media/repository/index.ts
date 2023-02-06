@@ -6,7 +6,7 @@ import { cloudinary } from "../../../../helper/cloudinary";
 import { getUser } from "helper/util";
 import SessionService from "../../session/service";
 import MediaServices, { TMedia } from "../service";
-import { ResponseService } from 'helper/ResponseService';
+import { ResponseService } from "../../../../services/ResponseService";
 
 const parser = new DatauriParser();
 

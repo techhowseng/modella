@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Type" AS ENUM ('Model', 'Client');
+CREATE TYPE "Type" AS ENUM ('Model', 'Client', 'Admin', 'SuperAdmin');
 
 -- CreateEnum
 CREATE TYPE "Types" AS ENUM ('All', 'FashionEditorial', 'FashionCatalog', 'Commercial', 'Mature', 'Runway', 'Swimsuit', 'Lingerie', 'Fitness', 'Fit', 'Parts', 'Promotional', 'Glamour', 'Child', 'Petite', 'PlusSize', 'Freelance', 'Print', 'Other');
@@ -59,7 +59,9 @@ CREATE TABLE "Session" (
 -- CreateTable
 CREATE TABLE "VerificationToken" (
     "id" SERIAL NOT NULL,
-    "identifier" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "type" "Type" NOT NULL DEFAULT 'Model',
     "token" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
 
@@ -110,7 +112,7 @@ CREATE TABLE "Client" (
 );
 
 -- CreateTable
-CREATE TABLE "ContractedModel" (
+CREATE TABLE "Contract" (
     "id" SERIAL NOT NULL,
     "clientId" INTEGER NOT NULL,
     "modelId" INTEGER NOT NULL,
@@ -122,31 +124,32 @@ CREATE TABLE "ContractedModel" (
     "days" TEXT,
     "fee" TEXT,
 
-    CONSTRAINT "ContractedModel_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Contract_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "ModelHistory" (
+CREATE TABLE "History" (
     "id" SERIAL NOT NULL,
     "modelId" INTEGER NOT NULL,
     "job" TEXT NOT NULL,
     "description" TEXT NOT NULL,
 
-    CONSTRAINT "ModelHistory_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "History_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "ClientJobs" (
+CREATE TABLE "Job" (
     "id" SERIAL NOT NULL,
     "clientId" INTEGER NOT NULL,
     "jobRole" TEXT NOT NULL,
     "jobDescription" TEXT NOT NULL,
+    "locations" JSONB NOT NULL,
     "salary" TEXT,
     "jobType" TEXT,
     "jobLength" TEXT,
     "isOpen" BOOLEAN NOT NULL DEFAULT true,
 
-    CONSTRAINT "ClientJobs_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Job_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -172,9 +175,6 @@ CREATE UNIQUE INDEX "Session_session_token_key" ON "Session"("session_token");
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Model_userId_key" ON "Model"("userId");
 
 -- CreateIndex
@@ -196,16 +196,16 @@ ALTER TABLE "Model" ADD CONSTRAINT "Model_userId_fkey" FOREIGN KEY ("userId") RE
 ALTER TABLE "Client" ADD CONSTRAINT "Client_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ContractedModel" ADD CONSTRAINT "ContractedModel_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Contract" ADD CONSTRAINT "Contract_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ContractedModel" ADD CONSTRAINT "ContractedModel_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Contract" ADD CONSTRAINT "Contract_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ModelHistory" ADD CONSTRAINT "ModelHistory_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "History" ADD CONSTRAINT "History_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ClientJobs" ADD CONSTRAINT "ClientJobs_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Job" ADD CONSTRAINT "Job_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Media" ADD CONSTRAINT "Media_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

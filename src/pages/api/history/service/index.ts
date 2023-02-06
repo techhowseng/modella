@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { ResponseService } from "helper/ResponseService";
+import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
 
 // @ts-ignore
