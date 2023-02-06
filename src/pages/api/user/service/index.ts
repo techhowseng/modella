@@ -1,6 +1,6 @@
 import { Type, PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
-import { ResponseService } from "../../../../helper/ResponseService";
+import { ResponseService } from "../../../../services/ResponseService";
 import {
   TEN_MINUTES_FROM_NOW,
   TWENTY_FOUR_HOURS_FROM_NOW
@@ -121,17 +121,17 @@ export default class UserServices {
 
 
   static async createVerificationToken(
-    user: TUser,
+    data: TUser,
     token: string,
   ) {
     const verificationToken = await this.prisma.verificationToken.create({
       data: {
-        identifier: user.email,
+        email: data.email,
+        password: data.password,
+        type: data.type,
         token,
         expires: TEN_MINUTES_FROM_NOW,
-        user: {
-          connect: { id: user.id },
-        },
+
       },
     });
     return verificationToken;
@@ -147,7 +147,7 @@ export default class UserServices {
   static async deleteVerificationToken(res, email: string) {
     try {
       const deleteVerifications = await prisma.verificationToken.deleteMany({
-        where: { identifier: email },
+        where: { email },
       })
       return deleteVerifications;
     } catch (err) {
@@ -164,25 +164,10 @@ export default class UserServices {
             gte: new Date(),
           },
         },
-      }).user();
-      return verifiedUser;
-    } catch (err) {
-      return ResponseService.sendError(err, res);
-    }
-  }
-
-  static async verifyUser(res, email: string) {
-    try {
-      const verifiedUser = await this.prisma.user.update({
-        where: { email },
-        data: {
-          emailVerified: TWENTY_FOUR_HOURS_FROM_NOW,
-          isAuthenticated: true
-        },
       });
       return verifiedUser;
     } catch (err) {
-      return ResponseService.json(res, err);
+      return ResponseService.sendError(err, res);
     }
   }
 }

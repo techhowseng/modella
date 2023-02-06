@@ -1,4 +1,3 @@
-import { ResponseService } from "helper/ResponseService";
 import { validationResult } from 'express-validator';
 import { NextApiRequest, NextApiResponse } from "next";
 import { validateContract } from "./contractValidation";

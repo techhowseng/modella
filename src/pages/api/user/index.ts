@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { validationResult } from "express-validator";
 import UserRepository from "./repository";
 import { validateUser, validateUpdateUser } from "./userValidation";
-import { ResponseService } from "helper/ResponseService";
 
 export default async function handle(
   req: NextApiRequest,

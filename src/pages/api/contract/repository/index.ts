@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
 import ContractServices, { TContract } from "../service";
-import { ResponseService } from "helper/ResponseService";
+import { ResponseService } from "../../../../services/ResponseService";
 import SessionServices from "../../session/service";
 import { getClient, getModel, getUser } from "helper/util";
 
