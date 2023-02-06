@@ -26,24 +26,39 @@ const types = [
 
 export const validateCreateJob = initMiddleware(
   validateMiddleware([
-      check('jobRole').isLength({min:2}),
-      check('jobDescription').isLength({min:5}),
+      check('jobRole').isLength({min:2})
+      .withMessage('is not descriptive enough.'),
+      check('jobDescription').isLength({min:5})
+      .withMessage('is not descriptive enough.'),,
       check('locations').isObject(),
-      check('salary').isLength({min:5}).optional({ nullable: true }),
-      check('jobType').isIn(types).optional({ nullable: true }),
-      check('jobLength').isLength({min:2}).optional({ nullable: true }),
+      check('salary').isLength({min:3}).optional({ nullable: true })
+      .withMessage('is not descriptive enough.'),,
+      check('jobType').isIn(types).optional({ nullable: true })
+      .withMessage('is not among the available optoins.'),,
+      check('jobLength').isLength({min:2}).optional({ nullable: true })
+      .withMessage('is not descriptive enough.'),,
       check('isOpen').isBoolean().optional({ nullable: true })
+      .withMessage('should be true or false.'),
   ], validationResult)
 )
 
 export const validateUpdateJob = initMiddleware(
   validateMiddleware([
-      check('jobRole').isLength({min:2}).optional({ nullable: true }),
-      check('jobDescription').isLength({min:5}).optional({ nullable: true }),
-      check('locations').isObject().optional({ nullable: true }),
-      check('salary').isLength({min:5}).optional({ nullable: true }),
-      check('jobType').isIn(types).optional({ nullable: true }),
-      check('jobLength').isLength({min:2}).optional({ nullable: true }),
-      check('isOpen').isBoolean().optional({ nullable: true })
+    check('jobRole').isLength({min:2})
+    .optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
+    check('jobDescription').isLength({min:5})
+    .optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
+    check('locations').isObject()
+    .optional({ nullable: true }),
+    check('salary').isLength({min:3}).optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),,
+    check('jobType').isIn(types).optional({ nullable: true })
+    .withMessage('is not among the available optoins.'),,
+    check('jobLength').isLength({min:2}).optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),,
+    check('isOpen').isBoolean().optional({ nullable: true })
+    .withMessage('should be true or false.'),
   ], validationResult)
 )

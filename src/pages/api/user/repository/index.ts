@@ -5,8 +5,9 @@ import jwt from "jsonwebtoken";
 import UserServices, { TUser } from "../service";
 import SessionServices from "../../session/service";
 import { getUser, randomStringGenerator } from "../../../../helper/util";
-import { checkExistingUser, existsInDB } from "../helper";
-import { ResponseService } from "../../../../helper/ResponseService";
+import { checkExistingUser, existsInDB } from "../helper"
+import NotificationService from "../../../../services/NotificationService";
+import { ResponseService } from "../../../../services/ResponseService";
 import { EntityExistsError } from "helper/errors";
 
 let JWT_KEY = process.env.JWT_KEY;
@@ -19,52 +20,41 @@ export default class UserRepository {
     this.prisma = prisma;
   }
 
-  static async createUser(req, res) {
-    console.log("number >>>> ", req.body);
-    try {
-      const inputs = req.body;
+	static async createUser(req, res) {
+		try {
+			const inputs = req.body;
       inputs.email = inputs.email.toLowerCase();
-      // this should be in service
-      const existingEmail = await prisma.user.findFirst({
-        where: { email: inputs.email },
-      });
-      if (Boolean(existingEmail)) {
-        return ResponseService.json(
-          res,
-          new EntityExistsError("user", inputs.email)
-        );
-      }
-
-      const newUser = await UserServices.createUser(
-        res,
-        inputs.email,
-        bcrypt.hashSync(inputs.password, 8),
-        inputs.type
-      );
-
-      let newVerification;
-      if (newUser) {
-        const verificationToken = randomStringGenerator();
-        newVerification = await UserServices.createVerificationToken(
-          newUser,
-          verificationToken
-        );
-      }
-      let responseObj = {
-        ...newUser,
-        ...newVerification,
-      };
+			// this should be in service
+			const existingEmail = await prisma.user.findFirst({
+				where: { 
+					email: inputs.email
+				},
+			});
+			if (Boolean(existingEmail)) {
+				return ResponseService.json(
+					res,
+					new EntityExistsError('user', inputs.email)
+				);
+			}
+			const verificationToken = randomStringGenerator();
+			const newVerification = await UserServices.createVerificationToken(
+				inputs,
+				verificationToken
+			);
+			await NotificationService.newSignup({
+				email: inputs.email,
+				code: verificationToken
+			});
       return ResponseService.json(
-        res,
-        200,
-        "Please verify your email address within 10 minutes",
-        responseObj
-      );
-    } catch (err) {
-      console.log("error >>> ", err);
+				res,
+				200,
+				'Please verify your email address within 10 minutes', 
+				newVerification
+			);
+		} catch(err) {
       return ResponseService.sendError(err, res);
     }
-  }
+	}
 
   static async updateUser(req, res) {
     interface Input {
@@ -167,36 +157,29 @@ export default class UserRepository {
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
-  }
+	}
 
-  static async verifyUser(req, res) {
-    try {
-      const { pid } = req.query;
-      let userDetails = {};
-      const verifiedUser = await UserServices.verifyToken(res, pid);
-      if (verifiedUser) {
-        await UserServices.verifyUser(res, verifiedUser.email);
-        await UserServices.deleteVerificationToken(res, verifiedUser.email);
-        const jwtToken = jwt.sign(verifiedUser, JWT_KEY, {
-          expiresIn: "24hr",
-        });
-        const session = await SessionServices.createSession(
-          res,
-          verifiedUser.id,
-          jwtToken
-        );
-        userDetails = {
-          ...verifiedUser,
-          ...session,
-        };
-        return userDetails;
-      } else
-        return ResponseService.sendError(
-          { message: "Token has expired or has already been verified" },
-          res
-        );
-    } catch (err) {
+	static async verifyUser(req, res) {
+		try {
+			const { pid } = req.query;
+			const verifiedUser = await UserServices.verifyToken(res, pid);
+			if (verifiedUser) {
+				const { email, password, type } = verifiedUser;
+				const user = await UserServices.createUser(res, email, password, type);
+				await UserServices.deleteVerificationToken(res, email);
+				const jwtToken = jwt.sign(user, JWT_KEY,{
+					expiresIn: "24hr",
+				});
+				const session = user ? await SessionServices.createSession(res, user.id, jwtToken) : null;
+				const userDetails = {
+					...user,
+					...session
+				}
+				return userDetails
+			} else return ResponseService.sendError({message: "Token has expired or has already been verified"}, res);
+		}
+		 catch(err) {
       return ResponseService.sendError(err, res);
     }
-  }
+	}
 }

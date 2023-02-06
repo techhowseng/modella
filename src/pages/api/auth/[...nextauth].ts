@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from "../../../lib/prisma";
 import EmailProvider from 'next-auth/providers/email';
-import { ResponseService } from "../../../helper/ResponseService";
+import { ResponseService } from "../../../services/ResponseService";
 import CredentialProvider from "next-auth/providers/credentials";
 
 export const authOptions = {

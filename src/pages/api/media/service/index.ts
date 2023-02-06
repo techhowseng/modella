@@ -1,6 +1,6 @@
 import { ContentType, PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
-import { ResponseService } from "helper/ResponseService";
+import { ResponseService } from "../../../../services/ResponseService";
 
 // @ts-ignore
 export type TMedia = PrismaClient["media"]["create"]["data"];
@@ -118,7 +118,6 @@ export default class MediaServices {
 
   static async getMediaByUser(res, userId: string) {
     try {
-      console.log("user id---", userId)
       const media = await this.prisma.media.findMany({
         where: { userId },
       });

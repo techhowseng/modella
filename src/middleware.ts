@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from 'next/server';
 import { verify } from "./helper/jwtSignVerify";
 import { authorisedPathMethods } from "./helper/constants";
 
@@ -28,8 +27,7 @@ export default async (req: Request, res: NextApiResponse) => {
       )
     ) {
       const decoded = await verify(token, process.env.JWT_KEY);
-      console.log("came in decoded", decoded);
-      if (decoded && Math.floor(Date.now() / 1000) < decoded.exp) {
+      if (decoded && Math.floor(Date.now()/1000) < decoded.exp) {
         return NextResponse.next();
       }
       throw BreakError;

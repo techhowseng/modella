@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import SessionServices from "../../session/service";
-import { ResponseService } from "helper/ResponseService";
+import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
 import JobsServices, { TJob } from "../service";
 
@@ -60,7 +60,6 @@ export default class JobsRepository {
   static async getJob(req, res) {
     try {
       const { pid } = req.query;
-      console.log("query--------", req.query)
       if (pid[1]) return this.getAllClientJobs(req, res);
       const contract = await JobsServices.getJob(res, ~~pid[0]);
       return contract;
