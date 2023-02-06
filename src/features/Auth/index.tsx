@@ -22,13 +22,13 @@ function Auth({ user }: AuthComponenetType) {
         <div className="flex flex-col">
           <div className="flex flex-row mt-10">
             {/* // icon before text */}
-            <Link href={`${APP_ROUTES.signup}?type=creator`}>
+            <Link href={`${APP_ROUTES.signup}?type=model`}>
               <div className="transition ease-in-out w-full border rounded-lg p-10 hover:base-color hover:base-border-color focus:base-border-color">
                 <div className=" flex flex-row items-center">
                   <div className="p-4 rounded-full border">
                     <FaUserCheck size={24} />
                   </div>
-                  <p className="ml-2 text-xl">Creators</p>
+                  <p className="ml-2 text-xl">Model</p>
                 </div>
                 <p className="mt-4">
                   Sign up here, upload your skillset and profile and get

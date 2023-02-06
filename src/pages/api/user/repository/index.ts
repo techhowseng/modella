@@ -172,8 +172,9 @@ export default class UserRepository {
   static async verifyUser(req, res) {
     try {
       const { pid } = req.query;
+      const token = pid || req.body.verifyToken;
       let userDetails = {};
-      const verifiedUser = await UserServices.verifyToken(res, pid);
+      const verifiedUser = await UserServices.verifyToken(res, token);
       if (verifiedUser) {
         await UserServices.verifyUser(res, verifiedUser.email);
         await UserServices.deleteVerificationToken(res, verifiedUser.email);
@@ -191,10 +192,7 @@ export default class UserRepository {
         };
         return userDetails;
       } else
-        return ResponseService.sendError(
-          { message: "Token has expired or has already been verified" },
-          res
-        );
+        return ResponseService.sendError({ message: "Email verification Token has expired" }, res);
     } catch (err) {
       return ResponseService.sendError(err, res);
     }

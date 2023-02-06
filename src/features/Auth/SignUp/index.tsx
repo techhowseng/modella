@@ -12,7 +12,7 @@ function SignUp() {
       <SideDisplay />
 
       <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center scroll-smooth overflow-y-scroll">
-        {type === "creator" ? <CreatorSignUpForm /> : <ClientSignupForm />}
+        {type === "model" ? <CreatorSignUpForm /> : <ClientSignupForm />}
       </div>
     </div>
   );

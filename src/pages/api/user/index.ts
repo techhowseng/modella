@@ -24,6 +24,7 @@ export default async function handle(
     case "PUT":
       break;
     case "PATCH":
+      res.json(await UserRepository.verifyUser(req, res));
       break;
     case "DELETE":
       break;

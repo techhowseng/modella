@@ -26,7 +26,7 @@ function CreatorSignUpForm() {
     (formData: AuthRegistrationFormType) => {
       dispatch(registerUser(formData)).then((res) => {
         if (res.payload.error) {
-          setErrorMessage(res.payload.message);
+          setErrorMessage(res.payload.data.message);
         } else {
           setSuccessMessage(res.payload.message);
         }
