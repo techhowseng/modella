@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { validationResult } from 'express-validator';
+import { validationResult } from "express-validator";
 import UserRepository from "./repository";
 import { validateUser, validateUpdateUser } from "./userValidation";
 
@@ -13,9 +13,11 @@ export default async function handle(
       res.json(await UserRepository.getUserByEmail(req, res));
       break;
     case "POST":
-      await validateUser(req, res)
-      const createErrors = validationResult(req)
-      if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+      await validateUser(req, res);
+      const createErrors = validationResult(req);
+      if (!createErrors.isEmpty()) {
+        return res.status(422).json({ errors: createErrors.array() });
+      }
       res.json(await UserRepository.createUser(req, res));
       break;
     case "PUT":

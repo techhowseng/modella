@@ -1,94 +1,99 @@
+import AlertMessage from "components/AlertMessage";
 import Button from "components/Button";
-import CheckBox from "components/CheckBox";
 import Input from "components/Input";
-import { useRegistrationUserType } from "features/Auth/hooks";
+import { useRegistrationUserType, useForm } from "features/Auth/hooks";
+import { registerUser } from "features/Auth/services";
+import { getAuthUser } from "features/Auth/slice";
+import { AuthRegistrationFormType } from "features/Auth/types";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import queryString from "query-string";
-import React, { useEffect } from "react";
-
-const CREATOR_SIGNUP_FORM = [
-  // {
-  //   label: "First Name",
-  //   type: "text",
-  //   name: "firstName",
-  //   placeholder: "Please enter your First Name",
-  // },
-  // {
-  //   label: "Last name",
-  //   type: "text",
-  //   name: "lastName",
-  //   placeholder: "Please enter your Last name",
-  // },
-  {
-    label: "Email",
-    type: "email",
-    name: "email",
-    // placeholder: "Please enter your Email Address",
-  },
-  // {
-  //   label: "Phone Number",
-  //   type: "phone",
-  //   name: "phoneNumber",
-  //   placeholder: "Please enter your Phone Number",
-  // },
-  {
-    label: "Password",
-    type: "password",
-    name: "password",
-    // placeholder: "Please enter your Password",
-  },
-  {
-    label: "Confirm Password",
-    type: "password",
-    name: "confirmPassword",
-    // placeholder: "Please enter your Confirm Password",
-  },
-];
+import React from "react";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { CREATOR_SIGNUP_FORM } from "../../formFieldData";
 
 function CreatorSignUpForm() {
+  const { type } = useRegistrationUserType();
+  const dispatch = useAppDispatch();
+  const [successMessage, setSuccessMessage] = React.useState<string>("");
+  const { data, loading, error, message } = useAppSelector(getAuthUser);
+  const { handleChange, handleSubmit, errorMessage, setErrorMessage } = useForm(
+    {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      type: "Model",
+    },
+    (formData: AuthRegistrationFormType) => {
+      dispatch(registerUser(formData)).then((res) => {
+        if (res.payload.error) {
+          setErrorMessage(res.payload.message);
+        } else {
+          setSuccessMessage(res.payload.message);
+        }
+      });
+    }
+  );
+
   return (
     <div className="flex-1 w-full py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
-      <div className="flex flex-col">
-        <h1 className="text-3xl mb-5 font-bold">Welcome</h1>
-        <p className="mr-1 text-xl">Please fill out the form</p>
-      </div>
+      {!error && message ? null : (
+        <div className="flex flex-col">
+          <h1 className="text-3xl mb-5 font-bold">Welcome</h1>
+          <p className="mr-1 text-xl">Please fill out the form</p>
+        </div>
+      )}
 
       <div className="flex flex-col mt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
-          {CREATOR_SIGNUP_FORM.map((field) => (
-            <Input
-              key={field.name}
-              label={field.label}
-              name={field.name}
-              // placeholder={field.placeholder}
-              type={field.type}
-              onChange={() => {}}
-            />
-          ))}
-        </div>
+        {errorMessage && <AlertMessage type="error" message={errorMessage} />}
+        {successMessage && (
+          <AlertMessage type="success" message={successMessage} />
+        )}
 
-        <CheckBox name={"tos"} onChange={() => {}}>
+        {!error && message ? (
+          <p className="text-xl">
+            A verification token has been sent to your email, Please click to
+            verify
+          </p>
+        ) : (
+          <div>
+            <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
+              {CREATOR_SIGNUP_FORM.map((field) => (
+                <Input
+                  key={field.name}
+                  label={field.label}
+                  name={field.name}
+                  type={field.type}
+                  onChange={handleChange}
+                />
+              ))}
+            </div>
+
+            <Button
+              className="mt-10"
+              onClick={handleSubmit}
+              loading={loading}
+              loadingText={"Registrying..."}
+            >
+              <p className="text-white">Register</p>
+            </Button>
+            {/* <!------------> */}
+
+            <p className="mt-10">
+              Already have an account?{" "}
+              <span className="base-blue">
+                <Link href={APP_ROUTES.login}>Login</Link>
+              </span>{" "}
+            </p>
+          </div>
+        )}
+        {/* <CheckBox name={"tos"} onChange={() => {}}>
           I accept the{" "}
           <span className="base-blue">
             <Link href={APP_ROUTES.tos}>Terms and conditions</Link>
           </span>{" "}
           of Modella.
-        </CheckBox>
+        </CheckBox> */}
       </div>
-
-      <Button className="mt-10" onClick={() => {}}>
-        <p className="text-white">Next</p>
-      </Button>
-      {/* <!---dskdlksld---> */}
-
-      <p className="mt-10">
-        Already have an account?{" "}
-        <span className="base-blue">
-          <Link href={APP_ROUTES.login}>Login</Link>
-        </span>{" "}
-      </p>
     </div>
   );
 }
