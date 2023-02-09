@@ -9,6 +9,7 @@ import { getUser } from "../../../../helper/util";
 import NotificationService from "../../../../services/NotificationService";
 import { ResponseService } from "../../../../services/ResponseService";
 import { EntityExistsError } from "helper/errors";
+import { NextApiRequest, NextApiResponse } from "next";
 
 let JWT_KEY = process.env.JWT_KEY;
 
@@ -20,7 +21,7 @@ export default class UserRepository {
     this.prisma = prisma;
   }
 
-  static async createUser(req, res) {
+  static async createUser(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const inputs = req.body;
       inputs.email = inputs.email.toLowerCase();

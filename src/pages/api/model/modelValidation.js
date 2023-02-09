@@ -4,8 +4,6 @@ import validateMiddleware from "../../../lib/middlewares/validate-middleware";
 
 export const validateModel = initMiddleware(
   validateMiddleware([
-    check('email').isEmail()
-    .withMessage('is not a valid email.'),
     check('firstname').isLength({min:2})
     .withMessage('is not long enough.'),
     check('lastname').isLength({min:2})

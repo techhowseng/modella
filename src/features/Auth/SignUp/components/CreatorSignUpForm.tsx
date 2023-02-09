@@ -1,21 +1,24 @@
 import AlertMessage from "components/AlertMessage";
 import Button from "components/Button";
 import Input from "components/Input";
-import { useRegistrationUserType, useForm } from "features/Auth/hooks";
+import { useForm } from "features/Auth/hooks";
+import { signUpFormDataSchema } from "features/Auth/schema";
 import { registerUser } from "features/Auth/services";
-import { getAuthUser } from "features/Auth/slice";
+import { getSessionUser } from "features/Auth/slice";
 import { AuthRegistrationFormType } from "features/Auth/types";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { CREATOR_SIGNUP_FORM } from "../../formFieldData";
+import {
+  CREATOR_SIGNUP_FORM,
+  CREATOR_SIGNUP_COMPLETE_FORM,
+} from "../../formFieldData";
 
-function CreatorSignUpForm() {
-  const { type } = useRegistrationUserType();
+function CreatorSignUpForm({ verified }: { verified?: boolean }) {
   const dispatch = useAppDispatch();
   const [successMessage, setSuccessMessage] = React.useState<string>("");
-  const { data, loading, error, message } = useAppSelector(getAuthUser);
+  const { data, loading, error, message } = useAppSelector(getSessionUser);
   const { handleChange, handleSubmit, errorMessage, setErrorMessage } = useForm(
     {
       email: "",
@@ -23,6 +26,7 @@ function CreatorSignUpForm() {
       confirmPassword: "",
       type: "Model",
     },
+    signUpFormDataSchema,
     (formData: AuthRegistrationFormType) => {
       dispatch(registerUser(formData)).then((res) => {
         if (res.payload.error) {
@@ -57,6 +61,7 @@ function CreatorSignUpForm() {
         ) : (
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
+              {/* @ts-ignore */}
               {CREATOR_SIGNUP_FORM.map((field) => (
                 <Input
                   key={field.name}

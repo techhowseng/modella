@@ -1,25 +1,11 @@
+import getCountries, { getState } from "lib/getCountries";
+
 export const CLIENT_SIGNUP_FORM = [
-  // {
-  //   label: "Full Name",
-  //   type: "text",
-  //   name: "fullname",
-  // },
-  // {
-  //   label: "Company name",
-  //   type: "text",
-  //   name: "companyName",
-  // },
   {
     label: "Email",
     type: "email",
     name: "email",
   },
-  // {
-  //   label: "Country",
-  //   type: "select",
-  //   name: "country",
-  //   options: [],
-  // },
   {
     label: "Password",
     type: "password",
@@ -32,27 +18,31 @@ export const CLIENT_SIGNUP_FORM = [
   },
 ];
 
+export const CLIENT_SIGNUP_COMPLETE_FORM = [
+  {
+    label: "Full Name",
+    type: "text",
+    name: "fullname",
+  },
+  {
+    label: "Company name",
+    type: "text",
+    name: "companyName",
+  },
+  {
+    label: "Country",
+    type: "select",
+    name: "country",
+    options: [],
+  },
+];
+
 export const CREATOR_SIGNUP_FORM = [
-  // {
-  //   label: "First Name",
-  //   type: "text",
-  //   name: "firstName",
-  // },
-  // {
-  //   label: "Last name",
-  //   type: "text",
-  //   name: "lastName",
-  // },
   {
     label: "Email",
     type: "email",
     name: "email",
   },
-  // {
-  //   label: "Phone Number",
-  //   type: "phone",
-  //   name: "phoneNumber",
-  // },
   {
     label: "Password",
     type: "password",
@@ -62,5 +52,40 @@ export const CREATOR_SIGNUP_FORM = [
     label: "Confirm Password",
     type: "password",
     name: "confirmPassword",
+  },
+];
+
+export const CREATOR_SIGNUP_COMPLETE_FORM = [
+  {
+    label: "First Name",
+    type: "text",
+    name: "firstname",
+  },
+  {
+    label: "Last name",
+    type: "text",
+    name: "lastname",
+  },
+  {
+    label: "Phone Number",
+    type: "phone",
+    name: "phone",
+  },
+  {
+    label: "Address",
+    type: "text",
+    name: "address",
+  },
+  {
+    label: "Country",
+    type: "select",
+    name: "country",
+    options: getCountries(),
+  },
+  {
+    label: "State",
+    type: "select",
+    name: "state",
+    options: getState("Nigeria"),
   },
 ];

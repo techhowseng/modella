@@ -133,7 +133,6 @@ export default class UserServices {
         type: data.type,
         token,
         expires: TEN_MINUTES_FROM_NOW,
-
       },
     });
     return verificationToken;
@@ -146,7 +145,7 @@ export default class UserServices {
     return verificationToken;
   }
 
-  static async deleteVerificationToken(res, email: string) {
+  static async deleteVerificationToken(res: any, email: string) {
     try {
       const deleteVerifications = await prisma.verificationToken.deleteMany({
         where: { email },
@@ -157,7 +156,7 @@ export default class UserServices {
     }
   }
 
-  static async verifyToken(res, token: string) {
+  static async verifyToken(res: any, token: string) {
     try {
       const verifiedUser = await this.prisma.verificationToken.findFirst({
         where: {

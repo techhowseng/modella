@@ -1,0 +1,1858 @@
+[
+  {
+    "id": "AD",
+    "name": "Andorra",
+    "dial_code": "+376",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "AE",
+    "name": "United Arab Emirates",
+    "dial_code": "+971",
+    "province_label": "Emirate",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "AF",
+    "name": "Afghanistan",
+    "dial_code": "+93",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "AG",
+    "name": "Antigua And Barbuda",
+    "dial_code": "+1268",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "AI",
+    "name": "Anguilla",
+    "dial_code": "+1 264",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "AL",
+    "name": "Albania",
+    "dial_code": "+355",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "AM",
+    "name": "Armenia",
+    "dial_code": "+374",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "AN",
+    "name": "Netherlands Antilles",
+    "dial_code": "+599",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "AO",
+    "name": "Angola",
+    "dial_code": "+244",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "AR",
+    "name": "Argentina",
+    "dial_code": "+54",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "AT",
+    "name": "Austria",
+    "dial_code": "+43",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "AU",
+    "name": "Australia",
+    "dial_code": "+61",
+    "province_label": "State/territory",
+    "zip_label": "Postcode",
+    "zip_required": true
+  },
+  {
+    "id": "AW",
+    "name": "Aruba",
+    "dial_code": "+297",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "AX",
+    "name": "Aland Islands",
+    "dial_code": "+358",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "AZ",
+    "name": "Azerbaijan",
+    "dial_code": "+994",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BA",
+    "name": "Bosnia And Herzegovina",
+    "dial_code": "+387",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BB",
+    "name": "Barbados",
+    "dial_code": "+1 246",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BD",
+    "name": "Bangladesh",
+    "dial_code": "+880",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BE",
+    "name": "Belgium",
+    "dial_code": "+32",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BF",
+    "name": "Burkina Faso",
+    "dial_code": "+226",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "BG",
+    "name": "Bulgaria",
+    "dial_code": "+359",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BH",
+    "name": "Bahrain",
+    "dial_code": "+973",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BI",
+    "name": "Burundi",
+    "dial_code": "+257",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BJ",
+    "name": "Benin",
+    "dial_code": "+229",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "BL",
+    "name": "Saint Barthlemy",
+    "dial_code": "+590",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BM",
+    "name": "Bermuda",
+    "dial_code": "+1 441",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BN",
+    "name": "Brunei",
+    "dial_code": "+673",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BO",
+    "name": "Bolivia",
+    "dial_code": "+591",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "BR",
+    "name": "Brazil",
+    "dial_code": "+55",
+    "province_label": "State",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BS",
+    "name": "Bahamas",
+    "dial_code": "+1 242",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "BT",
+    "name": "Bhutan",
+    "dial_code": "+975",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BW",
+    "name": "Botswana",
+    "dial_code": "+267",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BY",
+    "name": "Belarus",
+    "dial_code": "+375",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "BZ",
+    "name": "Belize",
+    "dial_code": "+501",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "CA",
+    "name": "Canada",
+    "dial_code": "+1",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CC",
+    "name": "Cocos (Keeling) Islands",
+    "dial_code": "+61",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CD",
+    "name": "Congo, The Democratic Republic Of The",
+    "dial_code": "+243",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CF",
+    "name": "Central African Republic",
+    "dial_code": "+236",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CG",
+    "name": "Congo",
+    "dial_code": "+242",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CH",
+    "name": "Switzerland",
+    "dial_code": "+41",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CI",
+    "name": "Cte d'Ivoire",
+    "dial_code": "+225",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CK",
+    "name": "Cook Islands",
+    "dial_code": "+682",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CL",
+    "name": "Chile",
+    "dial_code": "+56",
+    "province_label": "State",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CM",
+    "name": "Republic of Cameroon",
+    "dial_code": "+237",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CN",
+    "name": "China",
+    "dial_code": "+86",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CO",
+    "name": "Colombia",
+    "dial_code": "+57",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CR",
+    "name": "Costa Rica",
+    "dial_code": "+506",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CU",
+    "name": "Cuba",
+    "dial_code": "+53",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CV",
+    "name": "Cape Verde",
+    "dial_code": "+238",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CX",
+    "name": "Christmas Island",
+    "dial_code": "+61",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CY",
+    "name": "Cyprus",
+    "dial_code": "+357",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "CZ",
+    "name": "Czech Republic",
+    "dial_code": "+420",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "DE",
+    "name": "Germany",
+    "dial_code": "+49",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "DJ",
+    "name": "Djibouti",
+    "dial_code": "+253",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "DK",
+    "name": "Denmark",
+    "dial_code": "+45",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "DM",
+    "name": "Dominica",
+    "dial_code": "+1 767",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "DO",
+    "name": "Dominican Republic",
+    "dial_code": "+1 849",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "DZ",
+    "name": "Algeria",
+    "dial_code": "+213",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "EC",
+    "name": "Ecuador",
+    "dial_code": "+593",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "EE",
+    "name": "Estonia",
+    "dial_code": "+372",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "EG",
+    "name": "Egypt",
+    "dial_code": "+20",
+    "province_label": "Governorate",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ER",
+    "name": "Eritrea",
+    "dial_code": "+291",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ES",
+    "name": "Spain",
+    "dial_code": "+34",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ET",
+    "name": "Ethiopia",
+    "dial_code": "+251",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "FI",
+    "name": "Finland",
+    "dial_code": "+358",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "FJ",
+    "name": "Fiji",
+    "dial_code": "+679",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "FK",
+    "name": "Falkland Islands (Malvinas)",
+    "dial_code": "+500",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "FO",
+    "name": "Faroe Islands",
+    "dial_code": "+298",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "FR",
+    "name": "France",
+    "dial_code": "+33",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GA",
+    "name": "Gabon",
+    "dial_code": "+241",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GB",
+    "name": "United Kingdom",
+    "dial_code": "+44",
+    "province_label": "Region",
+    "zip_label": "Postcode",
+    "zip_required": true
+  },
+  {
+    "id": "GD",
+    "name": "Grenada",
+    "dial_code": "+1 473",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GE",
+    "name": "Georgia",
+    "dial_code": "+995",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GF",
+    "name": "French Guiana",
+    "dial_code": "+594",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GG",
+    "name": "Guernsey",
+    "dial_code": "+44",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GH",
+    "name": "Ghana",
+    "dial_code": "+233",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "GI",
+    "name": "Gibraltar",
+    "dial_code": "+350",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GL",
+    "name": "Greenland",
+    "dial_code": "+299",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GM",
+    "name": "Gambia",
+    "dial_code": "+220",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GN",
+    "name": "Guinea",
+    "dial_code": "+224",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GP",
+    "name": "Guadeloupe",
+    "dial_code": "+590",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GQ",
+    "name": "Equatorial Guinea",
+    "dial_code": "+240",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GR",
+    "name": "Greece",
+    "dial_code": "+30",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GS",
+    "name": "South Georgia And The South Sandwich Islands",
+    "dial_code": "+500",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GT",
+    "name": "Guatemala",
+    "dial_code": "+502",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GW",
+    "name": "Guinea Bissau",
+    "dial_code": "+245",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "GY",
+    "name": "Guyana",
+    "dial_code": "+595",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "HK",
+    "name": "Hong Kong",
+    "dial_code": "+852",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "HN",
+    "name": "Honduras",
+    "dial_code": "+504",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "HR",
+    "name": "Croatia",
+    "dial_code": "+385",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "HT",
+    "name": "Haiti",
+    "dial_code": "+509",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "HU",
+    "name": "Hungary",
+    "dial_code": "+36",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ID",
+    "name": "Indonesia",
+    "dial_code": "+62",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "IE",
+    "name": "Ireland",
+    "dial_code": "+353",
+    "province_label": "County",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "IL",
+    "name": "Israel",
+    "dial_code": "+972",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "IM",
+    "name": "Isle Of Man",
+    "dial_code": "+44",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "IN",
+    "name": "India",
+    "dial_code": "+91",
+    "province_label": "State",
+    "zip_label": "Pincode",
+    "zip_required": true
+  },
+  {
+    "id": "IO",
+    "name": "British Indian Ocean Territory",
+    "dial_code": "+246",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "IQ",
+    "name": "Iraq",
+    "dial_code": "+964",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "IR",
+    "name": "Iran, Islamic Republic Of",
+    "dial_code": "+98",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "IS",
+    "name": "Iceland",
+    "dial_code": "+354",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "IT",
+    "name": "Italy",
+    "dial_code": "+39",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "JE",
+    "name": "Jersey",
+    "dial_code": "+44",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "JM",
+    "name": "Jamaica",
+    "dial_code": "+1 876",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "JO",
+    "name": "Jordan",
+    "dial_code": "+962",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "JP",
+    "name": "Japan",
+    "dial_code": "+81",
+    "province_label": "Prefecture",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KE",
+    "name": "Kenya",
+    "dial_code": "+254",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KG",
+    "name": "Kyrgyzstan",
+    "dial_code": "+996",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KH",
+    "name": "Cambodia",
+    "dial_code": "+855",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KI",
+    "name": "Kiribati",
+    "dial_code": "+686",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KM",
+    "name": "Comoros",
+    "dial_code": "+269",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KN",
+    "name": "Saint Kitts And Nevis",
+    "dial_code": "+1 869",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KP",
+    "name": "Korea, Democratic People's Republic Of",
+    "dial_code": "+850",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KR",
+    "name": "South Korea",
+    "dial_code": "+82",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KW",
+    "name": "Kuwait",
+    "dial_code": "+965",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KY",
+    "name": "Cayman Islands",
+    "dial_code": "+ 345",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "KZ",
+    "name": "Kazakhstan",
+    "dial_code": "+7 7",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LA",
+    "name": "Lao People's Democratic Republic",
+    "dial_code": "+856",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LB",
+    "name": "Lebanon",
+    "dial_code": "+961",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LC",
+    "name": "Saint Lucia",
+    "dial_code": "+1 758",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LI",
+    "name": "Liechtenstein",
+    "dial_code": "+423",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LK",
+    "name": "Sri Lanka",
+    "dial_code": "+94",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LR",
+    "name": "Liberia",
+    "dial_code": "+231",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LS",
+    "name": "Lesotho",
+    "dial_code": "+266",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LT",
+    "name": "Lithuania",
+    "dial_code": "+370",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LU",
+    "name": "Luxembourg",
+    "dial_code": "+352",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LV",
+    "name": "Latvia",
+    "dial_code": "+371",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "LY",
+    "name": "Libyan Arab Jamahiriya",
+    "dial_code": "+218",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MA",
+    "name": "Morocco",
+    "dial_code": "+212",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MC",
+    "name": "Monaco",
+    "dial_code": "+377",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MD",
+    "name": "Moldova, Republic of",
+    "dial_code": "+373",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ME",
+    "name": "Montenegro",
+    "dial_code": "+382",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MF",
+    "name": "Saint Martin",
+    "dial_code": "+590",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MG",
+    "name": "Madagascar",
+    "dial_code": "+261",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MK",
+    "name": "Macedonia, Republic Of",
+    "dial_code": "+389",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ML",
+    "name": "Mali",
+    "dial_code": "+223",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "MM",
+    "name": "Myanmar",
+    "dial_code": "+95",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MN",
+    "name": "Mongolia",
+    "dial_code": "+976",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MO",
+    "name": "Macao",
+    "dial_code": "+853",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MQ",
+    "name": "Martinique",
+    "dial_code": "+596",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MR",
+    "name": "Mauritania",
+    "dial_code": "+222",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MS",
+    "name": "Montserrat",
+    "dial_code": "+1664",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MT",
+    "name": "Malta",
+    "dial_code": "+356",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MU",
+    "name": "Mauritius",
+    "dial_code": "+230",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MV",
+    "name": "Maldives",
+    "dial_code": "+960",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MW",
+    "name": "Malawi",
+    "dial_code": "+265",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MX",
+    "name": "Mexico",
+    "dial_code": "+52",
+    "province_label": "State",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MY",
+    "name": "Malaysia",
+    "dial_code": "+60",
+    "province_label": "State/territory",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "MZ",
+    "name": "Mozambique",
+    "dial_code": "+258",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NA",
+    "name": "Namibia",
+    "dial_code": "+264",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NC",
+    "name": "New Caledonia",
+    "dial_code": "+687",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NE",
+    "name": "Niger",
+    "dial_code": "+227",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NF",
+    "name": "Norfolk Island",
+    "dial_code": "+672",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NG",
+    "name": "Nigeria",
+    "dial_code": "+234",
+    "province_label": "State",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NI",
+    "name": "Nicaragua",
+    "dial_code": "+505",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NL",
+    "name": "Netherlands",
+    "dial_code": "+31",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NO",
+    "name": "Norway",
+    "dial_code": "+47",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NP",
+    "name": "Nepal",
+    "dial_code": "+977",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NR",
+    "name": "Nauru",
+    "dial_code": "+674",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NU",
+    "name": "Niue",
+    "dial_code": "+683",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "NZ",
+    "name": "New Zealand",
+    "dial_code": "+64",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "OM",
+    "name": "Oman",
+    "dial_code": "+968",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PA",
+    "name": "Panama",
+    "dial_code": "+507",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "PE",
+    "name": "Peru",
+    "dial_code": "+51",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PF",
+    "name": "French Polynesia",
+    "dial_code": "+689",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PG",
+    "name": "Papua New Guinea",
+    "dial_code": "+675",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PH",
+    "name": "Philippines",
+    "dial_code": "+63",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PK",
+    "name": "Pakistan",
+    "dial_code": "+92",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PL",
+    "name": "Poland",
+    "dial_code": "+48",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PM",
+    "name": "Saint Pierre And Miquelon",
+    "dial_code": "+508",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PN",
+    "name": "Pitcairn",
+    "dial_code": "+872",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PS",
+    "name": "Palestinian Territory, Occupied",
+    "dial_code": "+970",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PT",
+    "name": "Portugal",
+    "dial_code": "+351",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "PY",
+    "name": "Paraguay",
+    "dial_code": "+595",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "QA",
+    "name": "Qatar",
+    "dial_code": "+974",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "RE",
+    "name": "Reunion",
+    "dial_code": "+262",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "RO",
+    "name": "Romania",
+    "dial_code": "+40",
+    "province_label": "County",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "RS",
+    "name": "Serbia",
+    "dial_code": "+381",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "RU",
+    "name": "Russia",
+    "dial_code": "+7",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "RW",
+    "name": "Rwanda",
+    "dial_code": "+250",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SA",
+    "name": "Saudi Arabia",
+    "dial_code": "+966",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SB",
+    "name": "Solomon Islands",
+    "dial_code": "+677",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SC",
+    "name": "Seychelles",
+    "dial_code": "+248",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SD",
+    "name": "Sudan",
+    "dial_code": "+249",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SE",
+    "name": "Sweden",
+    "dial_code": "+46",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SG",
+    "name": "Singapore",
+    "dial_code": "+65",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SH",
+    "name": "Saint Helena",
+    "dial_code": "+290",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SI",
+    "name": "Slovenia",
+    "dial_code": "+386",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SJ",
+    "name": "Svalbard And Jan Mayen",
+    "dial_code": "+47",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SK",
+    "name": "Slovakia",
+    "dial_code": "+421",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SL",
+    "name": "Sierra Leone",
+    "dial_code": "+232",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SM",
+    "name": "San Marino",
+    "dial_code": "+378",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SN",
+    "name": "Senegal",
+    "dial_code": "+221",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SO",
+    "name": "Somalia",
+    "dial_code": "+252",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SR",
+    "name": "Suriname",
+    "dial_code": "+597",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ST",
+    "name": "Sao Tome And Principe",
+    "dial_code": "+239",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SV",
+    "name": "El Salvador",
+    "dial_code": "+503",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SY",
+    "name": "Syria",
+    "dial_code": "+963",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "SZ",
+    "name": "Swaziland",
+    "dial_code": "+268",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TC",
+    "name": "Turks and Caicos Islands",
+    "dial_code": "+1 649",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TD",
+    "name": "Chad",
+    "dial_code": "+235",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "TG",
+    "name": "Togo",
+    "dial_code": "+228",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "TH",
+    "name": "Thailand",
+    "dial_code": "+66",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TJ",
+    "name": "Tajikistan",
+    "dial_code": "+992",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TK",
+    "name": "Tokelau",
+    "dial_code": "+690",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TL",
+    "name": "Timor Leste",
+    "dial_code": "+670",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TM",
+    "name": "Turkmenistan",
+    "dial_code": "+993",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TN",
+    "name": "Tunisia",
+    "dial_code": "+216",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TO",
+    "name": "Tonga",
+    "dial_code": "+676",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TR",
+    "name": "Turkey",
+    "dial_code": "+90",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TT",
+    "name": "Trinidad and Tobago",
+    "dial_code": "+1 868",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "TV",
+    "name": "Tuvalu",
+    "dial_code": "+688",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "TW",
+    "name": "Taiwan",
+    "dial_code": "+886",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "TZ",
+    "name": "Tanzania, United Republic Of",
+    "dial_code": "+255",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "UA",
+    "name": "Ukraine",
+    "dial_code": "+380",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "UG",
+    "name": "Uganda",
+    "dial_code": "+256",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "US",
+    "name": "United States",
+    "dial_code": "+1",
+    "province_label": "State",
+    "zip_label": "ZIP code",
+    "zip_required": true
+  },
+  {
+    "id": "UY",
+    "name": "Uruguay",
+    "dial_code": "+598",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "UZ",
+    "name": "Uzbekistan",
+    "dial_code": "+998",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "VA",
+    "name": "Holy See (Vatican City State)",
+    "dial_code": "+379",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "VC",
+    "name": "St. Vincent",
+    "dial_code": "+1 784",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "VE",
+    "name": "Venezuela",
+    "dial_code": "+58",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "VG",
+    "name": "Virgin Islands, British",
+    "dial_code": "+1 284",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "VN",
+    "name": "Vietnam",
+    "dial_code": "+84",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "VU",
+    "name": "Vanuatu",
+    "dial_code": "+678",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "WF",
+    "name": "Wallis And Futuna",
+    "dial_code": "+681",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "WS",
+    "name": "Samoa",
+    "dial_code": "+685",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "YE",
+    "name": "Yemen",
+    "dial_code": "+967",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  },
+  {
+    "id": "YT",
+    "name": "Mayotte",
+    "dial_code": "+262",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ZA",
+    "name": "South Africa",
+    "dial_code": "+27",
+    "province_label": "Province",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ZM",
+    "name": "Zambia",
+    "dial_code": "+260",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": true
+  },
+  {
+    "id": "ZW",
+    "name": "Zimbabwe",
+    "dial_code": "+263",
+    "province_label": "Region",
+    "zip_label": "Postal code",
+    "zip_required": false
+  }
+]

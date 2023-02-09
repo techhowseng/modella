@@ -1051,6 +1051,10 @@ select{
   margin-top: 0.75rem;
 }
 
+.mt-0{
+  margin-top: 0px;
+}
+
 .ml-10{
   margin-left: 2.5rem;
 }
@@ -1776,11 +1780,6 @@ select{
   line-height: 1.75rem;
 }
 
-.text-5xl{
-  font-size: 3rem;
-  line-height: 1;
-}
-
 .font-medium{
   font-weight: 500;
 }
@@ -2333,6 +2332,11 @@ select{
     margin-right: 0.5rem;
   }
 
+  .lg\:my-10{
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
   .lg\:mb-0{
     margin-bottom: 0px;
   }
@@ -2343,6 +2347,14 @@ select{
 
   .lg\:mt-0{
     margin-top: 0px;
+  }
+
+  .lg\:mt-10{
+    margin-top: 2.5rem;
+  }
+
+  .lg\:mt-16{
+    margin-top: 4rem;
   }
 
   .lg\:block{
