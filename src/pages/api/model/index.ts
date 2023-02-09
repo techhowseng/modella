@@ -14,9 +14,10 @@ export default async function handle(
       res.json(await ModelRepository.getAllModels(res));
       break;
     case "POST":
-      await validateModel(req, res)
-      const createErrors = validationResult(req)
-      if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+      await validateModel(req, res);
+      const createErrors = validationResult(req);
+      if (!createErrors.isEmpty())
+        return res.status(422).json({ errors: createErrors.array() });
       res.json(await ModelRepository.createModel(req, res));
       break;
     case "PUT":

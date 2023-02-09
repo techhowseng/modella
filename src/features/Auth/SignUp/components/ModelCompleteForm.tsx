@@ -70,9 +70,8 @@ function ModelCompleteForm() {
   const isFinal = stepState === SIGN_UP_STEPS.PROFILE_PICTURE;
 
   return (
-    <div className="flex-1 w-full py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
-      <div className="flex flex-col mt-10">
-        {errorMessage && <AlertMessage type="error" message={errorMessage} />}
+    <div className="flex-1 w-full lg:my-10 py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 flex flex-col justify-center">
+      <div className="flex flex-col lg:mt-10">
         {successMessage && (
           <AlertMessage type="success" message={successMessage} />
         )}
@@ -80,7 +79,7 @@ function ModelCompleteForm() {
         <div>
           {stepState === SIGN_UP_STEPS.MORE_DETAILS && (
             <>
-              <div className="flex flex-col mb-10">
+              <div className="flex flex-col mt-0 lg:mt-16 mb-10">
                 <h1 className="text-3xl mb-5 font-bold">
                   Thank you for signing up
                 </h1>
@@ -107,7 +106,11 @@ function ModelCompleteForm() {
             <ProfessionalAssetsComponent />
           )}
           {/* {stepState === SIGN_UP_STEPS.FINISH && <SkillsComponents />} */}
-
+          <div className="mt-10">
+            {errorMessage && (
+              <AlertMessage type="error" message={errorMessage} />
+            )}
+          </div>
           <Button
             className="mt-10"
             onClick={isFinal ? handleSubmit : handleNextClick}

@@ -25,10 +25,10 @@ function SetUpProfile() {
         onChange={() => {}}
       />
 
-      <p className="mt-10">
+      {/* <p className="mt-10">
         Please do ensure you click on the verification link sent to your mail to
         activate account
-      </p>
+      </p> */}
     </div>
   );
 }

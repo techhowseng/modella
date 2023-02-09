@@ -15,7 +15,7 @@ function SignUp() {
     <div className="flex flex-col-reverse sm:flex-col-reverse md:flex-col-reverse lg:flex-row sm:h-fit lg:h-screen">
       <SideDisplay />
 
-      <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center scroll-smooth overflow-y-scroll">
+      <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 flex flex-col justify-center overflow-y-scroll">
         {type === "model" && <CreatorSignUpForm />}
         {type === "client" && <ClientSignupForm />}
         {/* @ts-ignore */}
