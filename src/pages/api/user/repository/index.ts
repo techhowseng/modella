@@ -2,10 +2,10 @@ import { PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { uuid } from 'uuidv4';
 import UserServices, { TUser } from "../service";
 import SessionServices from "../../session/service";
-import { getUser, randomStringGenerator } from "../../../../helper/util";
-import { checkExistingUser, existsInDB } from "../helper";
+import { getUser } from "../../../../helper/util";
 import NotificationService from "../../../../services/NotificationService";
 import { ResponseService } from "../../../../services/ResponseService";
 import { EntityExistsError } from "helper/errors";
@@ -25,6 +25,7 @@ export default class UserRepository {
     try {
       const inputs = req.body;
       inputs.email = inputs.email.toLowerCase();
+      inputs.password = bcrypt.hashSync(inputs.password, 8)
       // this should be in service
       const existingEmail = await prisma.user.findFirst({
         where: {
@@ -37,7 +38,7 @@ export default class UserRepository {
           new EntityExistsError("user", inputs.email)
         );
       }
-      const verificationToken = randomStringGenerator();
+      const verificationToken = uuid();
       const newVerification = await UserServices.createVerificationToken(
         inputs,
         verificationToken
@@ -50,8 +51,7 @@ export default class UserRepository {
         res,
         200,
         "Please verify your email address within 10 minutes",
-        newVerification
-      );
+        (({ token, email}) => ({token, email}))(newVerification));
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -167,7 +167,13 @@ export default class UserRepository {
       const verifiedUser = await UserServices.verifyToken(res, token);
       if (verifiedUser) {
         const { email, password, type } = verifiedUser as any;
-        const user = await UserServices.createUser(res, email, password, type);
+        const user = await UserServices.createUser(
+          res,
+          email,
+          bcrypt.hashSync(password, 8),
+          type,
+          true
+          );
         await UserServices.deleteVerificationToken(res, email);
         const jwtToken = jwt.sign(user, JWT_KEY, {
           expiresIn: "24hr",

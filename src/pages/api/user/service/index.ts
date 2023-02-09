@@ -20,14 +20,16 @@ export default class UserServices {
     res,
     email: string,
     password: string,
-    type: Type
+    type: Type,
+    isAuthenticated: boolean
   ) {
     try {
       const user = await prisma.user.create({
         data: {
           email,
           password,
-          type
+          type,
+          isAuthenticated
         }
       });
       return user;
