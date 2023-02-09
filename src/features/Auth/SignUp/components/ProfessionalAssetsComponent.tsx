@@ -4,7 +4,7 @@ import { BsPlusCircle } from "react-icons/bs";
 
 function ProfessionalAssetsComponent() {
   return (
-    <div className="flex-1 py-20 md:py-30 lg:py-36 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
+    <div className="flex-1">
       <div className="flex flex-col">
         <h1 className="text-3xl mb-5 font-bold">
           Great, you are almost there.
@@ -22,10 +22,6 @@ function ProfessionalAssetsComponent() {
         <BsPlusCircle className="my-10" size={58} />
         <p>Upload</p>
       </div>
-
-      <Button className="mt-10" onClick={() => {}}>
-        <p className="text-white">Next</p>
-      </Button>
       {/* <!---dskdlksld---> */}
     </div>
   );

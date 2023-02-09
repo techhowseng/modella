@@ -23,7 +23,8 @@
       "types/*": ["./types/*"],
       "assets/*": ["./assets/*"],
       "hooks/*": ["./hooks/*"],
-      "styles/*": ["./styles/*"]
+      "styles/*": ["./styles/*"],
+      "core/*": ["./core/*"]
     }
   },
   "exclude": ["node_modules"],

@@ -1,0 +1,126 @@
+import AlertMessage from "components/AlertMessage";
+import Button from "components/Button";
+import Input from "components/Input";
+import { useFieldsErrorCheck, useForm } from "features/Auth/hooks";
+import { signUpCompleteFormDataSchema } from "features/Auth/schema";
+import { updateUser } from "features/Auth/services";
+import { getSessionUser } from "features/Auth/slice";
+import { AuthRegistrationCompleteFormType } from "features/Auth/types";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { CREATOR_SIGNUP_COMPLETE_FORM } from "../../formFieldData";
+import { SIGN_UP_STEPS } from "../constants";
+import ProfessionalAssetsComponent from "./ProfessionalAssetsComponent";
+import SetUpProfile from "./SetUpProfile";
+
+function ModelCompleteForm() {
+  const dispatch = useAppDispatch();
+  const [successMessage, setSuccessMessage] = React.useState<string>("");
+  const { data, loading, error, message } = useAppSelector(getSessionUser);
+  const {
+    formData: values,
+    handleChange,
+    handleSubmit,
+    handleNext,
+    stepState,
+    errorMessage,
+    setErrorMessage,
+  } = useForm(
+    {
+      firstname: "",
+      lastname: "",
+      phone: "",
+      address: "",
+      state: "",
+      country: "",
+    },
+    signUpCompleteFormDataSchema,
+    (formData: AuthRegistrationCompleteFormType) => {
+      formData.phone = {
+        phone_1: formData.phone,
+      };
+      dispatch(updateUser(formData)).then((res) => {
+        if (res.payload.error) {
+          setErrorMessage(res.payload.data.message);
+        } else {
+          setSuccessMessage(res.payload.message);
+        }
+      });
+    }
+  );
+
+  const handleNextClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log("values >>> ", values);
+    // Pass in the schema for the current step
+    let schema = signUpCompleteFormDataSchema;
+    switch (stepState) {
+      case SIGN_UP_STEPS.MORE_DETAILS:
+        schema = signUpCompleteFormDataSchema;
+        break;
+      case SIGN_UP_STEPS.PROFILE_PICTURE:
+        schema = signUpCompleteFormDataSchema;
+        break;
+      default:
+        break;
+    }
+    useFieldsErrorCheck(values, schema, handleNext, setErrorMessage, e);
+  };
+
+  // check if the current step is the last step
+  const isFinal = stepState === SIGN_UP_STEPS.PROFILE_PICTURE;
+
+  return (
+    <div className="flex-1 w-full py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
+      <div className="flex flex-col mt-10">
+        {errorMessage && <AlertMessage type="error" message={errorMessage} />}
+        {successMessage && (
+          <AlertMessage type="success" message={successMessage} />
+        )}
+
+        <div>
+          {stepState === SIGN_UP_STEPS.MORE_DETAILS && (
+            <>
+              <div className="flex flex-col mb-10">
+                <h1 className="text-3xl mb-5 font-bold">
+                  Thank you for signing up
+                </h1>
+                <p className="mr-1 text-xl">
+                  Please fill out the important data needed for your profile
+                </p>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
+                {/* @ts-ignore */}
+                {CREATOR_SIGNUP_COMPLETE_FORM.map((field) => (
+                  <Input
+                    key={field.name}
+                    label={field.label}
+                    name={field.name}
+                    type={field.type}
+                    onChange={handleChange}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+          {stepState === SIGN_UP_STEPS.PROFILE_PICTURE && <SetUpProfile />}
+          {stepState === SIGN_UP_STEPS.SET_UP_PROFILE && (
+            <ProfessionalAssetsComponent />
+          )}
+          {/* {stepState === SIGN_UP_STEPS.FINISH && <SkillsComponents />} */}
+
+          <Button
+            className="mt-10"
+            onClick={isFinal ? handleSubmit : handleNextClick}
+            loading={loading}
+            loadingText={"Submitting..."}
+          >
+            <p className="text-white">{isFinal ? "Submit" : "Next"}</p>
+          </Button>
+          {/* <!------------> */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ModelCompleteForm;

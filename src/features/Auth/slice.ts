@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "store";
-import { registerUser } from "./services";
+import { registerUser, updateUser } from "./services";
 import { User, UserState } from "./types";
 
 const initialState: UserState = {
@@ -12,11 +12,10 @@ const initialState: UserState = {
 
 export const userSlice = createSlice({
   reducers: {
-    // registerUser: (state, action: PayloadAction<User>) => {
-    //   console.log('action.payload: ', action.payload);
-    //   const user = action.payload;
-    //   state.data.user = user;
-    // },
+    registerSessionUser: (state, action: PayloadAction<User>) => {
+      const user = action.payload;
+      state.data.user = user;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -36,6 +35,18 @@ export const userSlice = createSlice({
         state.loading = false;
         state.error = true;
         state.message = payload.error.message;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        console.log("payload >>>> ", payload);
+      })
+      .addCase(updateUser.rejected, (state, payload) => {
+        state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
       });
   },
   name: "user",
@@ -43,9 +54,9 @@ export const userSlice = createSlice({
 });
 
 // actions
-// export const { registerUser } = userSlice.actions;
+export const { registerSessionUser } = userSlice.actions;
 
 // selectors
-export const getAuthUser = (state: RootState) => state.auth;
+export const getSessionUser = (state: RootState) => state.auth;
 
 export default userSlice.reducer;

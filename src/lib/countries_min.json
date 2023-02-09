@@ -1,0 +1,18 @@
+[
+    {
+        "id": "NG",
+        "name": "Nigeria",
+        "dial_code": "+234",
+        "province_label": "State",
+        "zip_label": "Postal code",
+        "zip_required": true
+    },
+    {
+        "id": "GH",
+        "name": "Ghana",
+        "dial_code": "+233",
+        "province_label": "Region",
+        "zip_label": "Postal code",
+        "zip_required": false
+    }
+]

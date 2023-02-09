@@ -22,3 +22,12 @@ export type AuthRegistrationFormType = {
   confirmPassword?: string;
   type: string;
 };
+
+export type AuthRegistrationCompleteFormType = {
+  firstname: string;
+  lastname: string;
+  phone: {};
+  address: string;
+  state: string;
+  country: string;
+};
