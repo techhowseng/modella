@@ -24,7 +24,7 @@ export const validateModel = initMiddleware(
     .withMessage('is not descriptive enough.'),
     check('complexion').isLength({min:4}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
-    check('DOB').isLength({min:5}).optional({ nullable: true })
+    check('DOB').isLength({min:5})
     .withMessage('is not written in the right format.'),
     check('social').isObject().optional({ nullable: true })
     .withMessage('should be sent as an object.'),

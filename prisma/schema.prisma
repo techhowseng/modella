@@ -88,14 +88,14 @@ model Model {
   hip             String?
   shoeSize        String?
   weight          String?
-  complexion      String
+  complexion      String?
   DOB             String
   social          Json?
   state           String?
   country         String?
   address         String?
-  isAvailable     Boolean           @default(true)
-  bio             String
+  isAvailable     Boolean?           @default(true)
+  bio             String?
   phone           Json?
   types           Types?
   unavailableDays String?
