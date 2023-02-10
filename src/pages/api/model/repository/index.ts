@@ -17,52 +17,14 @@ export default class ModelRepository {
 	}
 
 	static async createModel(req, res) {
-		const {
-      email,
-      firstname,
-      lastname,
-      height,
-      bust,
-      waist,
-      hip,
-      shoeSize,
-      weight,
-      complexion,
-      DOB,
-      social,
-      state,
-      country,
-      phone,
-      address,
-      isAvailable,
-      types,
-      bio
-		} = req.body;
+		const data = req.body;
     try {
       const session = await getUser(req);
       if (session) {
         const user = await ModelServices.createModel(
           res,
           session.id,
-          email,
-          firstname,
-          lastname,
-          height,
-          bust,
-          waist,
-          hip,
-          shoeSize,
-          weight,
-          complexion,
-          DOB,
-          social,
-          state,
-          country,
-          phone,
-          address,
-          isAvailable,
-          types,
-          bio
+          data
         );
         return user;
       }

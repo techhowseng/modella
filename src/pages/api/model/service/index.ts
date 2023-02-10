@@ -9,54 +9,18 @@ export default class UserServices {
   static prisma: PrismaClient = prisma;
 
   static async createModel(
-    res,
-    userId: string,
-    email: string,
-    firstname: string,
-    lastname: string,
-    height: string,
-    bust: string,
-    waist: string,
-    hip: string,
-    shoeSize: string,
-    weight: string,
-    complexion: string,
-    DOB: string,
-    social: object,
-    state: string,
-    country: string,
-    phone: object,
-    address: string,
-    isAvailable: boolean,
-    types: Types,
-    bio: string,
+    res: any,
+    id: string,
+    data: TModel
   ) {
     try {
       const model = await this.prisma.model.create({
         data: {
-          email,
-          firstname,
-          lastname,
-          height,
-          bust,
-          waist,
-          hip,
-          shoeSize,
-          weight,
-          complexion,
-          DOB,
-          social,
-          state,
-          country,
-          phone,
-          address,
-          isAvailable,
-          types,
-          bio,
+          ...data,
           user: {
-            connect: { id: userId },
-          },
-        },
+            connect: { id },
+          }
+        }
       });
       return model;
     } catch(err) {
