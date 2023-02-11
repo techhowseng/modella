@@ -19,7 +19,6 @@ CREATE TABLE "users" (
     "type" "Type" NOT NULL DEFAULT 'Model',
     "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "isAuthenticated" BOOLEAN NOT NULL DEFAULT false,
-    "emailVerified" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -72,7 +71,6 @@ CREATE TABLE "VerificationToken" (
 CREATE TABLE "Model" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
     "firstname" TEXT NOT NULL,
     "lastname" TEXT NOT NULL,
     "height" TEXT,
@@ -101,7 +99,6 @@ CREATE TABLE "Client" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
     "companyName" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
     "phone" JSONB NOT NULL,
     "social" JSONB NOT NULL,
     "state" TEXT,

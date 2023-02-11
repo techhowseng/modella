@@ -79,7 +79,6 @@ model Model {
   id              Int               @id @default(autoincrement())
   userId          String            @unique
   user            User              @relation(fields: [userId], references: [id])
-  email           String
   firstname       String
   lastname        String
   height          String?
@@ -130,7 +129,6 @@ model Client {
   user            User              @relation(fields: [userId], references: [id])
   userId          String            @unique
   companyName     String
-  email           String
   phone           Json
   social          Json
   state           String?
