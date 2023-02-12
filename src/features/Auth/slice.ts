@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { updateModel } from "features/BioData/services";
 import { RootState } from "store";
 import { registerUser, createModel } from "./services";
 import { User, UserState } from "./types";
@@ -44,6 +45,18 @@ export const userSlice = createSlice({
         state.data.user = { ...state.data.user, ...payload };
       })
       .addCase(createModel.rejected, (state, payload) => {
+        state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
+      })
+      .addCase(updateModel.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateModel.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.data.user = { ...state.data.user, ...payload };
+      })
+      .addCase(updateModel.rejected, (state, payload) => {
         state.loading = false;
         state.error = true;
         state.message = payload.error.message;
