@@ -6,6 +6,7 @@ export const APP_ROUTES = {
   login: "/auth/login",
   signup: "/auth/signup",
   register: "/register",
+  bioData: "/bio-data",
   dashboard: "/dashboard",
   profile: "/profile",
   settings: "/settings",

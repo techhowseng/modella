@@ -96,7 +96,7 @@ function CreatorSignUpForm({ verified }: { verified?: boolean }) {
           <span className="base-blue">
             <Link href={APP_ROUTES.tos}>Terms and conditions</Link>
           </span>{" "}
-          of Modella.
+          of {SITE_NAME}.
         </CheckBox> */}
       </div>
     </div>

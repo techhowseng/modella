@@ -77,6 +77,11 @@ export const CREATOR_SIGNUP_COMPLETE_FORM = [
     name: "address",
   },
   {
+    label: "Date of birth",
+    type: "date",
+    name: "DOB",
+  },
+  {
     label: "Country",
     type: "select",
     name: "country",

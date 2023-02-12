@@ -5,15 +5,19 @@ import { LinkButton, Logo } from "components";
 import { classNames } from "lib/functions";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
+import { SITE_NAME } from "lib/constants";
+import { useGetSessionUser } from "features/hooks";
 
 export default function Header() {
+  const { userData } = useGetSessionUser();
+
   return (
     <Popover className="relative bg-white">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href={APP_ROUTES.home}>
-              <span className="sr-only">Modella</span>
+              <span className="sr-only">{SITE_NAME}</span>
               <Logo />
             </Link>
           </div>
@@ -24,18 +28,20 @@ export default function Header() {
             </Popover.Button>
           </div>
 
-          <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <Link
-              href={APP_ROUTES.login}
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-            >
-              Sign in
-            </Link>
+          {userData?.isAvailable && (
+            <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+              <Link
+                href={APP_ROUTES.login}
+                className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+              >
+                Sign in
+              </Link>
 
-            <LinkButton className="ml-8" href={APP_ROUTES.signup}>
-              Sign up
-            </LinkButton>
-          </div>
+              <LinkButton className="ml-8" href={APP_ROUTES.signup}>
+                Sign up
+              </LinkButton>
+            </div>
+          )}
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
@@ -44,7 +50,9 @@ export default function Header() {
             >
               <span className="sr-only">View notifications</span>
               <BellIcon className="h-6 w-6" aria-hidden="true" />
-              <span className="top-0 left-4 absolute w-3.5 h-3.5 bg-red-400 border-2 border-white rounded-full"></span>
+              {false && (
+                <span className="top-0 left-4 absolute w-3.5 h-3.5 bg-red-400 border-2 border-white rounded-full"></span>
+              )}
             </button>
 
             {/* Profile dropdown */}

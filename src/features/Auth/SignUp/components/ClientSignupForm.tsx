@@ -7,6 +7,7 @@ import { signUpFormDataSchema } from "features/Auth/schema";
 import { registerUser } from "features/Auth/services";
 import { getSessionUser } from "features/Auth/slice";
 import { AuthRegistrationFormType } from "features/Auth/types";
+import { SITE_NAME } from "lib/constants";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
 import React from "react";
@@ -95,7 +96,7 @@ function ClientSignupForm({ verified }: { verified?: boolean }) {
               <span className="base-blue">
                 <Link href={APP_ROUTES.tos}>Terms and conditions</Link>
               </span>{" "}
-              of Modella.
+              of {SITE_NAME}.
             </CheckBox>
 
             <Button

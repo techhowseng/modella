@@ -6,6 +6,8 @@ import { signUpCompleteFormDataSchema } from "features/Auth/schema";
 import { updateUser } from "features/Auth/services";
 import { getSessionUser } from "features/Auth/slice";
 import { AuthRegistrationCompleteFormType } from "features/Auth/types";
+import { APP_ROUTES } from "lib/routes";
+import Router from "next/router";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { CREATOR_SIGNUP_COMPLETE_FORM } from "../../formFieldData";
@@ -31,6 +33,7 @@ function ModelCompleteForm() {
       lastname: "",
       phone: "",
       address: "",
+      DOB: "",
       state: "",
       country: "",
     },
@@ -39,10 +42,14 @@ function ModelCompleteForm() {
       formData.phone = {
         phone_1: formData.phone,
       };
+
       dispatch(updateUser(formData)).then((res) => {
         if (res.payload.error) {
           setErrorMessage(res.payload.data.message);
         } else {
+          if (res.payload.DOB) {
+            Router.push(APP_ROUTES.bioData);
+          }
           setSuccessMessage(res.payload.message);
         }
       });
@@ -50,7 +57,6 @@ function ModelCompleteForm() {
   );
 
   const handleNextClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("values >>> ", values);
     // Pass in the schema for the current step
     let schema = signUpCompleteFormDataSchema;
     switch (stepState) {

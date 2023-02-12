@@ -1,3 +1,4 @@
+import { SITE_NAME } from "lib/constants";
 import React from "react";
 import DashMenuList from "./DashMenuList";
 
@@ -18,7 +19,7 @@ function ClientAside() {
         Joyce Florence
       </h1>
       <h5 className="text-md text-inherit w-full mx-auto antialiased text-center mt-2">
-        Modella Advertising limited
+      {SITE_NAME} Advertising limited
       </h5>
 
       <div className="flex flex-col justify-start">

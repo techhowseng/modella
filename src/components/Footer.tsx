@@ -1,3 +1,4 @@
+import { SITE_NAME } from "lib/constants";
 import Link from "next/link";
 import React from "react";
 import Logo from "./Logo";
@@ -36,7 +37,7 @@ function Footer() {
       <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
         © 2023{" "}
         <Link href="/" className="hover:underline">
-          Modella™
+          {SITE_NAME}™
         </Link>
         . All Rights Reserved.
       </span>

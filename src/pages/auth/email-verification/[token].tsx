@@ -4,14 +4,14 @@ import Head from "next/head";
 import React from "react";
 import { APP_ROUTES } from "lib/routes";
 import { verifyEmailToken } from "features/Auth/services";
-import { SESSION_NAME } from "lib/constants";
+import { SESSION_NAME, SITE_NAME } from "lib/constants";
 import { setCookie } from "cookies-next";
 
 const EmailVerification = ({ message }) => {
   return (
     <>
       <Head>
-        <title>Verify Email | Modella</title>
+        <title>Verify Email | {SITE_NAME}</title>
       </Head>
       <div className="flex flex-col justify-center w-full">
         <p className="text-center mr-1 text-2xl mt-10">{message}</p>

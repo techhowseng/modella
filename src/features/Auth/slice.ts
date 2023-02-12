@@ -41,6 +41,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, { payload }) => {
         state.loading = false;
+        state.data.user = { ...state.data.user, ...payload };
         console.log("payload >>>> ", payload);
       })
       .addCase(updateUser.rejected, (state, payload) => {

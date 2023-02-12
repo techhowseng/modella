@@ -32,7 +32,7 @@ export default class SessionServices {
     }
   }
 
-  static async getSession(res, sessionToken: string | null) {
+  static async getSession(res: any, sessionToken: string | null) {
     try {
       if (!sessionToken) return null;
       const session = await this.prisma.session.findUnique({
@@ -44,7 +44,7 @@ export default class SessionServices {
     }
   }
 
-  static async getClientSession(res, sessionToken: string | null) {
+  static async getClientSession(res: any, sessionToken: string | null) {
     try {
       if (!sessionToken) return null;
       const session = await this.prisma.session.findUnique({

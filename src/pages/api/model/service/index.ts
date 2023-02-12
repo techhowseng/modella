@@ -8,26 +8,22 @@ export type TModel = PrismaClient["model"]["create"]["data"];
 export default class UserServices {
   static prisma: PrismaClient = prisma;
 
-  static async createModel(
-    res: any,
-    id: string,
-    data: TModel
-  ) {
+  static async createModel(res: any, id: string, data: TModel) {
     try {
       const model = await this.prisma.model.create({
         data: {
           ...data,
           user: {
             connect: { id },
-          }
-        }
+          },
+        },
       });
       return model;
-    } catch(err) {
+    } catch (err) {
+      console.log("createModel err >>> ", err);
       return ResponseService.sendError(err, res);
     }
   }
-
 
   static async getModel(res, id: number) {
     try {
@@ -35,7 +31,7 @@ export default class UserServices {
         where: { id },
       });
       return model;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
@@ -44,7 +40,7 @@ export default class UserServices {
     try {
       const model = await this.prisma.model.findMany();
       return model;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
@@ -53,11 +49,14 @@ export default class UserServices {
     try {
       const updatedModel = await this.prisma.model.update({
         where: { userId },
-        data
+        data,
       });
       return updatedModel;
-    } catch(err) {
-      return ResponseService.sendError({message: "Error updating models information."}, res);
+    } catch (err) {
+      return ResponseService.sendError(
+        { message: "Error updating models information." },
+        res
+      );
     }
   }
 }

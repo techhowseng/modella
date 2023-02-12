@@ -28,6 +28,7 @@ export const useFieldsErrorCheck = (
 export const useRegistrationUserType = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const userData = getCookieData();
   const { type, verified } =
     typeof window === "object"
       ? queryString.parse(location.search)
@@ -37,7 +38,6 @@ export const useRegistrationUserType = () => {
     if (!type && !verified) {
       router.push(APP_ROUTES.auth);
     } else if (verified) {
-      const userData = getCookieData();
       dispatch(registerSessionUser(userData));
     }
   }, []);

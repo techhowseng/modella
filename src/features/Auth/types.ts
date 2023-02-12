@@ -27,6 +27,7 @@ export type AuthRegistrationCompleteFormType = {
   firstname: string;
   lastname: string;
   phone: {};
+  DOB: string;
   address: string;
   state: string;
   country: string;

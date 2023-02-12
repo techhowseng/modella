@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import SessionServices from "../service";
 import UserServices from "../../user/service";
-import { randomStringGenerator } from "../../../../helper/util";
 import { checkExistingUser, existsInDB } from "../../../../helper/util";
 import { ResponseService } from "../../../../services/ResponseService";
 import { EntityExistsError } from "helper/errors";
