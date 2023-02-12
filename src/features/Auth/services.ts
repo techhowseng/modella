@@ -28,7 +28,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const updateUser = createAsyncThunk(
+export const createModel = createAsyncThunk(
   "register/user/model",
   async (data: AuthRegistrationCompleteFormType) => {
     try {

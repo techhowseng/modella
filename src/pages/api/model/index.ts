@@ -21,6 +21,7 @@ export default async function handle(
       res.json(await ModelRepository.createModel(req, res));
       break;
     case "PUT":
+      res.json(await ModelRepository.updateModel(req, res));
       break;
     case "PATCH":
       break;

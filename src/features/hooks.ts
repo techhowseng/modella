@@ -1,6 +1,8 @@
 import { APP_ROUTES } from "lib/routes";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
+import { SIGN_UP_STEPS } from "./Auth/SignUp/constants";
 import { getCookieData } from "./functions";
 
 export const useGetSessionUser = () => {
@@ -14,4 +16,93 @@ export const useGetSessionUser = () => {
   }, [userData]);
 
   return { userData };
+};
+
+export const useFieldsErrorCheck = (
+  values: any,
+  schema: any,
+  handleNext: any,
+  setErrorMessage: any,
+  e: any
+) => {
+  schema
+    .validate(values)
+    .then(() => {
+      handleNext(e);
+    })
+    .catch((err: { errors: string[] }) => {
+      setErrorMessage(err.errors[0]);
+    });
+};
+
+export const useForm = (initialValues: any, schema: any, cb: any) => {
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState(initialValues);
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [successMessage, setSuccessMessage] = React.useState<string>("");
+  const [stepState, setStepState] = React.useState(SIGN_UP_STEPS.MORE_DETAILS);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isCheckBox = e.target.type === "checkbox";
+
+    if (e.target.name.includes(".")) {
+      const name = e.target.name.split(".")[0];
+      const subName = e.target.name.split(".")[1];
+      setFormData({
+        ...formData,
+        [name]: {
+          ...formData[name],
+          [subName]: e.target.value,
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: isCheckBox ? e.target.checked : e.target.value,
+      });
+    }
+  };
+
+  const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setSuccessMessage("");
+    setErrorMessage("");
+    // validate data and dispatch action to move to next step here ...
+    setStepState(stepState + 1);
+  };
+
+  // handle submit
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setErrorMessage("");
+    setLoading(true);
+    // validate data and dispatch action to register user here ...
+    // confirm password and confirmPassword match
+    schema
+      .validate(formData)
+      .catch((err: { errors: React.SetStateAction<string>[] }) => {
+        setErrorMessage(err.errors[0]);
+        setLoading(false);
+      });
+    const isValid = await schema.isValid(formData);
+    if (isValid) {
+      delete formData.confirmPassword;
+      cb(formData);
+      return setLoading(false);
+    }
+  };
+
+  return {
+    formData,
+    handleChange,
+    handleSubmit,
+    errorMessage,
+    setErrorMessage,
+    setSuccessMessage,
+    successMessage,
+    stepState,
+    handleNext,
+    loading,
+    setFormData,
+  };
 };

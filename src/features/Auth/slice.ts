@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "store";
-import { registerUser, updateUser } from "./services";
+import { registerUser, createModel } from "./services";
 import { User, UserState } from "./types";
 
 const initialState: UserState = {
@@ -36,15 +36,14 @@ export const userSlice = createSlice({
         state.error = true;
         state.message = payload.error.message;
       })
-      .addCase(updateUser.pending, (state) => {
+      .addCase(createModel.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateUser.fulfilled, (state, { payload }) => {
+      .addCase(createModel.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.data.user = { ...state.data.user, ...payload };
-        console.log("payload >>>> ", payload);
       })
-      .addCase(updateUser.rejected, (state, payload) => {
+      .addCase(createModel.rejected, (state, payload) => {
         state.loading = false;
         state.error = true;
         state.message = payload.error.message;

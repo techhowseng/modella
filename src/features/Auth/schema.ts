@@ -20,12 +20,3 @@ export const signUpCompleteFormDataSchema = yup.object().shape({
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
 });
-
-// export const bioCompleteFormDataSchema = yup.object().shape({
-//   firstname: yup.string().required("First Name is required"),
-//   lastname: yup.string().required("Last Name is required"),
-//   phone: yup.string().required("Phone is required"),
-//   address: yup.string().required("Address is required"),
-//   country: yup.string().required("Country is required"),
-//   state: yup.string().required("State is required"),
-// });

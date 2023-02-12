@@ -1,9 +1,9 @@
 import AlertMessage from "components/AlertMessage";
 import Button from "components/Button";
 import Input from "components/Input";
-import { useFieldsErrorCheck, useForm } from "features/Auth/hooks";
+import { useFieldsErrorCheck, useForm } from "features/hooks";
 import { signUpCompleteFormDataSchema } from "features/Auth/schema";
-import { updateUser } from "features/Auth/services";
+import { createModel } from "features/Auth/services";
 import { getSessionUser } from "features/Auth/slice";
 import { AuthRegistrationCompleteFormType } from "features/Auth/types";
 import { APP_ROUTES } from "lib/routes";
@@ -43,7 +43,7 @@ function ModelCompleteForm() {
         phone_1: formData.phone,
       };
 
-      dispatch(updateUser(formData)).then((res) => {
+      dispatch(createModel(formData)).then((res) => {
         if (res.payload.error) {
           setErrorMessage(res.payload.data.message);
         } else {

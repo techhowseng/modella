@@ -2,7 +2,7 @@ import AlertMessage from "components/AlertMessage";
 import Button from "components/Button";
 import CheckBox from "components/CheckBox";
 import Input from "components/Input";
-import { useForm } from "features/Auth/hooks";
+import { useForm } from "features/hooks";
 import { signUpFormDataSchema } from "features/Auth/schema";
 import { registerUser } from "features/Auth/services";
 import { getSessionUser } from "features/Auth/slice";
