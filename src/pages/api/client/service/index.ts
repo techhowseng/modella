@@ -12,7 +12,6 @@ export default class ClientServices {
     res,
     userId: string,
     companyName: string,
-    email: string,
     phone: object,
     social: object,
     state: string,
@@ -22,7 +21,6 @@ export default class ClientServices {
     try {
       const client = await this.prisma.client.create({
         data: {
-          email,
           companyName,
           phone,
           social,

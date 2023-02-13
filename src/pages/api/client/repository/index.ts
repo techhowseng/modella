@@ -18,7 +18,6 @@ export default class ClientRepository {
     try {
       const {
         companyName,
-        email,
         phone,
         social,
         state,
@@ -31,7 +30,6 @@ export default class ClientRepository {
           res,
           user.id,
           companyName,
-          email,
           phone,
           social,
           state,

@@ -174,7 +174,7 @@ export default class UserRepository {
         const user: any = await UserServices.createUser(
           res,
           email,
-          bcrypt.hashSync(password, 8),
+          password,
           type,
           true
         );
