@@ -1,7 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { setCookie } from "cookies-next";
 import { updateModel } from "features/BioData/services";
+import { deleteCookie } from "helper/cookie";
+import { SESSION_NAME } from "lib/constants";
 import { RootState } from "store";
-import { registerUser, createModel } from "./services";
+import {
+  registerUser,
+  createModel,
+  deleteSession,
+  createSession,
+} from "./services";
 import { User, UserState } from "./types";
 
 const initialState: UserState = {
@@ -20,6 +28,26 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(createSession.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createSession.fulfilled, (state, { payload }) => {
+        // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
+        state.loading = false;
+        state.data.user = payload.data ?? payload;
+        setCookie(SESSION_NAME, JSON.stringify(payload), {
+          maxAge: 60 * 60 * 24,
+        });
+        state.message = payload.message;
+        if (payload.error) {
+          state.error = true;
+        }
+      })
+      .addCase(createSession.rejected, (state, payload) => {
+        state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
+      })
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
       })
@@ -57,6 +85,19 @@ export const userSlice = createSlice({
         state.data.user = { ...state.data.user, ...payload };
       })
       .addCase(updateModel.rejected, (state, payload) => {
+        state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
+      })
+      .addCase(deleteSession.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteSession.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.data.user = {};
+        deleteCookie(SESSION_NAME);
+      })
+      .addCase(deleteSession.rejected, (state, payload) => {
         state.loading = false;
         state.error = true;
         state.message = payload.error.message;

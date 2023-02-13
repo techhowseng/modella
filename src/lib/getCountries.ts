@@ -4,7 +4,7 @@ import statesList from "lib/provinces.json";
 
 export const getCountries = () => {
   return countriesList.map((country) => ({
-    value: country.id,
+    value: country.name,
     label: country.name,
   }));
 };

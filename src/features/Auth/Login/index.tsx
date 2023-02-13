@@ -1,12 +1,49 @@
+import AlertMessage from "components/AlertMessage";
 import SideDisplay from "components/Auth/SideDisplay";
 import Button from "components/Button";
+import Input from "components/Input";
+import { useForm } from "features/hooks";
 import { APP_ROUTES } from "lib/routes";
-import Head from "next/head";
 import Link from "next/link";
+import Router from "next/router";
 import React from "react";
 import { HiOutlineEye } from "react-icons/hi";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { LOGIN_FORM } from "../formFieldData";
+import { loginFormDataSchema } from "../schema";
+import { createSession } from "../services";
+import { getSessionUser } from "../slice";
+import { LoginSessionType } from "../types";
 
 function Login() {
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector(getSessionUser);
+  const {
+    handleChange,
+    handleSubmit,
+    errorMessage,
+    setErrorMessage,
+    setSuccessMessage,
+  } = useForm(
+    {
+      email: "",
+      password: "",
+    },
+    loginFormDataSchema,
+    (formData: LoginSessionType) => {
+      dispatch(createSession(formData)).then((res) => {
+        console.log("🚀 ~ file: index.tsx:29 ~ dispatch ~ res", res);
+
+        if (res.payload.error) {
+          setErrorMessage(res.payload.data.message);
+        } else {
+          setSuccessMessage(res.payload.message || res.type);
+          Router.push(APP_ROUTES.jobs);
+        }
+      });
+    }
+  );
+
   return (
     <div className="flex flex-col-reverse sm:flex-col-reverse md:flex-col-reverse lg:flex-row sm:h-fit lg:h-screen">
       <SideDisplay />
@@ -24,16 +61,25 @@ function Login() {
           </div>
 
           <div className="flex flex-col mt-10">
-            <div className="flex flex-col mt-10">
-              <label className="mb-2">Email Address</label>
-              <input
-                type="email"
-                placeholder="abc@mail.com"
-                className="base-input w-full p-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-              />
+            {errorMessage && (
+              <AlertMessage type="error" message={errorMessage} />
+            )}
+
+            <div className="grid grid-cols-6 gap-6">
+              {LOGIN_FORM.map((field, index) => (
+                <div key={index} className="col-span-6 sm:col-span-6">
+                  <Input
+                    type={field.type}
+                    onChange={handleChange}
+                    label={field.label}
+                    name={field.name}
+                    id={field.name}
+                  />
+                </div>
+              ))}
             </div>
 
-            <div className="flex flex-col mt-10">
+            {/* <div className="flex flex-col mt-10">
               <label className="mb-2">Password</label>
               <div className="relative w-full">
                 <input
@@ -43,11 +89,15 @@ function Login() {
                 />
                 <HiOutlineEye className="absolute top-4 right-4" size={24} />
               </div>
-            </div>
+            </div> */}
 
             <div className="w-full flex flex-col md:flex-col lg:flex-row mt-10 justify-between items-center">
               <p className="base-grey mb-10">Forget Password?</p>
-              <Button onClick={() => {}}>
+              <Button
+                onClick={handleSubmit}
+                loading={loading}
+                loadingText={"Loading..."}
+              >
                 <p className="text-white">Sign In</p>
               </Button>
             </div>

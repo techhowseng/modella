@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { uuid } from 'uuidv4';
+import { uuid } from "uuidv4";
 import UserServices, { TUser } from "../service";
 import SessionServices from "../../session/service";
 import { getUser } from "../../../../helper/util";
@@ -25,7 +25,7 @@ export default class UserRepository {
     try {
       const inputs = req.body;
       inputs.email = inputs.email.toLowerCase();
-      inputs.password = bcrypt.hashSync(inputs.password, 8)
+      inputs.password = bcrypt.hashSync(inputs.password, 8);
       // this should be in service
       const existingEmail = await prisma.user.findFirst({
         where: {
@@ -51,13 +51,14 @@ export default class UserRepository {
         res,
         200,
         "Please verify your email address within 10 minutes",
-        (({ token, email}) => ({token, email}))(newVerification));
+        (({ token, email }) => ({ token, email }))(newVerification)
+      );
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async updateUser(req, res) {
+  static async updateUser(req: NextApiRequest, res: NextApiResponse<any>) {
     interface Input {
       email?: string;
       password?: string;
@@ -83,17 +84,17 @@ export default class UserRepository {
     }
   }
 
-  static async getUser(req, res) {
+  static async getUser(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      const user = await UserServices.getUser(res, pid);
+      const user = await UserServices.getUser(res, pid as string);
       return user;
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async getUserByEmail(req, res) {
+  static async getUserByEmail(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { email } = req.body;
       const user = await UserServices.getUserByEmail(res, email);
@@ -103,21 +104,21 @@ export default class UserRepository {
     }
   }
 
-  static async deleteUser(req, res) {
+  static async deleteUser(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       let { pid } = req.query;
       const user = await getUser(req);
       if (user) {
         pid = user.type == "Admin" ? pid : user.id;
       }
-      const deletedUser = await UserServices.deleteUser(pid);
+      const deletedUser = await UserServices.deleteUser(pid as string);
       return deletedUser;
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async getSession(req, res) {
+  static async getSession(req: { body: { token: any } }, res: any) {
     try {
       const { token } = req.body;
       const user = await SessionServices.getSession(res, token);
@@ -127,7 +128,7 @@ export default class UserRepository {
     }
   }
 
-  static async updateSession(req, res) {
+  static async updateSession(req: { body: { token: any } }, res: any) {
     try {
       const { token } = req.body;
       const user = await SessionServices.updateSession(res, token);
@@ -137,7 +138,10 @@ export default class UserRepository {
     }
   }
 
-  static async createVerificationToken(req, res) {
+  static async createVerificationToken(
+    req: { body: { token: any; identifier: any } },
+    res: any
+  ) {
     try {
       const { token, identifier } = req.body;
       const user = await UserServices.createVerificationToken(
@@ -150,7 +154,7 @@ export default class UserRepository {
     }
   }
 
-  static async getVerificationToken(req, res) {
+  static async getVerificationToken(req: { body: { token: any } }, res: any) {
     try {
       const { token } = req.body;
       const user = await UserServices.getVerificationToken(token);
@@ -167,13 +171,13 @@ export default class UserRepository {
       const verifiedUser = await UserServices.verifyToken(res, token);
       if (verifiedUser) {
         const { email, password, type } = verifiedUser as any;
-        const user = await UserServices.createUser(
+        const user: any = await UserServices.createUser(
           res,
           email,
           bcrypt.hashSync(password, 8),
           type,
           true
-          );
+        );
         await UserServices.deleteVerificationToken(res, email);
         const jwtToken = jwt.sign(user, JWT_KEY, {
           expiresIn: "24hr",

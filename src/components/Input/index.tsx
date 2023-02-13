@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
+import PasswordVisibilty from "./PasswordVisibilty";
 
 interface InputProps {
   id?: string;
@@ -31,6 +33,7 @@ function Input({
   autoComplete,
   options = [],
 }: InputProps) {
+  const [inputType, setInputType] = useState(type);
   const renderInput = () => {
     if (type === "textarea") {
       return (
@@ -40,7 +43,7 @@ function Input({
           rows={4}
           // value={value || ""}
           onChange={onChange}
-          className={`base-input p-4 rounded-lg border-2 ${
+          className={`w-full base-input p-4 rounded-lg border-2 ${
             error ? "base-border-red" : "border-gray-200"
           } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
           placeholder={placeholder}
@@ -83,7 +86,7 @@ function Input({
     return (
       <input
         id={id}
-        type={type}
+        type={inputType}
         name={name}
         placeholder={placeholder}
         value={value}
@@ -102,7 +105,17 @@ function Input({
   return (
     <div className="flex flex-col w-full">
       {label && <label className="mb-2">{label}</label>}
-      <>{renderInput()}</>
+      <div className="relative">
+        {renderInput()}
+        {type === "password" && (
+          <PasswordVisibilty
+            initialType={type}
+            inputType={inputType}
+            setInputType={setInputType}
+          />
+        )}
+      </div>
+
       <p className="base-red">{error}</p>
     </div>
   );

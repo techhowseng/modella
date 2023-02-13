@@ -71,7 +71,7 @@ function ClientSignupForm({ verified }: { verified?: boolean }) {
             <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
               {/* @ts-ignore */}
               {!data.user.sessionToken
-                ? CLIENT_SIGNUP_FORM.map((field) => (
+                ? CLIENT_SIGNUP_FORM.map((field: any) => (
                     <Input
                       key={field.name}
                       label={field.label}
@@ -80,12 +80,13 @@ function ClientSignupForm({ verified }: { verified?: boolean }) {
                       onChange={handleChange}
                     />
                   ))
-                : CLIENT_SIGNUP_COMPLETE_FORM.map((field) => (
+                : CLIENT_SIGNUP_COMPLETE_FORM.map((field: any) => (
                     <Input
                       key={field.name}
                       label={field.label}
                       name={field.name}
                       type={field.type}
+                      options={field?.options}
                       onChange={handleChange}
                     />
                   ))}

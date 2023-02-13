@@ -62,7 +62,7 @@ function CreatorSignUpForm({ verified }: { verified?: boolean }) {
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
               {/* @ts-ignore */}
-              {CREATOR_SIGNUP_FORM.map((field) => (
+              {CREATOR_SIGNUP_FORM.map((field: any) => (
                 <Input
                   key={field.name}
                   label={field.label}

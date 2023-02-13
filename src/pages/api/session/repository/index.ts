@@ -7,6 +7,7 @@ import UserServices from "../../user/service";
 import { checkExistingUser, existsInDB } from "../../../../helper/util";
 import { ResponseService } from "../../../../services/ResponseService";
 import { EntityExistsError } from "helper/errors";
+import { NextApiRequest, NextApiResponse } from "next";
 
 
 export default class SessionRepository {
@@ -17,29 +18,28 @@ export default class SessionRepository {
 		this.prisma = prisma;
 	}
 	
-	static async loginUser(req, res) {
+	static async loginUser(req: NextApiRequest, res: NextApiResponse<any>) {
 		try {
       const inputs = req.body;
 
       inputs.email = inputs.email.toLowerCase();
-      inputs.password = inputs.password;
 
       const user = await existsInDB(inputs.email, "user", "email");
       const validPassword = await bcrypt.compare(req.body.password, user.password);
       if (validPassword) {
         const jwtToken = jwt.sign(user, process.env.JWT_KEY,{
-          expiresIn: "1hr",
+          expiresIn: "24hr",
         });
         const session = user ? await SessionServices.createSession(res, user.id, jwtToken) :  "";
         return session;
       }
-      throw new Error("Email and password do not match.");
+      throw new Error("Email or password do not match.");
 		} catch(err) {
       return ResponseService.sendError(err, res);
     }
 	}
 
-	static async deleteSession(req, res) {
+	static async deleteSession(req: NextApiRequest, res: NextApiResponse<any>) {
 		try {
       let token: string;
 			const { authorization } = req.headers;

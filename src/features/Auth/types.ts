@@ -16,6 +16,11 @@ export type AuthComponenetType = {
   user: User;
 };
 
+export type LoginSessionType = {
+  email: string;
+  password: string;
+};
+
 export type AuthRegistrationFormType = {
   email: string;
   password: string;

@@ -1,5 +1,18 @@
 import getCountries, { getState } from "lib/getCountries";
 
+export const LOGIN_FORM = [
+  {
+    label: "Email",
+    type: "email",
+    name: "email",
+  },
+  {
+    label: "Password",
+    type: "password",
+    name: "password",
+  },
+];
+
 export const CLIENT_SIGNUP_FORM = [
   {
     label: "Email",

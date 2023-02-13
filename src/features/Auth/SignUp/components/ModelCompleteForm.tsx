@@ -101,6 +101,7 @@ function ModelCompleteForm() {
                     label={field.label}
                     name={field.name}
                     type={field.type}
+                    options={field.options}
                     onChange={handleChange}
                   />
                 ))}
