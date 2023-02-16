@@ -22,7 +22,7 @@ export default class MediaRepository {
 		try {
 			const data = req.body;
 			const image = req.file;
-			const user = await getUser(req);
+			const user = await getUser(req, res);
       if (user) {
 				const base64Image = await parser.format(path.extname(image.originalname).toString(), image.buffer);
 
@@ -57,11 +57,11 @@ export default class MediaRepository {
 		}
 	}
 
-	static async getMediaByUser(req, res) {
+	static async getMediaByUser(req: any, res: any) {
 		try {
 			let { userId } = req.body;
 			if ( !userId) {
-				const user = await getUser(req);
+				const user = await getUser(req, res);
 				userId = user ? user.id : userId
 			}
 			const media = await MediaServices.getMediaByUser(res, userId);
@@ -74,7 +74,7 @@ export default class MediaRepository {
 	static async deleteMedia(req, res) {
 		try {
 			const { id, userId, public_id} = req.body;
-			const user = await getUser(req);
+			const user = await getUser(req, res);
 			if (user && user.type != "Admin" && userId == user.id) {
 				return new Response('This user is not authorised to update the image.', {
 					status: 401,
@@ -95,7 +95,7 @@ export default class MediaRepository {
 		try {
 			const { id, userId, content, contentType } = req.body
 			const image = req.file;
-			const user = await getUser(req);
+			const user = await getUser(req, res);
 			if (user && user.type != "Admin" && userId == user.id) {
 				return new Response('This user is not authorised to update the image.', {
 					status: 401,
@@ -127,12 +127,9 @@ export default class MediaRepository {
 		try {
 			let { userId, type } = req.body
 			if (!userId) {
-				let token: string;
-				const { authorization } = req.headers;
-				if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-				const session = await SessionService.getSession(res, token)
-				if (session) {
-					userId = session.id
+				const user = await getUser(req, res);
+				if (user) {
+					userId = user.id
 				}
 			}
 			const updatedMedia = await MediaServices.getMediaByType(res, userId, type);
@@ -146,12 +143,9 @@ export default class MediaRepository {
 		try {
 			let { content, type, userId } = req.body
 			if (!userId) {
-				let token: string;
-				const { authorization } = req.headers;
-				if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-				const session = await SessionService.getSession(res, token)
-				if (session) {
-					userId = session.id
+				const user = await getUser(req, res);
+				if (user) {
+					userId = user.id
 				}
 			}
 			const uploadedImages = await MediaServices.uploadProfileImages(res, userId, content, type);

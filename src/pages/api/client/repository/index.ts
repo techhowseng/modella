@@ -16,25 +16,13 @@ export default class ClientRepository {
 
   static async createClient(req, res) {
     try {
-      const {
-        companyName,
-        phone,
-        social,
-        state,
-        country,
-        address
-      } = req.body;
+      const data = req.body;
       const user = await getUser(req);
       if (user) {
         const client = await ClientServices.createClient(
           res,
           user.id,
-          companyName,
-          phone,
-          social,
-          state,
-          country,
-          address
+          data
         );
       return client;
     }
@@ -60,8 +48,8 @@ export default class ClientRepository {
   static async getClient(req, res) {
     try {
       const { pid } = req.query;
-      const user = await ClientServices.getClient(res, ~~pid);
-      return user;
+      const client = await ClientServices.getClient(res, ~~pid);
+      return client;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -69,8 +57,8 @@ export default class ClientRepository {
 
   static async getAllClients(res) {
     try {
-      const user = await ClientServices.getAllClients(res);
-      return user;
+      const clients = await ClientServices.getAllClients(res);
+      return clients;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }

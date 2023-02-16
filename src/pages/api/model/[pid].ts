@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { validateUpdateModel } from "./modelValidation";
 import ModelRepository from "./repository/index";
+import { validationResult } from "express-validator";
+import { permittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -13,6 +16,11 @@ export default async function handle(
     case "POST":
       break;
     case "PUT":
+      await validateUpdateModel(req, res);
+      const updateErrors = validationResult(req);
+      if (!updateErrors.isEmpty())
+        return res.status(422).json({ errors: updateErrors.array() });
+      permittedParams(req);
       res.json(await ModelRepository.updateModel(req, res));
       break;
     case "PATCH":

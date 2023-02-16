@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 import ModelRepository from "./repository/index";
-import { validateModel } from "./modelValidation";
+import { validateCreateModel } from "./modelValidation";
 import { validationResult } from "express-validator";
+import { permittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -14,14 +14,14 @@ export default async function handle(
       res.json(await ModelRepository.getAllModels(res));
       break;
     case "POST":
-      await validateModel(req, res);
+      await validateCreateModel(req, res);
       const createErrors = validationResult(req);
       if (!createErrors.isEmpty())
         return res.status(422).json({ errors: createErrors.array() });
+      permittedParams(req);
       res.json(await ModelRepository.createModel(req, res));
       break;
     case "PUT":
-      res.json(await ModelRepository.updateModel(req, res));
       break;
     case "PATCH":
       break;

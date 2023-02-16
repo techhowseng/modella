@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ResponseService } from "../../../../services/ResponseService";
-import { getUser } from "helper/util";
+import { getUser, getModel } from "helper/util";
 import SessionService from "../../session/service";
 import prisma from "lib/prisma";
 import ModelServices, { TModel } from "../service";
@@ -20,17 +20,16 @@ export default class ModelRepository {
 	static async createModel(req: NextApiRequest, res: NextApiResponse<any>) {
 		const data = req.body;
     try {
-      const session = await getUser(req);
-      if (session) {
-        const user = await ModelServices.createModel(
+      const user = await getUser(req, res);
+      if (user) {
+        const model = await ModelServices.createModel(
           res,
-          session.id,
+          user.id,
           data
         );
-        return user;
+        return model;
       }
     } catch(err) {
-      console.log('err >>> ', err);
       return ResponseService.sendError(err, res);
     }
 	}
@@ -38,23 +37,29 @@ export default class ModelRepository {
 	static async getModel(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      const user = await ModelServices.getModel(res, ~~pid);
-      return user;
+      if (pid == "user") {
+        const model = await getModel(req, res);
+        return model;
+      } else if (pid.length == 25) {
+        const model = await ModelServices.getModelByUserId(res, pid as string);
+        return model;
+      }
+      return await ModelServices.getModel(res, ~~pid);
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
 	}
 
   static async getAllModels(res: NextApiResponse<any>) {
-		const user = await ModelServices.getAllModels(res);
-		return user;
+		const models = await ModelServices.getAllModels(res);
+		return models;
 	}
 
 	static async updateModel(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const data = req.body
       let { pid } = req.query;
-      const user = await getUser(req);
+      const user = await getUser(req, res);
       if (user) {
         const userId = user.type == "Admin" ? pid : user.id
         const model = await ModelServices.updateModel(res, userId, data);

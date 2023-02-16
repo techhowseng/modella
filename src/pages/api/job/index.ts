@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { validationResult } from 'express-validator';
 import { validateCreateJob, validateUpdateJob } from "./jobValidation";
 import JobsRepository from "./repository";
+import { permittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -16,6 +17,7 @@ export default async function handle(
       await validateCreateJob(req, res)
       const createErrors = validationResult(req)
       if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+      permittedParams(req);
       res.json(await JobsRepository.createJob(req, res));
       break;
     case "PUT":

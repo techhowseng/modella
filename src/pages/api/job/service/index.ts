@@ -11,24 +11,12 @@ export default class JobServices {
   static async createJob(
     res,
     clientId: number,
-    jobRole: string,
-    jobDescription: string,
-    locations: object,
-    salary: string,
-    jobType: string,
-    jobLength: string,
-    isOpen: boolean | null
+    data: TJob
   ) {
     try {
       const job = await this.prisma.job.create({
         data: {
-          jobRole,
-          jobDescription,
-          locations,
-          salary,
-          jobType,
-          jobLength,
-          isOpen,
+          ...data,
           client: {
             connect: { id: clientId },
           },
@@ -86,7 +74,7 @@ export default class JobServices {
     }
   }
 
-  static async updateJob(res, data: TJob) {
+  static async updateJob(res: any, data: TJob) {
     try {
       const updatedJob = await this.prisma.job.update({
         where: { id: data.id },
@@ -98,7 +86,7 @@ export default class JobServices {
     }
   }
 
-  static async deleteJob(res, id: number) {
+  static async deleteJob(res: any, id: number) {
     try {
       const job = await this.prisma.job.delete({
         where: { id },

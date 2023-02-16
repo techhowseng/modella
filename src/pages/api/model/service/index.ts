@@ -20,7 +20,6 @@ export default class UserServices {
       });
       return model;
     } catch (err) {
-      console.log("createModel err >>> ", err);
       return ResponseService.sendError(err, res);
     }
   }
@@ -29,6 +28,17 @@ export default class UserServices {
     try {
       const model = await this.prisma.model.findUnique({
         where: { id },
+      });
+      return model;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async getModelByUserId(res, userId: string) {
+    try {
+      const model = await this.prisma.model.findUnique({
+        where: { userId },
       });
       return model;
     } catch (err) {
