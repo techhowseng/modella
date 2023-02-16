@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { validationResult } from 'express-validator';
 import HistoryRepository from "./respository";
-import { validateModelHistory } from "./historyValidation";
+import { validateUpdateHistory } from "./historyValidation";
+import { permittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -14,9 +15,10 @@ export default async function handle(
     case "POST":
       break;
     case "PUT":
-      await validateModelHistory(req, res)
+      await validateUpdateHistory(req, res)
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
+      permittedParams(req);
       res.json(await HistoryRepository.updateHistory(req, res));
       break;
     case "PATCH":

@@ -25,3 +25,10 @@ export const validateUpdateUser = initMiddleware(
       .withMessage('has to be a Model or a Client.'),
   ], validationResult)
 )
+
+export const validatePatchUser = initMiddleware(
+  validateMiddleware([
+      check('verifyToken').isLength({min:36}).optional({ nullable: true })
+      .withMessage('verify token is not valid.')
+  ], validationResult)
+)

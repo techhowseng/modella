@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { validationResult } from 'express-validator';
 import ClientRepository from "./repository/index";
-import { validateClient } from "./clientValidation";
+import { validateCreateClient } from "./clientValidation";
+import { permittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -13,9 +14,10 @@ export default async function handle(
       res.json(await ClientRepository.getAllClients(res));
       break;
     case "POST":
-      await validateClient(req, res)
+      await validateCreateClient(req, res)
       const createErrors = validationResult(req)
       if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+      permittedParams(req);
       res.json(await ClientRepository.createClient(req, res));
       break;
     case "PUT":

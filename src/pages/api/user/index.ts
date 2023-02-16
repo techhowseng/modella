@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { validationResult } from "express-validator";
+import { validationResult, matchedData } from "express-validator";
 import UserRepository from "./repository";
-import { validateUser, validateUpdateUser } from "./userValidation";
+import { permittedParams } from "helper/util";
+import { validateUser, validatePatchUser } from "./userValidation";
 
 export default async function handle(
   req: NextApiRequest,
@@ -18,11 +19,18 @@ export default async function handle(
       if (!createErrors.isEmpty()) {
         return res.status(422).json({ errors: createErrors.array() });
       }
+      permittedParams(req);
       res.json(await UserRepository.createUser(req, res));
       break;
     case "PUT":
       break;
     case "PATCH":
+      await validatePatchUser(req, res);
+      const createPatchErrors = validationResult(req);
+      if (!createPatchErrors.isEmpty()) {
+        return res.status(422).json({ errors: createPatchErrors.array() });
+      }
+      permittedParams(req);
       res.json(await UserRepository.verifyUser(req, res));
       break;
     case "DELETE":

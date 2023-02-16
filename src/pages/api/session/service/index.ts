@@ -49,26 +49,40 @@ export default class SessionServices {
       if (!sessionToken) return null;
       const session = await this.prisma.session.findUnique({
         where: { sessionToken },
-      }).user().client();
-      return session;
+        include: {
+          user: {
+            include: {
+              client: true
+            }
+          }
+        }
+      })
+      return (({ user }) => ({ ...user.client }))(session)
     } catch(err) {
       return ResponseService.sendError({message: "There was an error retrieving the token details"}, res);
     }
   }
 
-  static async getModelSession(res, sessionToken: string | null) {
+  static async getModelSession(res: any, sessionToken: string | null) {
     try {
       if (!sessionToken) return null;
       const session = await this.prisma.session.findUnique({
         where: { sessionToken },
-      }).user().model();
-      return session;
+        include: {
+          user: {
+            include: {
+              model: true
+            }
+          }
+        }
+      })
+      return (({ user }) => ({ ...user.model }))(session)
     } catch(err) {
-      return ResponseService.sendError({message: "There was an error retrieving the token details"}, res);
+      ResponseService.sendError({ message: 'The user does not have an associated model.' }, res);
     }
   }
 
-  static async updateSession(res, session: TSession, force?: boolean) {
+  static async updateSession(res: any, session: TSession, force?: boolean) {
     try {
       const expires = TWENTY_FOUR_HOURS_FROM_NOW;
       const updatedSession = await this.prisma.session.update({

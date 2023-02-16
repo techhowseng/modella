@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
+import { matchedData } from "express-validator";
 import SessionService from "../pages/api/session/service";
 
 export const checkExistingUser = async (email) => {
@@ -18,11 +19,11 @@ export const existsInDB = async (data, model, columnName) => {
   return existingValue
 }
 
-export const getUser = async (request) => {
+export const getUser = async (request, response) => {
   let token;
   const { authorization } = request.headers;
   if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-  const session = await SessionService.getSession(request, token);
+  const session = await SessionService.getSession(response, token);
   return session;
 }
 
@@ -34,11 +35,11 @@ export const getClient = async (request) => {
   return session;
 }
 
-export const getModel = async (request) => {
+export const getModel = async (request, response) => {
   let token;
   const { authorization } = request.headers;
   if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-  const session = await SessionService.getModelSession(request, token);
+  const session = await SessionService.getModelSession(response, token);
   return session;
 }
 
@@ -48,4 +49,11 @@ export const getObjectVal = (obj, key, defaultVal) => {
 
 export const isEmptyObject = (obj) => {
   return JSON.stringify(obj) === '{}'
+}
+
+export const permittedParams = (req) => {
+  req.body = matchedData(req, {
+    includeOptionals: true,
+    onlyValidData: true
+   });
 }

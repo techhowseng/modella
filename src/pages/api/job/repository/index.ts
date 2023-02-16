@@ -14,15 +14,7 @@ export default class JobsRepository {
 
   static async createJob(req, res) {
     try {
-      const {
-        jobRole,
-        jobDescription,
-        locations,
-        salary,
-        jobType,
-        jobLength,
-        isOpen
-      } = req.body;
+      const data = req.body;
       let token;
       const { authorization } = req.headers;
       if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
@@ -31,13 +23,7 @@ export default class JobsRepository {
       const contract = await JobsServices.createJob(
         res,
         session.id,
-        jobRole,
-        jobDescription,
-        locations,
-        salary,
-        jobType,
-        jobLength,
-        isOpen
+        data
       );
       
       return contract;

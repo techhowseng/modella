@@ -9,24 +9,14 @@ export default class ClientServices {
   static prisma: PrismaClient = prisma;
 
   static async createClient(
-    res,
+    res: any,
     userId: string,
-    companyName: string,
-    phone: object,
-    social: object,
-    state: string,
-    country: string,
-    address: string
+    data: TClient
   ) {
     try {
       const client = await this.prisma.client.create({
         data: {
-          companyName,
-          phone,
-          social,
-          state,
-          country,
-          address,
+          ...data,
           user: {
             connect: { id: userId },
           },
@@ -38,7 +28,7 @@ export default class ClientServices {
     }
   }
 
-  static async getClient(res, id: number) {
+  static async getClient(res: any, id: number) {
     try {
       const client = await this.prisma.client.findUnique({
         where: { id },
@@ -49,7 +39,7 @@ export default class ClientServices {
     }
   }
 
-  static async getAllClients(res) {
+  static async getAllClients(res: any) {
     try {
       const client = await this.prisma.client.findMany();
       return client;
@@ -58,7 +48,7 @@ export default class ClientServices {
     }
   }
 
-  static async updateClient(res, userId: string, data: TClient) {
+  static async updateClient(res: any, userId: string, data: TClient) {
     try {
       const updatedClient = await this.prisma.client.update({
         where: { userId },

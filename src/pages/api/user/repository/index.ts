@@ -69,7 +69,7 @@ export default class UserRepository {
       const { email, password, type } = req.body;
       let { pid } = req.query;
 
-      const user = await getUser(req);
+      const user = await getUser(req, res);
       if (user) {
         pid = user.type == "Admin" ? pid : user.id;
       }
@@ -78,7 +78,13 @@ export default class UserRepository {
       password ? (input.password = bcrypt.hashSync(password, 8)) : null;
       type ? (input.type = type) : null;
       const updatedUser = await UserServices.updateUser(res, pid, input);
-      return updatedUser;
+      if (updatedUser) {
+        return (({
+          id, email, type, isAuthenticated, updatedAt, isDeleted
+        }) => ({
+          id, email, type, isAuthenticated, updatedAt, isDeleted
+        }))(updatedUser);
+      }
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -88,7 +94,13 @@ export default class UserRepository {
     try {
       const { pid } = req.query;
       const user = await UserServices.getUser(res, pid as string);
-      return user;
+      if (user) {
+        return (({
+          id, email, type, isAuthenticated, updatedAt, isDeleted
+        }) => ({
+          id, email, type, isAuthenticated, updatedAt, isDeleted
+        }))(user);
+      }
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -98,7 +110,13 @@ export default class UserRepository {
     try {
       const { email } = req.body;
       const user = await UserServices.getUserByEmail(res, email);
-      return user;
+      if (user) {
+        return (({
+          id, email, type, isAuthenticated, updatedAt, isDeleted
+        }) => ({
+          id, email, type, isAuthenticated, updatedAt, isDeleted
+        }))(user);
+      }
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -107,12 +125,18 @@ export default class UserRepository {
   static async deleteUser(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       let { pid } = req.query;
-      const user = await getUser(req);
+      const user = await getUser(req, res);
       if (user) {
         pid = user.type == "Admin" ? pid : user.id;
       }
       const deletedUser = await UserServices.deleteUser(pid as string);
-      return deletedUser;
+      if (deletedUser) {
+        return (({
+          id, email, type, isAuthenticated, updatedAt, isDeleted
+        }) => ({
+          id, email, type, isAuthenticated, updatedAt, isDeleted
+        }))(deletedUser);
+      }
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -158,7 +182,13 @@ export default class UserRepository {
     try {
       const { token } = req.body;
       const user = await UserServices.getVerificationToken(token);
-      return user;
+      if (user) {
+        return (({
+          email, type, token, expires
+        }) => ({
+          email, type, token, expires
+        }))(user);
+      }
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -186,13 +216,16 @@ export default class UserRepository {
           ? await SessionServices.createSession(res, user.id, jwtToken)
           : null;
         const userDetails = {
-          ...user,
+          ...(({ id, email, type, isAuthenticated, createdAt }) => (
+            { id, email, type, isAuthenticated, createdAt }
+            ))(user),
           ...session,
         };
+        
         return userDetails;
       } else
         return ResponseService.sendError(
-          { message: "Email verification Token has expired" },
+          { message: "This Token has expired or has already been verified." },
           res
         );
     } catch (err) {
