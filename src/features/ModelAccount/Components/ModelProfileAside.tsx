@@ -22,10 +22,10 @@ function ModelProfileAside() {
         Professional Model
       </h5>
       <div className="flex flex-row justify-center my-2">
-        <Rating rating={0} />
+        <Rating rating={5} />
       </div>
       <div className="flex flex-row justify-between	mt-3">
-        <Button onClick={undefined}>Message</Button>
+        <Button onClick={undefined}>Select</Button>
         <div className="w-3" />
         <Button onClick={undefined}>Hire</Button>
       </div>

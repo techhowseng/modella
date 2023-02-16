@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { validationResult } from 'express-validator';
+import { validationResult } from "express-validator";
 import ClientRepository from "./repository/index";
 import { validateCreateClient } from "./clientValidation";
 import { bodyPermittedParams } from "helper/util";

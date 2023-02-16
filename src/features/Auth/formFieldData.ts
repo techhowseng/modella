@@ -33,20 +33,51 @@ export const CLIENT_SIGNUP_FORM = [
 
 export const CLIENT_SIGNUP_COMPLETE_FORM = [
   {
-    label: "Full Name",
-    type: "text",
-    name: "fullname",
-  },
-  {
     label: "Company name",
     type: "text",
     name: "companyName",
   },
   {
+    label: "Phone Number",
+    type: "phone",
+    name: "phone.number_1",
+  },
+  {
+    label: "Address",
+    type: "text",
+    name: "address",
+  },
+  {
     label: "Country",
     type: "select",
     name: "country",
-    options: [],
+    options: getCountries(),
+  },
+  {
+    label: "State",
+    type: "select",
+    name: "state",
+    options: getState("Nigeria"),
+  },
+  {
+    label: "Facebook Profile Link",
+    type: "url",
+    name: "social.facebook",
+  },
+  {
+    label: "LinkedIn Profile Link",
+    type: "url",
+    name: "social.linkedIn",
+  },
+  {
+    label: "Instagram Profile Link",
+    type: "url",
+    name: "social.instagram",
+  },
+  {
+    label: "Twitter Profile Link",
+    type: "url",
+    name: "social.twitter",
   },
 ];
 

@@ -4,6 +4,7 @@ import { errorHandler } from "lib/errorhandler";
 import {
   AuthRegistrationCompleteFormType,
   AuthRegistrationFormType,
+  ClientRegistrationCompleteFormType,
   LoginSessionType,
 } from "./types";
 
@@ -61,6 +62,36 @@ export const createModel = createAsyncThunk(
   async (data: AuthRegistrationCompleteFormType) => {
     try {
       const response = await axiosInstance.post("/model", data);
+      return response.data;
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+);
+
+export const createClient = createAsyncThunk(
+  "register/user/client",
+  async (data: ClientRegistrationCompleteFormType) => {
+    try {
+      const response = await axiosInstance.post("/client", data);
+      return response.data;
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+);
+
+export const updateClient = createAsyncThunk(
+  "update/user/client",
+  async ({
+    data,
+    id,
+  }: {
+    data: ClientRegistrationCompleteFormType;
+    id: string;
+  }) => {
+    try {
+      const response = await axiosInstance.put(`/client/${id}`, data);
       return response.data;
     } catch (error) {
       return errorHandler(error);

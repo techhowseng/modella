@@ -1,6 +1,7 @@
 import { Types, PrismaClient } from "@prisma/client";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
+import { NextApiResponse } from "next";
 
 // @ts-ignore
 export type TModel = PrismaClient["model"]["create"]["data"];
@@ -24,7 +25,7 @@ export default class UserServices {
     }
   }
 
-  static async getModel(res, id: number) {
+  static async getModel(res: NextApiResponse<any>, id: number) {
     try {
       const model = await this.prisma.model.findUnique({
         where: { id },
@@ -43,7 +44,7 @@ export default class UserServices {
     }
   }
 
-  static async getModelByUserId(res, userId: string) {
+  static async getModelByUserId(res: NextApiResponse<any>, userId: string) {
     try {
       const model = await this.prisma.model.findUnique({
         where: { userId },
@@ -62,7 +63,7 @@ export default class UserServices {
     }
   }
 
-  static async getAllModels(res) {
+  static async getAllModels(res: NextApiResponse<any>) {
     try {
       const model = await this.prisma.model.findMany();
       return model;
@@ -71,7 +72,7 @@ export default class UserServices {
     }
   }
 
-  static async updateModel(res, userId, data) {
+  static async updateModel(res: NextApiResponse<any>, userId: string, data: any) {
     try {
       const updatedModel = await this.prisma.model.update({
         where: { userId },

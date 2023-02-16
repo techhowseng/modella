@@ -9,6 +9,8 @@ import {
   createModel,
   deleteSession,
   createSession,
+  createClient,
+  updateClient,
 } from "./services";
 import { User, UserState } from "./types";
 
@@ -73,6 +75,30 @@ export const userSlice = createSlice({
         state.data.user = { ...state.data.user, ...payload };
       })
       .addCase(createModel.rejected, (state, payload) => {
+        state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
+      })
+      .addCase(createClient.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createClient.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.data.user = { ...state.data.user, ...payload };
+      })
+      .addCase(createClient.rejected, (state, payload) => {
+        state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
+      })
+      .addCase(updateClient.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateClient.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.data.user = { ...state.data.user, ...payload };
+      })
+      .addCase(updateClient.rejected, (state, payload) => {
         state.loading = false;
         state.error = true;
         state.message = payload.error.message;
