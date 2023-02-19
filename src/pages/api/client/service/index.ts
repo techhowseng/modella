@@ -8,11 +8,7 @@ export type TClient = PrismaClient["client"]["create"]["data"];
 export default class ClientServices {
   static prisma: PrismaClient = prisma;
 
-  static async createClient(
-    res: any,
-    userId: string,
-    data: TClient
-  ) {
+  static async createClient(res: any, userId: string, data: TClient) {
     try {
       const client = await this.prisma.client.create({
         data: {
@@ -23,7 +19,7 @@ export default class ClientServices {
         },
       });
       return client;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
@@ -51,7 +47,7 @@ export default class ClientServices {
     try {
       const client = await this.prisma.client.findMany();
       return client;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
@@ -60,11 +56,15 @@ export default class ClientServices {
     try {
       const updatedClient = await this.prisma.client.update({
         where: { userId },
-        data
+        data,
       });
       return updatedClient;
-    } catch(err) {
-      return ResponseService.sendError({message: "There was an error updating the client information."}, res);
+    } catch (err) {
+      console.log("erro >> ", err);
+      return ResponseService.sendError(
+        { message: "There was an error updating the client information." },
+        res
+      );
     }
   }
 }

@@ -2,7 +2,7 @@ import AlertMessage from "components/AlertMessage";
 import Button from "components/Button";
 import Input from "components/Input";
 import { clientCompleteFormDataSchema } from "features/Auth/schema";
-import { updateClient } from "features/Auth/services";
+import { createClient } from "features/Auth/services";
 import { getSessionUser } from "features/Auth/slice";
 import { ClientRegistrationCompleteFormType } from "features/Auth/types";
 import { useForm } from "features/hooks";
@@ -41,19 +41,16 @@ const ClientCompleteForm = () => {
     clientCompleteFormDataSchema,
     (formData: ClientRegistrationCompleteFormType) => {
       // @ts-ignore
-      dispatch(updateClient({ data: formData, id: data.user?.userId })).then(
-        (res) => {
-          if (res.payload.error) {
-            setErrorMessage(res.payload.data.message);
-          } else {
-            console.log("payload >>>> ", res.payload);
-            if (res.payload.DOB) {
-              Router.push(APP_ROUTES.clientProfile);
-            }
-            setSuccessMessage(res.payload.message);
+      dispatch(createClient(formData)).then((res) => {
+        if (res.payload.error) {
+          setErrorMessage(res.payload.data.message);
+        } else {
+          if (res.payload.id) {
+            Router.push(APP_ROUTES.clientProfile);
           }
+          setSuccessMessage(res.payload.message);
         }
-      );
+      });
     }
   );
 
