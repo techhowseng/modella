@@ -81,14 +81,14 @@ model Model {
   user            User              @relation(fields: [userId], references: [id])
   firstname       String
   lastname        String
-  height          String?
-  bust            String?
-  waist           String?
-  hip             String?
-  shoeSize        String?
-  weight          String?
+  height          Int?
+  bust            Int?
+  waist           Int?
+  hip             Int?
+  shoeSize        Int?
+  weight          Decimal?          @db.Decimal(4,1)
   complexion      String?
-  DOB             String
+  dob             DateTime?
   social          Json?
   state           String?
   country         String?
@@ -134,23 +134,24 @@ model Client {
   state           String?
   country         String?
   address         String
+  isVetted        Boolean?           @default(false)
   contracts       Contract[]
   jobs            Job[]
 }
 
 model       Contract {
-  id        Int    @id @default(autoincrement())
-  client    Client @relation(fields: [clientId], references: [id])
-  clientId  Int
-  model     Model  @relation(fields: [modelId], references: [id])
-  modelId   Int
-  status    Status @default(Ongoing)
-  locations Json
-  startDate String?
-  startTime String?
-  hours     String?
-  days      String?
-  fee       String?
+  id            Int         @id @default(autoincrement())
+  client        Client      @relation(fields: [clientId], references: [id])
+  clientId      Int
+  model         Model       @relation(fields: [modelId], references: [id])
+  modelId       Int
+  status        Status      @default(Ongoing)
+  locations     Json
+  startDate     DateTime?
+  startTime     DateTime?
+  hours         Int?
+  days          Int?
+  fee           Decimal?    @db.Decimal(9,2)
 }
 
 enum Status {

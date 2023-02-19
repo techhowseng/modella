@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import ModelRepository from "./repository/index";
-import { validateCreateModel } from "./modelValidation";
-import { validationResult } from "express-validator";
-import { permittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -11,14 +8,9 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
+      res.json(await ModelRepository.getAllModels(res));
       break;
     case "POST":
-      await validateCreateModel(req, res);
-      const createErrors = validationResult(req);
-      if (!createErrors.isEmpty())
-        return res.status(422).json({ errors: createErrors.array() });
-      permittedParams(req);
-      res.json(await ModelRepository.createModel(req, res));
       break;
     case "PUT":
       break;
