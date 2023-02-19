@@ -50,11 +50,6 @@ export default class ModelRepository {
     }
 	}
 
-  static async getAllModels(res: NextApiResponse<any>) {
-		const models = await ModelServices.getAllModels(res);
-		return models;
-	}
-
 	static async updateModel(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const data = req.body

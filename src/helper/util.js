@@ -57,3 +57,55 @@ export const permittedParams = (req) => {
     onlyValidData: true
    });
 }
+
+export const handleSymbolComparison = (key, range, isDate) => {
+  if (range[0] == "<") {
+    return {
+      [key]: {
+        lte: isDate ? new Date(range[1]) : parseFloat(range[1])
+      }
+    }
+  } else {
+    return {
+      [key]: {
+        gte: isDate ? new Date(range[1]) : parseFloat(range[1])
+      }
+    }
+  }
+}
+
+export const handleRangeObject = (key, range, isDate) => {
+  return {
+    [key]: {
+      gte: isDate ? new Date(range[0]) : parseFloat(range[0]),
+      lte: isDate ? new Date(range[1]) : parseFloat(range[1])
+    }
+  }
+}
+
+export const handleQueryObject = (params) => {
+  let search = {};
+  let obj = {};
+  for (const key in params) {
+    let range = params[key].split(",");
+    let isDate = params[key].includes("-");
+    let num = parseFloat(params[key]);
+    if (range[0] == "<" || range[0] == ">") {
+      obj = handleSymbolComparison(key, range, isDate);
+    } else if (range.length > 1) {
+      obj = handleRangeObject(key, range, isDate);
+    } else if (Boolean(num)) {
+      obj = {
+        [key]: num,
+      };
+    } else {
+      obj = {
+        [key]: {
+          search: params[key]
+        }
+      };
+    }
+    Object.assign(search, obj);
+  }
+return search
+}

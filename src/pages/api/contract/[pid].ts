@@ -1,6 +1,7 @@
 import { validationResult } from 'express-validator';
+import { permittedParams } from 'helper/util';
 import { NextApiRequest, NextApiResponse } from "next";
-import { validateContract } from "./contractValidation";
+import { validateUpdateContract } from "./contractValidation";
 import ContractRepository from "./repository";
 
 export default async function handle(
@@ -15,9 +16,10 @@ export default async function handle(
     case "POST":
       break;
     case "PUT":
-      await validateContract(req, res)
+      await validateUpdateContract(req, res)
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
+      permittedParams(req);
       res.json(await ContractRepository.updateContract(req, res));
       break;
     case "PATCH":
