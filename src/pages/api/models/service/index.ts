@@ -29,14 +29,12 @@ export default class UserServices {
   }
 
   static async searchModels(res: any, query) {
-    console.log("query-----", query)
     try {
       const models = await this.prisma.model.findMany({
         where: query
       });
       return models;
     } catch (err) {
-      console.log("err--------", err)
       return ResponseService.sendError(err, res);
     }
   }
