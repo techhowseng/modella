@@ -8,7 +8,7 @@ export const useGetUser = (id: string) => {
   const _getUser = async () => {
     const res = await getUser(id);
     console.log("🚀 ~ file: hooks.ts:10 ~ const_getUser= ~ res", res);
-    setUser(res.data);
+    setUser(res?.data);
   };
 
   useEffect(() => {
