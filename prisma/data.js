@@ -26,7 +26,7 @@ const client = (user1, user2) => {
     {
       userId: user1.id,
       companyName: "Stars aligned",
-      phone: { phone1: "02334669933"},
+      phone: "02334669933",
       social: {"facebook": "www.facebook.com/newClient1"},
       state: "Lagos",
       country: "Nigeria",
@@ -35,7 +35,7 @@ const client = (user1, user2) => {
     {
       userId: user2.id,
       companyName: "Top Notch Stars",
-      phone: { phone1: "02334343434"},
+      phone: "02334343434",
       social: {"facebook": "www.facebook.com/newClient2"},
       state: "Lagos",
       country: "Nigeria",
@@ -89,7 +89,7 @@ const contract = (client, model) => {
     {
       clientId: client.id,
       modelId: model.id,
-      locations: { location1: "Lekki phase 1"},
+      locations: "Lekki phase 1",
       startDate: new Date("2023-03-03"),
       startTime: new Date(1676817624900), 
       hours: 2,
@@ -105,10 +105,19 @@ const job = (client) => {
       clientId: client.id,
       jobRole: "Glamour model",
       jobDescription: "A modelling job for a glamour magazine.",
-      locations: { location1: "Lekki phase 1"},
+      locations: "Lekki phase 1",
       salary: "50,000",
       jobType: "Glamour",
       jobLength: "2 days"
+    },
+    {
+      clientId: client.id,
+      jobRole: "Runway model",
+      jobDescription: "Ajob for arunway shoot.",
+      locations: "Ajah",
+      salary: "150,000",
+      jobType: "Runway",
+      jobLength: "1 day"
     },
   ];
 }

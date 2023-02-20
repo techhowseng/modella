@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
+import { NextApiResponse } from "next";
 
 // @ts-ignore
 export type TJob = PrismaClient["job"]["create"]["data"];
@@ -9,7 +10,7 @@ export default class JobServices {
   static prisma: PrismaClient = prisma;
 
   static async createJob(
-    res,
+    res: NextApiResponse,
     clientId: number,
     data: TJob
   ) {
@@ -28,7 +29,7 @@ export default class JobServices {
     }
   }
 
-  static async getJob(res, id: number) {
+  static async getJob(res: NextApiResponse, id: number) {
     try {
       const job = await this.prisma.job.findUnique({
         where: { id },
@@ -39,7 +40,7 @@ export default class JobServices {
     }
   }
 
-  static async getJobs(res ) {
+  static async getJobs(res: NextApiResponse ) {
     try {
       const job = await this.prisma.job.findMany();
       return job;
@@ -48,7 +49,7 @@ export default class JobServices {
     }
   }
 
-  static async getAllClientJobs(res, clientId: number) {
+  static async getAllClientJobs(res: NextApiResponse, clientId: number) {
     try {
       const job = await this.prisma.job.findMany({
         where: { clientId },
@@ -59,14 +60,10 @@ export default class JobServices {
     }
   }
 
-  static async searchJobs(res, query: string | string[]) {
+  static async searchJobs(res: NextApiResponse, query: TJob) {
     try {
       const job = await this.prisma.job.findMany({
-        where: { 
-          jobDescription: {
-            search: `${query}`,
-          }
-         },
+        where: query
       });
       return job;
     } catch(err) {
@@ -74,7 +71,7 @@ export default class JobServices {
     }
   }
 
-  static async updateJob(res: any, data: TJob) {
+  static async updateJob(res: NextApiResponse, data: TJob) {
     try {
       const updatedJob = await this.prisma.job.update({
         where: { id: data.id },
@@ -86,7 +83,7 @@ export default class JobServices {
     }
   }
 
-  static async deleteJob(res: any, id: number) {
+  static async deleteJob(res: NextApiResponse, id: number) {
     try {
       const job = await this.prisma.job.delete({
         where: { id },

@@ -20,27 +20,33 @@ export const existsInDB = async (data, model, columnName) => {
 }
 
 export const getUser = async (request, response) => {
+  const token = getToken(request);
+  const user = await SessionService.getSession(response, token);
+  return user;
+}
+
+export const getToken = (request) => {
   let token;
   const { authorization } = request.headers;
-  if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-  const session = await SessionService.getSession(response, token);
-  return session;
+  if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1];
+  return token;
+}
+
+export const isUserAdmin = async (request, response) => {
+  const user = await getUser(request, response)
+  return Boolean(user.type == "Admin");
 }
 
 export const getClient = async (request) => {
-  let token;
-  const { authorization } = request.headers;
-  if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-  const session = await SessionService.getClientSession(request, token);
-  return session;
+  const token = getToken(request);
+  const client = await SessionService.getClientSession(request, token);
+  return client;
 }
 
 export const getModel = async (request, response) => {
-  let token;
-  const { authorization } = request.headers;
-  if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-  const session = await SessionService.getModelSession(response, token);
-  return session;
+  const token = getToken(request);
+  const model = await SessionService.getModelSession(response, token);
+  return model;
 }
 
 export const getObjectVal = (obj, key, defaultVal) => {
@@ -108,4 +114,18 @@ export const handleQueryObject = (params) => {
     Object.assign(search, obj);
   }
 return search
+}
+
+export const handleQuery = (params) => {
+  let obj = {};
+  let search = {};
+  for (const key in params) {
+    obj = {
+      [key]: {
+        search: params[key]
+      }
+    };
+    Object.assign(search, obj);
+  }
+  return search;
 }

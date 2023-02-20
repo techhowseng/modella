@@ -95,7 +95,7 @@ model Model {
   address         String?
   isAvailable     Boolean?           @default(true)
   bio             String?
-  phone           Json?
+  phone           String?
   types           Types?
   unavailableDays String?
   contracts       Contract[]
@@ -129,7 +129,7 @@ model Client {
   user            User              @relation(fields: [userId], references: [id])
   userId          String            @unique
   companyName     String
-  phone           Json
+  phone           String
   social          Json
   state           String?
   country         String?
@@ -146,7 +146,7 @@ model       Contract {
   model         Model       @relation(fields: [modelId], references: [id])
   modelId       Int
   status        Status      @default(Ongoing)
-  locations     Json
+  locations     String?
   startDate     DateTime?
   startTime     DateTime?
   hours         Int?
@@ -173,7 +173,7 @@ model Job {
   clientId       Int
   jobRole        String
   jobDescription String @db.Text
-  locations      Json
+  location       String?
   salary         String?
   jobType        String?
   jobLength      String?

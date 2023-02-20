@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import SessionServices from "../../session/service";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
 import JobsServices, { TJob } from "../service";
+import { handleQuery } from "helper/util";
 
 export default class JobsRepository {
   prisma: PrismaClient;
@@ -43,30 +45,33 @@ export default class JobsRepository {
     }
   }
 
-  static async getJob(req, res) {
+  static async getJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      if (pid[1]) return this.getAllClientJobs(req, res);
-      const contract = await JobsServices.getJob(res, ~~pid[0]);
-      return contract;
+      if (pid[0] == "client"){
+        return await this.getAllClientJobs(res, pid);
+      } else if (pid[0] == "search") {
+        return await this.searchJobs(req, res);
+      } else {
+        const contract = await JobsServices.getJob(res, ~~pid[0]);
+        return contract;
+      }
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async getAllClientJobs(req, res) {
+  static async getAllClientJobs(res: NextApiResponse<any>, pid) {
     try {
-			let { pid } = req.query;
-      const contract = await JobsServices.getAllClientJobs(res, ~~pid[0]);
-      return contract;
+      const clientJobs = await JobsServices.getAllClientJobs(res, ~~pid[1]);
+      return clientJobs;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async getJobs(req, res) {
+  static async getJobs(res: NextApiResponse<any>) {
     try {
-      if (req.query) return this.searchJobs(req, res);
       const contract = await JobsServices.getJobs(res);
       return contract;
     } catch(err) {
@@ -74,17 +79,21 @@ export default class JobsRepository {
     }
   }  
   
-  static async searchJobs(req, res) {
+  static async searchJobs(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-      const { query } = req
-      const contract = await JobsServices.searchJobs(res, query);
+      let param = req.query;
+      delete param.pid;
+      const queries = handleQuery(param);
+
+      console.log("query-------", queries)
+      const contract = await JobsServices.searchJobs(res, queries);
       return contract;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async deleteJob(req, res) {
+  static async deleteJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
       const contract = await JobsServices.deleteJob(res, ~~pid);
