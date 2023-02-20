@@ -7,7 +7,6 @@ import SocialForm from "./components/SocialForm";
 
 function BioDataForm() {
   const { loading, user } = useGetUser("user");
-  // console.log("🚀 ~ file: index.tsx:10 ~ BioDataForm ~ user", user);
 
   if (!user.id && loading) {
     return <>Loading...</>;
