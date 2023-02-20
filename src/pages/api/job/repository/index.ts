@@ -84,8 +84,6 @@ export default class JobsRepository {
       let param = req.query;
       delete param.pid;
       const queries = handleQuery(param);
-
-      console.log("query-------", queries)
       const contract = await JobsServices.searchJobs(res, queries);
       return contract;
     } catch(err) {
