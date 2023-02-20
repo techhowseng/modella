@@ -76,11 +76,7 @@ function ModelProfileAside({
         <div className="flex flex-col justify-start">
           <div className="mt-10">
             <h1 className="text-md font-bold text-gray-500">Bio</h1>
-            <p className="text-md text-inherit">
-              I am an extrovert that loves what i do, i model for magazine
-              covers, runway shoots and so many more, please do well to check my
-              Gallery, i upload
-            </p>
+            <p className="text-md text-inherit">{user.bio}</p>
           </div>
           <div className="mt-10">
             <h1 className="text-md font-bold text-gray-500">Location</h1>

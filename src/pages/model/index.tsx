@@ -6,7 +6,7 @@ import React from "react";
 
 function ModelPage() {
   const { userData } = useGetSessionUser();
-  
+
   return (
     <HeaderFooter title={`Model profile page | ${SITE_NAME}`}>
       <ModelAccountSreen userId={userData.userId} />
@@ -15,3 +15,7 @@ function ModelPage() {
 }
 
 export default ModelPage;
+
+export const getServerProps = () => {
+  
+};

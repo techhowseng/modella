@@ -47,7 +47,7 @@ export const MODEL_ATTRIBUTES_DATA_FIELDS = [
     name: "height",
   },
   {
-    label: "Your Bust Size",
+    label: "Your Burst Size",
     type: "text",
     name: "bust",
   },
