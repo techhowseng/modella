@@ -10,9 +10,10 @@ import { socialsFormDataSchema } from "../schema";
 import { updateModel } from "../services";
 import { SocialFormType } from "../types";
 
-const SocialForm = () => {
+const SocialForm = ({ socials }: { socials: any }) => {
   const dispatch = useAppDispatch();
   const {
+    formData: values,
     handleChange,
     handleSubmit,
     errorMessage,
@@ -23,10 +24,10 @@ const SocialForm = () => {
   } = useForm(
     {
       social: {
-        facebook: "",
-        instagram: "",
-        linkedIn: "",
-        twitter: "",
+        facebook: socials?.facebook || "",
+        instagram: socials?.instagram || "",
+        linkedIn: socials?.linkedIn || "",
+        twitter: socials?.twitter || "",
       },
     },
     socialsFormDataSchema,
@@ -72,6 +73,13 @@ const SocialForm = () => {
                         onChange={handleChange}
                         label={field.label}
                         name={field.name}
+                        value={
+                          field.name.includes(".")
+                            ? values[field.name.split(".")[0]][
+                                field.name.split(".")[1]
+                              ]
+                            : values[field.name]
+                        }
                         id={field.name}
                         placeholder={field?.placeholder ?? ""}
                       />

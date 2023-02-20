@@ -1,6 +1,6 @@
 import React from "react";
 
-function Rating({ size = "7", rating = 0 }) {
+function Rating({ size = "8", rating = 0 }) {
   // calculate rating
   // Calculate number of stars from rating
   const stars = Math.round(rating / 2);

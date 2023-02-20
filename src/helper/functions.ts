@@ -31,3 +31,7 @@ export const getDynamicCookieDomain = (): string => {
 
   return finalHostName;
 };
+
+export const isEmptyObject = (obj: any) => {
+  return JSON.stringify(obj) === '{}'
+}

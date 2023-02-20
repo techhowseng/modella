@@ -5,6 +5,7 @@ export const SITE_DESCRIPTION =
 export const SITE_URL = "https://manikeens.dev";
 export const SITE_AUTHOR = "Manikeens";
 export const SITE_NAME = "Manikeens";
+export const SITE_HOME_TITLE = `${SITE_NAME} - Modelling Solution`;
 
 // Cookie Constants
 export const SESSION_NAME = "session_manikeens";

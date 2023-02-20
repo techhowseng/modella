@@ -41,7 +41,7 @@ function Input({
           id={id}
           name={name}
           rows={4}
-          // value={value || ""}
+          value={value}
           onChange={onChange}
           className={`w-full base-input p-4 rounded-lg border-2 ${
             error ? "base-border-red" : "border-gray-200"
@@ -56,7 +56,7 @@ function Input({
         <select
           id={id}
           name={name}
-          defaultValue={"---- Select ----"}
+          defaultValue={value || "---- Select ----"}
           onChange={onChange as any}
           className={`base-input w-full p-4 rounded-lg border-2 ${
             error ? "base-border-red" : "border-gray-200"
@@ -90,6 +90,7 @@ function Input({
         name={name}
         placeholder={placeholder}
         value={value}
+        checked={!!value}
         autoComplete={autoComplete}
         defaultValue={value}
         onChange={onChange}

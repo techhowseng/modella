@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie } from "cookies-next";
 import { updateModel } from "features/BioData/services";
+import { getUser } from "features/ModelAccount/services";
 import { deleteCookie } from "helper/cookie";
 import { SESSION_NAME } from "lib/constants";
 import { RootState } from "store";
@@ -75,6 +76,18 @@ export const userSlice = createSlice({
         state.data.user = { ...state.data.user, ...payload };
       })
       .addCase(createModel.rejected, (state, payload) => {
+        state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUser.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.data.user = { ...state.data.user, ...payload };
+      })
+      .addCase(getUser.rejected, (state, payload) => {
         state.loading = false;
         state.error = true;
         state.message = payload.error.message;

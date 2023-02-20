@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
-import HeaderFooter from "layouts/HeaderFooter";
-import { useAppDispatch } from "store/hooks";
+import React from "react";
+import Home from "features/Home";
+import Head from "next/head";
+import { SITE_HOME_TITLE } from "lib/constants";
 
 type Props = {};
 
 const HomePage: React.FC<Props> = (props) => {
-  const dispatch = useAppDispatch();
-
-  return <HeaderFooter title={""}>Hello home</HeaderFooter>;
+  return (
+    <>
+      <Head>
+        <title>{SITE_HOME_TITLE}</title>
+      </Head>
+      <Home />
+    </>
+  );
 };
 
 export default HomePage;
