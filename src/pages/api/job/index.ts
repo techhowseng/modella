@@ -11,7 +11,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await JobsRepository.getJobs(req, res));
+      res.json(await JobsRepository.getJobs(res));
       break;
     case "POST":
       await validateCreateJob(req, res)

@@ -1,10 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import { ResponseService } from "../../../../services/ResponseService";
 import { getUser, getModel } from "helper/util";
-import SessionService from "../../session/service";
 import prisma from "lib/prisma";
 import ModelServices, { TModel } from "../service";
-import { NextApiRequest, NextApiResponse } from "next";
 
 // @ts-ignore
 export type TUser = PrismaClient["session"]["create"]["data"];
