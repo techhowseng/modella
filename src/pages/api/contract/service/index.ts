@@ -12,13 +12,7 @@ export default class ContractServices {
     res,
     clientId: number,
     modelId: number,
-    locations: object,
-    startDate: string,
-    startTime: string,
-    hours: string,
-    days: string,
-    fee: string,
-    status: Status
+    data: TContract
   ) {
     try {
       const contractedModel = await this.prisma.contract.create({
@@ -29,7 +23,7 @@ export default class ContractServices {
           model: {
             connect: { id: modelId },
           },
-          locations, startDate, startTime, hours, days, fee, status
+          ...data
         },
       });
       return contractedModel;

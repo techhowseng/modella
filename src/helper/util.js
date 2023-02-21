@@ -21,20 +21,22 @@ export const existsInDB = async (data, model, columnName) => {
 
 export const getUser = async (request, response) => {
   const token = getToken(request);
-  const user = await SessionService.getSession(response, token);
-  return user;
+  if (token) {
+    const user = await SessionService.getSession(response, token);
+    return user;
+  } return null;
 }
 
 export const getToken = (request) => {
   let token;
   const { authorization } = request.headers;
-  if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1];
+  if (authorization && authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1];
   return token;
 }
 
 export const isUserAdmin = async (request, response) => {
   const user = await getUser(request, response)
-  return Boolean(user.type == "Admin");
+  return Boolean(user && user.type == "Admin");
 }
 
 export const getClient = async (request) => {
@@ -57,9 +59,16 @@ export const isEmptyObject = (obj) => {
   return JSON.stringify(obj) === '{}'
 }
 
-export const permittedParams = (req) => {
+export const bodyPermittedParams = (req) => {
   req.body = matchedData(req, {
-    includeOptionals: true,
+    includeOptionals: false,
+    onlyValidData: true
+   });
+}
+
+export const queryPermittedParams = (req) => {
+  req.query = matchedData(req, {
+    includeOptionals: false,
     onlyValidData: true
    });
 }

@@ -32,8 +32,16 @@ export default class ClientServices {
     try {
       const client = await this.prisma.client.findUnique({
         where: { id },
-      });
-      return client;
+        include: {
+          user: {
+            select: {
+              email: true,
+              type: true
+            }
+          }
+        }
+      })
+      return (({ user, ...client }) => ({ ...user, ...client }))(client);
     } catch(err) {
       return ResponseService.sendError(err, res);
     }

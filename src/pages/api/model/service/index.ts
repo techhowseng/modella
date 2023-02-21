@@ -28,8 +28,16 @@ export default class UserServices {
     try {
       const model = await this.prisma.model.findUnique({
         where: { id },
-      });
-      return model;
+        include: {
+          user: {
+            select: {
+              email: true,
+              type: true
+            }
+          }
+        }
+      })
+      return (({ user, ...model }) => ({ ...user, ...model }))(model);
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -39,8 +47,16 @@ export default class UserServices {
     try {
       const model = await this.prisma.model.findUnique({
         where: { userId },
-      });
-      return model;
+        include: {
+          user: {
+            select: {
+              email: true,
+              type: true
+            }
+          }
+        }
+      })
+      return (({ user, ...model }) => ({ ...user, ...model }))(model);
     } catch (err) {
       return ResponseService.sendError(err, res);
     }

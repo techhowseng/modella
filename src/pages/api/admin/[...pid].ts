@@ -8,6 +8,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
+      res.json(await AdminRepository.getUserContracts(req, res));
       break;
     case "POST":
       break;

@@ -4,9 +4,9 @@ import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
 
 // @ts-ignore
-export type TModel = PrismaClient["model"]["create"]["data"];
+export type TModel = PrismaClient["admin"]["create"]["data"];
 
-export default class UserServices {
+export default class AdminServices {
   static prisma: PrismaClient = prisma;
 
   static async disableUser(res: NextApiResponse<any>, id: string) {
@@ -68,6 +68,38 @@ export default class UserServices {
         where: { userId }
       });
       return deletedUserMedia;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async getModelFromUserId(res: NextApiResponse<any>, id: string, includeRelation) {
+    try {
+      const data = await this.prisma.user.findFirst({
+        where: { id },
+        select: {
+          [includeRelation]: {
+            select: {
+              id: true
+            }
+          }
+        }
+      });
+      return data;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async getUsersContracts(res: NextApiResponse<any>, id: number, type: string) {
+    const key = `${type}Id`;
+    try {
+      const usersContracts = await this.prisma.contract.findMany({
+        where: { 
+          [key]: id
+         }
+      });
+      return usersContracts;
     } catch (err) {
       return ResponseService.sendError(err, res);
     }

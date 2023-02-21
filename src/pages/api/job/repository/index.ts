@@ -4,7 +4,7 @@ import SessionServices from "../../session/service";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
 import JobsServices, { TJob } from "../service";
-import { handleQuery } from "helper/util";
+import { getClient, handleQuery } from "helper/util";
 
 export default class JobsRepository {
   prisma: PrismaClient;
@@ -16,19 +16,14 @@ export default class JobsRepository {
 
   static async createJob(req, res) {
     try {
-      const data = req.body;
-      let token;
-      const { authorization } = req.headers;
-      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-      const session = await SessionServices.getClientSession(res, token)
-      if (session) {
-      const contract = await JobsServices.createJob(
+      const client = await getClient(req);
+      if (client) {
+      const jobs = await JobsServices.createJob(
         res,
-        session.id,
-        data
+        client.id,
+        req.body
       );
-      
-      return contract;
+      return jobs;
       }
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -38,8 +33,8 @@ export default class JobsRepository {
   static async updateJob(req, res) {
     try {
       const { body } = req;
-      const contract = await JobsServices.updateJob(res, body);
-      return contract;
+      const jobs = await JobsServices.updateJob(res, body);
+      return jobs;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -72,8 +67,8 @@ export default class JobsRepository {
 
   static async getJobs(res: NextApiResponse<any>) {
     try {
-      const contract = await JobsServices.getJobs(res);
-      return contract;
+      const jobs = await JobsServices.getJobs(res);
+      return jobs;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -84,8 +79,8 @@ export default class JobsRepository {
       let param = req.query;
       delete param.pid;
       const queries = handleQuery(param);
-      const contract = await JobsServices.searchJobs(res, queries);
-      return contract;
+      const jobs = await JobsServices.searchJobs(res, queries);
+      return jobs;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -94,8 +89,8 @@ export default class JobsRepository {
   static async deleteJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      const contract = await JobsServices.deleteJob(res, ~~pid);
-      return contract;
+      const job = await JobsServices.deleteJob(res, ~~pid);
+      return job;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }

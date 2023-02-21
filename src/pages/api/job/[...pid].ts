@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { validationResult } from 'express-validator';
-import { validateUpdateJob } from "./jobValidation";
+import { validateUpdateJob, validateSearchJob } from "./jobValidation";
 import JobsRepository from "./repository";
-import { permittedParams } from "helper/util";
+import { bodyPermittedParams, queryPermittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -11,6 +11,10 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
+      await validateSearchJob(req, res)
+      const searchErrors = validationResult(req)
+      if (!searchErrors.isEmpty()) return res.status(422).json({ errors: searchErrors.array() });
+      queryPermittedParams(req);
       res.json(await JobsRepository.getJob(req, res));
       break;
     case "POST":
@@ -19,7 +23,7 @@ export default async function handle(
       await validateUpdateJob(req, res)
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
-      permittedParams(req);
+      bodyPermittedParams(req);
       res.json(await JobsRepository.updateJob(req, res));
       break;
     case "PATCH":

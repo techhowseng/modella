@@ -1,22 +1,24 @@
+const bcrypt = require('bcryptjs');
+
 const user = [
   {
     email: "clientuser1@gmail.com",
-    password: "password1",
+    password: bcrypt.hashSync("password1", 8),
     type: "Client"  
   },
   {
     email: "clientuser2@gmail.com",
-    password: "password1",
+    password: bcrypt.hashSync("password1", 8),
     type: "Client"  
   },
   {
     email: "modeluser1@gmail.com",
-    password: "password1",
+    password: bcrypt.hashSync("password1", 8),
     type: "Model"  
   },
   {
     email: "modeluser2@gmail.com",
-    password: "password1",
+    password: bcrypt.hashSync("password1", 8),
     type: "Model"  
   }
 ];
@@ -58,7 +60,7 @@ const model = (user1, user2) => {
       shoeSize: 39,
       weight: 66,
       complexion: "Dark",
-      DOB: new Date("2001-01-06"),
+      dob: new Date("2001-01-06"),
       social: {"facebook": "www.facebook.com/newmodel1"},
       state: "Lagos",
       country: "Nigeria",
@@ -75,7 +77,7 @@ const model = (user1, user2) => {
       shoeSize: 41,
       weight: 72,
       complexion: "Light",
-      DOB: new Date("2002-05-07"),
+      dob: new Date("2002-05-07"),
       social: {"facebook": "www.facebook.com/newmodel2"},
       state: "Lagos",
       country: "Nigeria",
@@ -105,7 +107,7 @@ const job = (client) => {
       clientId: client.id,
       jobRole: "Glamour model",
       jobDescription: "A modelling job for a glamour magazine.",
-      locations: "Lekki phase 1",
+      location: "Lekki phase 1",
       salary: "50,000",
       jobType: "Glamour",
       jobLength: "2 days"
@@ -114,7 +116,7 @@ const job = (client) => {
       clientId: client.id,
       jobRole: "Runway model",
       jobDescription: "Ajob for arunway shoot.",
-      locations: "Ajah",
+      location: "Ajah",
       salary: "150,000",
       jobType: "Runway",
       jobLength: "1 day"
