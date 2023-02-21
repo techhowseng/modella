@@ -1,11 +1,53 @@
+import { isEmptyObject } from "helper/functions";
 import { APP_ROUTES } from "lib/routes";
-import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import Router, { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "store/hooks";
 import { SIGN_UP_STEPS } from "./Auth/SignUp/constants";
+import { getSessionUser } from "./Auth/slice";
 import { getCookieData } from "./functions";
+import { getUser } from "./ModelAccount/services";
+
+export const useGetUser = (id: string) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<any>({});
+  const dispatch = useAppDispatch();
+
+  const {
+    data: { user: sessionStoreUser },
+  } = useAppSelector(getSessionUser);
+
+  const _getUser = async () => {
+    setLoading(true);
+    const res = await dispatch(getUser({ id }));
+    if (res.payload.userId) {
+      setUser(res.payload);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      // Router.push("/404");
+    }
+  };
+
+  useEffect(() => {
+    // @ts-ignore
+    if (sessionStoreUser?.userId) {
+      setUser(sessionStoreUser);
+    } else {
+      _getUser();
+    }
+  }, []);
+
+  return {
+    user,
+    loading,
+  };
+};
 
 export const useGetSessionUser = () => {
+  const { data: session }: any = useSession();
   const userData = getCookieData();
   const router = useRouter();
 
@@ -14,6 +56,10 @@ export const useGetSessionUser = () => {
       router.push(APP_ROUTES.login);
     }
   }, [userData]);
+  // @ts-ignore
+  if (session && session.message) {
+    return { userData: session.message };
+  }
 
   return { userData };
 };
@@ -41,6 +87,12 @@ export const useForm = (initialValues: any, schema: any, cb: any) => {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [successMessage, setSuccessMessage] = React.useState<string>("");
   const [stepState, setStepState] = React.useState(SIGN_UP_STEPS.MORE_DETAILS);
+
+  useEffect(() => {
+    if (isEmptyObject(formData)) {
+      setFormData(initialValues);
+    }
+  }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isCheckBox = e.target.type === "checkbox";

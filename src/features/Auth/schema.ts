@@ -28,3 +28,22 @@ export const signUpCompleteFormDataSchema = yup.object().shape({
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
 });
+
+const urlTest =
+  /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+
+export const clientCompleteFormDataSchema = yup.object().shape({
+  companyName: yup.string().required("Company name is required"),
+  phone: yup.object().shape({
+    number_1: yup.string(),
+  }),
+  address: yup.string().required("Address is required"),
+  country: yup.string().required("Country is required"),
+  state: yup.string().required("State is required"),
+  social: yup.object().shape({
+    facebook: yup.string().matches(urlTest, "Please Enter a valid url"),
+    linkedIn: yup.string().matches(urlTest, "Please Enter a valid url"),
+    twitter: yup.string().matches(urlTest, "Please Enter a valid url"),
+    instagram: yup.string().matches(urlTest, "Please Enter a valid url"),
+  }),
+});

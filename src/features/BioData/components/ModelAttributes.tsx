@@ -10,9 +10,10 @@ import { modelAttributesFormDataSchema } from "../schema";
 import { updateModel } from "../services";
 import { ModelAttributesType } from "../types";
 
-const ModelAttributes = () => {
+const ModelAttributes = ({ userData }: any) => {
   const dispatch = useAppDispatch();
   const {
+    formData: values,
     handleChange,
     handleSubmit,
     errorMessage,
@@ -22,14 +23,14 @@ const ModelAttributes = () => {
     loading,
   } = useForm(
     {
-      height: "",
-      bust: "",
-      waist: "",
-      hip: "",
-      shoeSize: "",
-      weight: "",
-      complexion: "",
-      isAvailable: false,
+      height: userData?.height || "",
+      bust: userData?.bust || "",
+      waist: userData?.waist || "",
+      hip: userData?.hip || "",
+      shoeSize: userData?.shoeSize || "",
+      weight: userData?.weight || "",
+      complexion: userData?.complexion || "",
+      isAvailable: userData?.isAvailable || false,
     },
     modelAttributesFormDataSchema,
     (formData: ModelAttributesType) => {
@@ -75,6 +76,7 @@ const ModelAttributes = () => {
                         onChange={handleChange}
                         label={field.label}
                         name={field.name}
+                        value={values[field.name]}
                         id={field.name}
                         options={field.options}
                         placeholder={field?.placeholder ?? ""}

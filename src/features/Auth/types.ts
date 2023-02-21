@@ -37,3 +37,19 @@ export type AuthRegistrationCompleteFormType = {
   state: string;
   country: string;
 };
+
+export type ClientRegistrationCompleteFormType = {
+  companyName: string;
+  phone: {
+    number_1: string;
+  };
+  address: string;
+  country: string;
+  state: string;
+  social: {
+    facebook: string;
+    twitter: string;
+    linkedIn: string;
+    instagram: string;
+  };
+};

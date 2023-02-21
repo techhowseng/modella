@@ -13,7 +13,6 @@ import Link from "next/link";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import {
-  CLIENT_SIGNUP_COMPLETE_FORM,
   CLIENT_SIGNUP_FORM,
 } from "../../formFieldData";
 
@@ -32,7 +31,7 @@ function ClientSignupForm({ verified }: { verified?: boolean }) {
       email: "",
       password: "",
       confirmPassword: "",
-      type: "Model",
+      type: "Client",
     },
     signUpFormDataSchema,
     (formData: AuthRegistrationFormType) => {
@@ -70,26 +69,15 @@ function ClientSignupForm({ verified }: { verified?: boolean }) {
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
               {/* @ts-ignore */}
-              {!data.user.sessionToken
-                ? CLIENT_SIGNUP_FORM.map((field: any) => (
-                    <Input
-                      key={field.name}
-                      label={field.label}
-                      name={field.name}
-                      type={field.type}
-                      onChange={handleChange}
-                    />
-                  ))
-                : CLIENT_SIGNUP_COMPLETE_FORM.map((field: any) => (
-                    <Input
-                      key={field.name}
-                      label={field.label}
-                      name={field.name}
-                      type={field.type}
-                      options={field?.options}
-                      onChange={handleChange}
-                    />
-                  ))}
+              {CLIENT_SIGNUP_FORM.map((field: any) => (
+                <Input
+                  key={field.name}
+                  label={field.label}
+                  name={field.name}
+                  type={field.type}
+                  onChange={handleChange}
+                />
+              ))}
             </div>
 
             <CheckBox name={"tos"} onChange={() => {}}>

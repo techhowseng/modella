@@ -1,5 +1,6 @@
 import { BaseError, createCustomError } from "../helper/errors";
-import { getObjectVal, isEmptyObject } from "../helper/util";
+import { getObjectVal } from "../helper/util";
+import { isEmptyObject } from '../helper/functions';
 
 
 const defaultCode = 'something_went_wrong';
