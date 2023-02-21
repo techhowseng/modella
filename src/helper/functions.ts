@@ -1,4 +1,5 @@
 import config from "core/config";
+import { APP_ROUTES } from "lib/routes";
 
 export const isVercelHost = (): boolean => {
   return window.location.hostname.indexOf(".vercel.app") !== -1;
@@ -30,4 +31,8 @@ export const getDynamicCookieDomain = (): string => {
   }
 
   return finalHostName;
+};
+
+export const isEmptyObject = (obj: any) => {
+  return JSON.stringify(obj) === "{}";
 };

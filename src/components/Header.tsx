@@ -3,16 +3,17 @@ import { Popover, Transition, Menu } from "@headlessui/react";
 import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import { LinkButton, Logo } from "components";
 import { classNames } from "lib/functions";
-import { APP_ROUTES } from "lib/routes";
+import { APP_ROUTES, userProfileRoute } from "lib/routes";
 import Link from "next/link";
 import { SITE_NAME } from "lib/constants";
-import { useGetSessionUser } from "features/hooks";
+import { useGetSessionUser, useGetUser } from "features/hooks";
 import { deleteSession } from "features/Auth/services";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getSessionUser } from "features/Auth/slice";
 import Router from "next/router";
 
 export default function Header() {
+  const { user } = useGetUser("user");
   const { userData } = useGetSessionUser();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector(getSessionUser);
@@ -95,11 +96,15 @@ export default function Header() {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="z-20 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="z-20 absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href={APP_ROUTES.profile}
+                        href={
+                          user.userId
+                            ? userProfileRoute(user)
+                            : userProfileRoute(userData)
+                        }
                         className={classNames(
                           active ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-700"

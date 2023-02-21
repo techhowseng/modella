@@ -10,9 +10,11 @@ import AlertMessage from "components/AlertMessage";
 import { useAppDispatch } from "store/hooks";
 import { updateModel } from "../services";
 
-const PersonalInformation = () => {
+const PersonalInformation = ({ bio, phone, dob }: any) => {
   const dispatch = useAppDispatch();
+
   const {
+    formData: values,
     handleChange,
     handleSubmit,
     errorMessage,
@@ -22,11 +24,11 @@ const PersonalInformation = () => {
     loading,
   } = useForm(
     {
-      bio: "",
+      bio: bio || "",
       phone: {
-        phone_1: "",
+        phone_1: phone || "",
       },
-      DOB: "",
+      DOB: dob || "",
     },
     bioCompleteFormDataSchema,
     (formData: BioCompleteFormType) => {
@@ -70,6 +72,11 @@ const PersonalInformation = () => {
                         type={field.type}
                         onChange={handleChange}
                         label={field.label}
+                        value={
+                          field.name.includes(".")
+                            ? values[field.name.split(".")[0]]?.phone_1
+                            : values[field.name]
+                        }
                         name={field.name}
                         id={field.name}
                         placeholder={field?.placeholder ?? ""}

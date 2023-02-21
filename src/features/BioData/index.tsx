@@ -1,12 +1,24 @@
+import { getSessionUser } from "features/Auth/slice";
+import { useGetUser } from "features/hooks";
 import React from "react";
 import ModelAttributes from "./components/ModelAttributes";
 import PersonalInformation from "./components/PersonalInformation";
 import SocialForm from "./components/SocialForm";
 
 function BioDataForm() {
+  const { loading, user } = useGetUser("user");
+
+  if (!user.id && loading) {
+    return <>Loading...</>;
+  }
+
   return (
     <div className="flex flex-col justify-center min-h-screen p-2 w-full lg:w-9/12 my-0 mx-auto">
-      <PersonalInformation />
+      <PersonalInformation
+        bio={user.bio}
+        phone={user?.phone?.phone_1 || user?.phone?.number_1}
+        dob={user.DOB}
+      />
 
       {/* Divider */}
       <div className="hidden sm:block" aria-hidden="true">
@@ -16,7 +28,7 @@ function BioDataForm() {
       </div>
       {/* End Divider */}
 
-      <ModelAttributes />
+      <ModelAttributes userData={user} />
 
       {/* Divider */}
       <div className="hidden sm:block" aria-hidden="true">
@@ -26,7 +38,7 @@ function BioDataForm() {
       </div>
       {/* End Divider */}
 
-      <SocialForm />
+      <SocialForm socials={user?.social} />
     </div>
   );
 }
