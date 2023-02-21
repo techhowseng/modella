@@ -1,5 +1,6 @@
 import { isEmptyObject } from "helper/functions";
 import { APP_ROUTES } from "lib/routes";
+import { useSession } from "next-auth/react";
 import Router, { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -20,13 +21,13 @@ export const useGetUser = (id: string) => {
 
   const _getUser = async () => {
     setLoading(true);
-    const res = await dispatch(getUser(id));
+    const res = await dispatch(getUser({ id }));
     if (res.payload.userId) {
       setUser(res.payload);
       setLoading(false);
     } else {
       setLoading(false);
-      Router.push("/404");
+      // Router.push("/404");
     }
   };
 
@@ -46,6 +47,7 @@ export const useGetUser = (id: string) => {
 };
 
 export const useGetSessionUser = () => {
+  const { data: session }: any = useSession();
   const userData = getCookieData();
   const router = useRouter();
 
@@ -54,6 +56,10 @@ export const useGetSessionUser = () => {
       router.push(APP_ROUTES.login);
     }
   }, [userData]);
+  // @ts-ignore
+  if (session && session.message) {
+    return { userData: session.message };
+  }
 
   return { userData };
 };

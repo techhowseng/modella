@@ -3,7 +3,7 @@ import { Popover, Transition, Menu } from "@headlessui/react";
 import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import { LinkButton, Logo } from "components";
 import { classNames } from "lib/functions";
-import { APP_ROUTES } from "lib/routes";
+import { APP_ROUTES, userProfileRoute } from "lib/routes";
 import Link from "next/link";
 import { SITE_NAME } from "lib/constants";
 import { useGetSessionUser, useGetUser } from "features/hooks";
@@ -13,8 +13,7 @@ import { getSessionUser } from "features/Auth/slice";
 import Router from "next/router";
 
 export default function Header() {
-  const { user } = useGetUser('user');
-  console.log("🚀 ~ file: Header.tsx:17 ~ Header ~ user", user)
+  const { user } = useGetUser("user");
   const { userData } = useGetSessionUser();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector(getSessionUser);
@@ -101,7 +100,11 @@ export default function Header() {
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href={APP_ROUTES.profile}
+                        href={
+                          user.userId
+                            ? userProfileRoute(user)
+                            : userProfileRoute(userData)
+                        }
                         className={classNames(
                           active ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-700"

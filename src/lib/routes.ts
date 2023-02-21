@@ -27,3 +27,14 @@ export const APP_ROUTES = {
   emailVerificationSuccess: "/email-verification/success",
   emailVerificationFailed: "/email-verification/failed",
 };
+
+export const userProfileRoute = (user: { type: string }): string => {
+  let link: string;
+  if (user.type === "Model") {
+    link = APP_ROUTES.profile;
+  }
+  if (user.type === "Client") {
+    link = APP_ROUTES.clientProfile;
+  }
+  return link;
+};

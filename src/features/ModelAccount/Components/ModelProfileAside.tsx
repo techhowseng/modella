@@ -119,7 +119,9 @@ function ModelProfileAside({
                 )}
               </li>
               <li className="flex items-center">Height: {user.height}</li>
-              <li className="flex items-center">Weight: {user.weight}</li>
+              <li className="flex items-center">
+                Weight: {user.weight as unknown as number}
+              </li>
               <li className="flex items-center">Burst: {user.bust}</li>
               <li className="flex items-center">Hips: {user.hip}</li>
               <li className="flex items-center">Waist: {user.waist}</li>

@@ -5,6 +5,7 @@ import Logo from "components/Logo";
 import Link from "next/link";
 import { APP_ROUTES } from "lib/routes";
 import { SITE_NAME } from "lib/constants";
+import { useGetSessionUser, useGetUser } from "features/hooks";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -14,6 +15,7 @@ const navigation = [
 ];
 
 const Home = () => {
+  const { userData } = useGetSessionUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -141,7 +143,7 @@ const Home = () => {
             </div>
             <div className="text-center">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Explore the World of Creative Professionals and Hire the best.
+                Explore the World of Modelling Professionals and Hire the best.
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Get in touch and connect with highly professional and talented
