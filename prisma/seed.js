@@ -13,15 +13,6 @@ const load = async () => {
     await prisma.verificationToken.deleteMany();
     console.log('Deleted all verification token data in table');
 
-    await prisma.model.deleteMany();
-    console.log('Deleted all models in model table');
-
-    await prisma.client.deleteMany();
-    console.log('Deleted all clients in client table');
-
-    await prisma.user.deleteMany();
-    console.log('Deleted all users in users table');
-
     await prisma.job.deleteMany();
     console.log('Deleted all jobs in jobs table');
 
@@ -34,8 +25,14 @@ const load = async () => {
     await prisma.media.deleteMany();
     console.log('Deleted all media in media table');
 
-    await prisma.job.deleteMany();
-    console.log('Deleted all jobs in jobs table');
+    await prisma.model.deleteMany();
+    console.log('Deleted all models in model table');
+
+    await prisma.client.deleteMany();
+    console.log('Deleted all clients in client table');
+
+    await prisma.user.deleteMany();
+    console.log('Deleted all users in users table');
 
 
     // await prisma.$queryRaw`ALTER TABLE User AUTO_INCREMENT = 1`;

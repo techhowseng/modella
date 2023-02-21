@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import SessionService from "../../session/service";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
+import { getModel } from "helper/util";
 import HistoryServices, { THistory } from "../service";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export default class HistoryRepository {
 	prisma: PrismaClient;
@@ -12,17 +13,14 @@ export default class HistoryRepository {
 		this.prisma = prisma;
 	}
 
-	static async createHistory(req, res) {
+	static async createHistory(req: NextApiRequest, res: NextApiResponse<any>) {
 		try {
 			const { job, description } = req.body;
-			let token: string;
-			const { authorization } = req.headers;
-      if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-      const session = await SessionService.getModelSession(res, token)
-      if (session) {
+			const model =  await getModel(req, res)
+      if (model) {
 			const history = await HistoryServices.createHistory(
 				res,
-				session.id,
+				model.id,
 				job,
 				description
 			);
@@ -33,15 +31,12 @@ export default class HistoryRepository {
 		}
 	}
 
-	static async getHistory(req, res) {
+	static async getHistory(req: NextApiRequest, res: NextApiResponse<any>) {
 		try {
-			let token: string;
 			let { modelId } = req.body;
 			if (!modelId) {
-				const { authorization } = req.headers;
-				if (authorization.split(' ')[0] === 'Bearer') token = authorization.split(' ')[1]
-				const session = await SessionService.getModelSession(res, token)
-				modelId = session ? session.id : null;
+				const model = await getModel(req, res)
+				modelId = model ? model.id : null;
 			}
 			const history = await HistoryServices.getHistory(res, ~~modelId);
 			return history;
@@ -50,7 +45,7 @@ export default class HistoryRepository {
 		}
 	}
 
-	static async updateHistory(req, res) {
+	static async updateHistory(req: NextApiRequest, res: NextApiResponse<any>) {
 		interface Input {
 			job?: string,
 			description?: string,

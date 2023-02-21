@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { validationResult } from 'express-validator';
 import HistoryRepository from "./respository";
 import { validateUpdateHistory } from "./historyValidation";
-import { permittedParams } from "helper/util";
+import { bodyPermittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -18,7 +18,7 @@ export default async function handle(
       await validateUpdateHistory(req, res)
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
-      permittedParams(req);
+      bodyPermittedParams(req);
       res.json(await HistoryRepository.updateHistory(req, res));
       break;
     case "PATCH":

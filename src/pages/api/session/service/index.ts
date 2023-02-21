@@ -40,7 +40,9 @@ export default class SessionServices {
       }).user();
       return session;
     } catch(err) {
-      return ResponseService.sendError({message: "There was an error retrieving the token details"}, res);
+      return ResponseService.sendError({
+        message: "There was an error retrieving the token details"
+      }, res);
     }
   }
 
@@ -57,7 +59,7 @@ export default class SessionServices {
           }
         }
       })
-      return (({ user }) => ({ ...user.client }))(session)
+      return (({ email, type, client }) => ({ email, type, ...client }))(session.user)
     } catch(err) {
       return ResponseService.sendError({message: "There was an error retrieving the token details"}, res);
     }
@@ -76,7 +78,7 @@ export default class SessionServices {
           }
         }
       })
-      return (({ user }) => ({ ...user.model }))(session)
+      return (({ email, type, model }) => ({ email, type, ...model }))(session.user)
     } catch(err) {
       ResponseService.sendError({ message: 'The user does not have an associated model.' }, res);
     }

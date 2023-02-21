@@ -1,9 +1,7 @@
 import { Type, PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
-import SessionService from "../../session/service";
-// import { ResponseService } from "../../../../services/ResponseService";
 import { ResponseService } from "../../../../services/ResponseService";
-import { getUser, getClient } from "helper/util";
+import { getUser } from "helper/util";
 import ClientServices, { TClient } from "../service";
 
 export default class ClientRepository {

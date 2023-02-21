@@ -43,6 +43,7 @@ export default class UserServices {
       const user = await this.prisma.user.findUnique({
         where: { id },
       });
+      console.log("usrr----", user)
       return user;
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -60,7 +61,7 @@ export default class UserServices {
     }
   }
 
-  static async updateUser(res, id, data) {
+  static async updateUser(res: any, id: string, data: TUser) {
     try {
       const updatedUser = await this.prisma.user.update({
         where: { id },

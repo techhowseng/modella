@@ -30,7 +30,9 @@ export const validateCreateJob = initMiddleware(
       .withMessage('is not descriptive enough.'),
       check('jobDescription').isLength({min:5})
       .withMessage('is not descriptive enough.'),,
-      check('locations').isObject(),
+      check('location').isLength({min:3})
+      .withMessage('is not descriptive enough.')
+      .optional({ nullable: true }),
       check('salary').isLength({min:3}).optional({ nullable: true })
       .withMessage('is not descriptive enough.'),,
       check('jobType').isIn(types).optional({ nullable: true })
@@ -50,7 +52,8 @@ export const validateUpdateJob = initMiddleware(
     check('jobDescription').isLength({min:5})
     .optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
-    check('locations').isObject()
+    check('location').isLength({min:3})
+    .withMessage('is not descriptive enough.')
     .optional({ nullable: true }),
     check('salary').isLength({min:3}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),,
@@ -60,5 +63,26 @@ export const validateUpdateJob = initMiddleware(
     .withMessage('is not descriptive enough.'),,
     check('isOpen').isBoolean().optional({ nullable: true })
     .withMessage('should be true or false.'),
+  ], validationResult)
+)
+
+export const validateSearchJob = initMiddleware(
+  validateMiddleware([
+    check('pid').isLength({min:1}),
+    check('jobRole').isLength({min:4})
+    .optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
+    check('jobDescription').isLength({min:5})
+    .optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
+    check('location').isLength({min:3})
+    .withMessage('is not descriptive enough.')
+    .optional({ nullable: true }),
+    check('salary').isLength({min:3}).optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),,
+    check('jobType').isIn(types).optional({ nullable: true })
+    .withMessage('is not among the available optoins.'),,
+    check('jobLength').isLength({min:2}).optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
   ], validationResult)
 )

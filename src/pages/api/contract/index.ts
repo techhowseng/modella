@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import { permittedParams } from 'helper/util';
+import { bodyPermittedParams } from 'helper/util';
 import { NextApiRequest, NextApiResponse } from "next";
 import { validateCreateContract } from "./contractValidation";
 import ContractRepository from "./repository";
@@ -17,7 +17,7 @@ export default async function handle(
       await validateCreateContract(req, res)
       const createErrors = validationResult(req)
       if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
-      permittedParams(req);
+      bodyPermittedParams(req);
       res.json(await ContractRepository.createContract(req, res));
       break;
     case "PUT":
