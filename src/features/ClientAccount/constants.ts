@@ -7,34 +7,34 @@ import {
 import { MdOutlineCases } from "react-icons/md";
 
 export const CLIENT_ACCOUNT_MENU_ITEMS = [
+  // {
+  //   name: "Dashboard",
+  //   icon: AiOutlineDashboard,
+  //   link: "/client/dashboard",
+  // },
   {
-    name: "Dashboard",
-    icon: AiOutlineDashboard,
-    link: "/client/dashboard",
+    name: "Posted Jobs",
+    icon: MdOutlineCases,
+    link: "/client/jobs",
   },
   {
-    name: "Message",
+    name: "Messages",
     icon: AiOutlineMessage,
     link: "/client/messages",
   },
   {
-    name: "Posted Jobs",
-    icon: MdOutlineCases,
-    link: "/client/posted-jobs",
-  },
-  {
-    name: "Hire Creators",
+    name: "Hired Models",
     icon: AiOutlineDashboard,
-    link: "/client/hire-creators",
+    link: "/client/models",
   },
-  {
-    name: "Settings",
-    icon: AiOutlineSetting,
-    link: "/client/settings",
-  },
-  {
-    name: "Logout",
-    icon: AiOutlineLogout,
-    link: "/client/logout",
-  },
+  // {
+  //   name: "Settings",
+  //   icon: AiOutlineSetting,
+  //   link: "/client/settings",
+  // },
+  // {
+  //   name: "Logout",
+  //   icon: AiOutlineLogout,
+  //   link: "/client/logout",
+  // },
 ];

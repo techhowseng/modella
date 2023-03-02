@@ -1,12 +1,12 @@
 import { isEmptyObject } from "helper/functions";
 import { APP_ROUTES } from "lib/routes";
 import { useSession } from "next-auth/react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { SIGN_UP_STEPS } from "./Auth/SignUp/constants";
-import { getSessionUser } from "./Auth/slice";
+import { getSessionUser, registerSessionUser } from "./Auth/slice";
 import { getCookieData } from "./functions";
 import { getUser } from "./ModelAccount/services";
 
@@ -50,6 +50,7 @@ export const useGetSessionUser = () => {
   const { data: session }: any = useSession();
   const userData = getCookieData();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!userData.id) {
@@ -58,6 +59,7 @@ export const useGetSessionUser = () => {
   }, [userData]);
   // @ts-ignore
   if (session && session.message) {
+    dispatch(registerSessionUser(session.message));
     return { userData: session.message };
   }
 

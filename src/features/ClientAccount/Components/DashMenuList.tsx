@@ -10,7 +10,7 @@ function DashMenuList() {
         <ul className="space-y-2">
           {CLIENT_ACCOUNT_MENU_ITEMS.map(
             (item: CLIENT_ACCOUNT_MENU_ITEMS_TYPE) => (
-              <li>
+              <li key={item.link}>
                 <Link
                   href={item.link}
                   className="flex items-center p-2 rounded-lg transition-all duration-200 ease-in-out text-black hover:text-white font-normal hover:base-bg-color"

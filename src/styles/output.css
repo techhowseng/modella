@@ -896,6 +896,26 @@ select{
   right: 0px;
 }
 
+.inset-x-full{
+  left: 100%;
+  right: 100%;
+}
+
+.inset-x-\[100\]{
+  left: 100;
+  right: 100;
+}
+
+.inset-x-\[100\%\]{
+  left: 100%;
+  right: 100%;
+}
+
+.inset-x-\[50\]{
+  left: 50;
+  right: 50;
+}
+
 .right-0{
   right: 0px;
 }
@@ -942,6 +962,22 @@ select{
 
 .top-\[-100px\]{
   top: -100px;
+}
+
+.right-\[\]{
+  right: ;
+}
+
+.right-\[0px\]{
+  right: 0px;
+}
+
+.right-\[10px\]{
+  right: 10px;
+}
+
+.top-\[calc\(13rem\)\]{
+  top: calc(13rem);
 }
 
 .isolate{
@@ -1363,6 +1399,10 @@ select{
 
 .max-w-full{
   max-width: 100%;
+}
+
+.max-w-\[50\%\]{
+  max-width: 50%;
 }
 
 .flex-1{
@@ -2707,6 +2747,10 @@ select{
 @media (min-width: 1024px){
   .lg\:sticky{
     position: sticky;
+  }
+
+  .lg\:right-\[10px\]{
+    right: 10px;
   }
 
   .lg\:my-8{

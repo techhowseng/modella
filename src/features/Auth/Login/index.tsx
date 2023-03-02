@@ -1,13 +1,13 @@
 import AlertMessage from "components/AlertMessage";
 import SideDisplay from "components/Auth/SideDisplay";
 import Button from "components/Button";
+import GradientBG from "components/GradientBG";
 import Input from "components/Input";
 import { useForm } from "features/hooks";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
 import Router from "next/router";
 import React from "react";
-import { HiOutlineEye } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { LOGIN_FORM } from "../formFieldData";
 import { loginFormDataSchema } from "../schema";
@@ -32,8 +32,6 @@ function Login() {
     loginFormDataSchema,
     (formData: LoginSessionType) => {
       dispatch(createSession(formData)).then((res) => {
-        console.log("🚀 ~ file: index.tsx:29 ~ dispatch ~ res", res);
-
         if (res.payload.error) {
           setErrorMessage(res.payload.data.message);
         } else {
@@ -49,6 +47,7 @@ function Login() {
       <SideDisplay />
 
       <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center scroll-smooth overflow-y-scroll">
+        <GradientBG />
         <div className="flex-1 w-full py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
           <div className="flex flex-col">
             <h1 className="text-3xl mb-10 font-bold">Sign In</h1>
