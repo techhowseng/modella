@@ -891,29 +891,14 @@ select{
   bottom: 0px;
 }
 
-.inset-x-0{
-  left: 0px;
-  right: 0px;
-}
-
-.inset-x-full{
-  left: 100%;
-  right: 100%;
-}
-
-.inset-x-\[100\]{
-  left: 100;
-  right: 100;
-}
-
-.inset-x-\[100\%\]{
-  left: 100%;
-  right: 100%;
-}
-
 .inset-x-\[50\]{
   left: 50;
   right: 50;
+}
+
+.inset-x-0{
+  left: 0px;
+  right: 0px;
 }
 
 .right-0{
@@ -926,6 +911,14 @@ select{
 
 .left-4{
   left: 1rem;
+}
+
+.top-\[calc\(100\%-13rem\)\]{
+  top: calc(100% - 13rem);
+}
+
+.left-\[calc\(50\%-11rem\)\]{
+  left: calc(50% - 11rem);
 }
 
 .top-4{
@@ -944,14 +937,6 @@ select{
   top: -10rem;
 }
 
-.left-\[calc\(50\%-11rem\)\]{
-  left: calc(50% - 11rem);
-}
-
-.top-\[calc\(100\%-13rem\)\]{
-  top: calc(100% - 13rem);
-}
-
 .left-\[calc\(50\%\+3rem\)\]{
   left: calc(50% + 3rem);
 }
@@ -964,22 +949,6 @@ select{
   top: -100px;
 }
 
-.right-\[\]{
-  right: ;
-}
-
-.right-\[0px\]{
-  right: 0px;
-}
-
-.right-\[10px\]{
-  right: 10px;
-}
-
-.top-\[calc\(13rem\)\]{
-  top: calc(13rem);
-}
-
 .isolate{
   isolation: isolate;
 }
@@ -988,12 +957,12 @@ select{
   z-index: 20;
 }
 
-.z-10{
-  z-index: 10;
-}
-
 .-z-10{
   z-index: -10;
+}
+
+.z-10{
+  z-index: 10;
 }
 
 .z-0{
@@ -1157,16 +1126,16 @@ select{
   margin-top: 1rem;
 }
 
-.mb-8{
-  margin-bottom: 2rem;
-}
-
 .mt-6{
   margin-top: 1.5rem;
 }
 
 .mt-1{
   margin-top: 0.25rem;
+}
+
+.mb-8{
+  margin-bottom: 2rem;
 }
 
 .mr-10{
@@ -1257,24 +1226,24 @@ select{
   height: 2.5rem;
 }
 
-.h-4{
-  height: 1rem;
-}
-
 .h-full{
   height: 100%;
+}
+
+.h-4{
+  height: 1rem;
 }
 
 .h-px{
   height: 1px;
 }
 
-.h-8{
-  height: 2rem;
-}
-
 .h-\[21\.1875rem\]{
   height: 21.1875rem;
+}
+
+.h-8{
+  height: 2rem;
 }
 
 .h-40{
@@ -1325,12 +1294,12 @@ select{
   width: 12rem;
 }
 
-.w-4{
-  width: 1rem;
-}
-
 .w-full{
   width: 100%;
+}
+
+.w-4{
+  width: 1rem;
 }
 
 .w-px{
@@ -1381,6 +1350,10 @@ select{
   max-width: 80rem;
 }
 
+.max-w-none{
+  max-width: none;
+}
+
 .max-w-2xl{
   max-width: 42rem;
 }
@@ -1389,20 +1362,12 @@ select{
   max-width: 20rem;
 }
 
-.max-w-none{
-  max-width: none;
-}
-
 .max-w-md{
   max-width: 28rem;
 }
 
 .max-w-full{
   max-width: 100%;
-}
-
-.max-w-\[50\%\]{
-  max-width: 50%;
 }
 
 .flex-1{
@@ -1470,12 +1435,12 @@ select{
        columns: 2;
 }
 
-.grid-cols-1{
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
 .grid-cols-6{
   grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .grid-cols-12{
@@ -1534,12 +1499,12 @@ select{
   gap: 4rem;
 }
 
-.gap-2{
-  gap: 0.5rem;
-}
-
 .gap-6{
   gap: 1.5rem;
+}
+
+.gap-2{
+  gap: 0.5rem;
 }
 
 .gap-1{
@@ -1857,16 +1822,16 @@ select{
   padding: 2.5rem;
 }
 
-.p-20{
-  padding: 5rem;
-}
-
 .p-2\.5{
   padding: 0.625rem;
 }
 
 .p-5{
   padding: 1.25rem;
+}
+
+.p-20{
+  padding: 5rem;
 }
 
 .px-6{
@@ -2497,16 +2462,16 @@ select{
     left: auto;
   }
 
-  .sm\:top-\[-20rem\]{
-    top: -20rem;
+  .sm\:top-\[calc\(100\%-30rem\)\]{
+    top: calc(100% - 30rem);
   }
 
   .sm\:left-\[calc\(50\%-30rem\)\]{
     left: calc(50% - 30rem);
   }
 
-  .sm\:top-\[calc\(100\%-30rem\)\]{
-    top: calc(100% - 30rem);
+  .sm\:top-\[-20rem\]{
+    top: -20rem;
   }
 
   .sm\:left-\[calc\(50\%\+36rem\)\]{
@@ -2546,13 +2511,13 @@ select{
     display: flex;
   }
 
+  .sm\:h-\[42\.375rem\]{
+    height: 42.375rem;
+  }
+
   .sm\:h-fit{
     height: -moz-fit-content;
     height: fit-content;
-  }
-
-  .sm\:h-\[42\.375rem\]{
-    height: 42.375rem;
   }
 
   .sm\:w-full{
@@ -2638,12 +2603,12 @@ select{
     margin-left: 0.5rem;
   }
 
-  .md\:mb-12{
-    margin-bottom: 3rem;
-  }
-
   .md\:mt-0{
     margin-top: 0px;
+  }
+
+  .md\:mb-12{
+    margin-bottom: 3rem;
   }
 
   .md\:flex{
@@ -2675,12 +2640,12 @@ select{
          columns: 3;
   }
 
-  .md\:grid-cols-2{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .md\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:flex-col{
@@ -2747,10 +2712,6 @@ select{
 @media (min-width: 1024px){
   .lg\:sticky{
     position: sticky;
-  }
-
-  .lg\:right-\[10px\]{
-    right: 10px;
   }
 
   .lg\:my-8{
@@ -2845,12 +2806,12 @@ select{
          columns: 3;
   }
 
-  .lg\:grid-cols-2{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .lg\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-1{
