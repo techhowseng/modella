@@ -2,6 +2,7 @@ import Button from "components/Button";
 import React from "react";
 
 interface Applicants {
+  id: string | number;
   image: string;
   name: string;
   title: string;
@@ -17,8 +18,8 @@ function Applicants({ applicants }: { applicants: Applicants[] }) {
           <div className="flow-root">
             <ul role="list" className="w-full divide-y divide-gray-200">
               {applicants.length > 0 ? (
-                applicants.map((applicant) => (
-                  <li className="py-3 sm:py-4">
+                applicants.map((applicant: Applicants) => (
+                  <li key={applicant.id} className="py-3 sm:py-4">
                     <div className="flex items-center space-x-4">
                       <div className="flex-shrink-0">
                         <img

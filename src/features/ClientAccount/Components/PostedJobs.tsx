@@ -5,7 +5,8 @@ import React, { useEffect } from "react";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getClientJobsActions } from "../services";
-import { getClientJobs } from "../slice";
+import { getJobs } from "../slice";
+import { Job } from "../types";
 
 const PostedJobs = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ const PostedJobs = () => {
     data: { clientJobs },
     loading,
     error,
-  } = useAppSelector(getClientJobs);
+  } = useAppSelector(getJobs);
 
   useEffect(() => {
     if (user.id) {
@@ -38,9 +39,7 @@ const PostedJobs = () => {
 
         {clientJobs && clientJobs.length > 0 ? (
           <div className="grid gap-2 mb-8 rounded-lg md:mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-            <JobCard />
-            <JobCard />
-            <JobCard />
+            {clientJobs.map((job: Job) => <JobCard isClient={job.clientId === user.id} job={job} key={job.id} />)}
           </div>
         ) : (
           <div className="flex w-full justify-center item-center">

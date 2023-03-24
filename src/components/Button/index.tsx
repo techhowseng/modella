@@ -8,9 +8,10 @@ function Button({
   className = "",
   loading = false,
   loadingText = "Loading...",
+  ...rest
 }: {
   type?: "button" | "submit" | "reset";
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
   className?: string;
   loading?: boolean;
@@ -18,6 +19,7 @@ function Button({
 }) {
   return (
     <button
+      {...rest}
       disabled={loading}
       type={type}
       onClick={onClick}

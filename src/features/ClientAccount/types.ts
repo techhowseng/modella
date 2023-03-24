@@ -4,10 +4,26 @@ export type CLIENT_ACCOUNT_MENU_ITEMS_TYPE = {
   link: string;
 };
 
-export type ClientJobsState = {
-  clientJobs: Jobs[];
+export type JobsState = {
+  clientJobs?: Job[];
+  jobs?: Job[];
+  job?: Job;
+  isApplying?: boolean;
 };
 
-export type Jobs = {
-  id: string;
+export type Job = {
+  id: number;
+  clientId: number;
+  jobRole: string;
+  jobDescription: string;
+  location: string | null;
+  salary: string | null;
+  jobType: string | null;
+  jobLength: string | null;
+  isOpen: boolean;
+};
+
+export type JobAttributesType = {
+  clientId: string;
+  jobRole: string;
 };

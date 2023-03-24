@@ -2,7 +2,6 @@ export const APP_ROUTES = {
   home: "/",
   auth: "/auth",
   about: "/about",
-  chat: "/chat",
   contact: "/contact",
   clientProfile: "/client",
   login: "/auth/login",
@@ -12,7 +11,7 @@ export const APP_ROUTES = {
   dashboard: "/dashboard",
   profile: "/model",
   jobs: "/jobs",
-  job: "/job-details",
+  job: "/job/{slug}",
   jobApplication: "/job-application",
   settings: "/settings",
   forgotPassword: "/forgot-password",
@@ -38,4 +37,8 @@ export const userProfileRoute = (user: { type: string }): string => {
     link = APP_ROUTES.clientProfile;
   }
   return link;
+};
+
+export const resolveRoute = (route: string, slug: string | number) => {
+  return route.replace("{slug}", slug as string);
 };
