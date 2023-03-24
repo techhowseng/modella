@@ -1,7 +1,6 @@
-import JobCard from "components/JobCard";
 import React from "react";
-import { HiOutlineDocumentSearch } from "react-icons/hi";
 import ClientAside from "./Components/ClientAside";
+import PostedJobs from "./Components/PostedJobs";
 import PostJobBanner from "./Components/PostJobBanner";
 
 function ClientAccountScreen() {
@@ -16,22 +15,11 @@ function ClientAccountScreen() {
           <PostJobBanner />
           {/* end of code snippet */}
 
+          {/* Begin */}
           <div className="flex flex-col item-center bg-white w-full mx-auto py-6 px-6 lg:px-8 relative overflow-hidden mt-5 rounded-lg border">
-            <h3 className="text-lg font-semibold">Posted Jobs</h3>
-            <div className="flex flex-col py-5">
-              <div className="flex w-full justify-center item-center">
-                <div className="flex text-center p-20 flex-col">
-                  <HiOutlineDocumentSearch className="mx-auto" size={68} />
-                  <h1>No Job posted yet</h1>
-                </div>
-              </div>
-              <div className="grid gap-2 mb-8 rounded-lg md:mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                <JobCard />
-                <JobCard />
-                <JobCard />
-              </div>
-            </div>
+            <PostedJobs />
           </div>
+          {/* end of code snippet */}
         </main>
       </div>
     </div>
