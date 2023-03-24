@@ -135,19 +135,16 @@ enum Types {
 }
 
 model Client {
-  id          Int        @id @default(autoincrement())
-  user        User       @relation(fields: [userId], references: [id])
-  userId      String     @unique
-  companyName String
-  phone       String
-  social      Json
-  state       String?
-  country     String?
-  address     String
-  isVetted    Boolean?   @default(false)
-  contracts   Contract[]
-  jobs        Job[]
-  Chat        Chat[]
+  id                Int        @id @default(autoincrement())
+  user              User       @relation(fields: [userId], references: [id])
+  userId            String     @unique
+  companyName       String
+  shortDescription  String?
+  clientDescription String?
+  isVetted          Boolean?   @default(false)
+  contracts         Contract[]
+  jobs              Job[]
+  Chat              Chat[]
 }
 
 model Contract {
@@ -188,6 +185,7 @@ model Job {
   salary         String?
   jobType        String?
   jobLength      String?
+  experience     String?
   isOpen         Boolean @default(true)
   applicants     Model[]
 }

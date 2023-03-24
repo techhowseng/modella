@@ -50,7 +50,6 @@ export default class ChatRepository {
           clientSocketIds.push({ socket: socket, userId:  user.userId });
           createdUsers = createdUsers.filter(item => item.userId != user.userId);
           createdUsers.push({...user, socketId: socket.id})
-          console.log("created user--------", createdUsers)
           io.emit('createdUsers', createdUsers)
         });
 
@@ -98,16 +97,13 @@ export default class ChatRepository {
   static async initiateOrGetConversation(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const  { chatId, modelId, clientId } = req.body;
-      console.log("req.body---------", req.body)
       if (chatId) return await ChatServices.getConversationByChatId(res, chatId);
       const conversation = await ChatServices.getOrCreateConversation(res, clientId, modelId);
-      console.log("convesation------------******8", conversation)
       return conversation
       // const conversation = await this.getConversations(req, res);
       // return ResponseService.json(res, 200, "Success", {df: "randomfasdf"});
 
     } catch (err) {
-      console.log("in hereree", err)
       // return ResponseService.sendError(err, res);
     }
   }
