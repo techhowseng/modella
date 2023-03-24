@@ -101,9 +101,7 @@ export default function Header() {
                     {({ active }) => (
                       <Link
                         href={
-                          user.userId
-                            ? userProfileRoute(user)
-                            : userProfileRoute(userData)
+                          (userData.userId && userProfileRoute(userData)) ?? "#"
                         }
                         className={classNames(
                           active ? "bg-gray-100" : "",
