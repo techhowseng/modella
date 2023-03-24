@@ -43,7 +43,6 @@ export default class UserServices {
       const user = await this.prisma.user.findUnique({
         where: { id },
       });
-      console.log("usrr----", user)
       return user;
     } catch (err) {
       return ResponseService.sendError(err, res);

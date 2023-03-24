@@ -61,7 +61,7 @@ export default class SessionRepository {
       } else if (sessionUser.type === "Model") {
         user = await SessionServices.getModelSession(res, token);
       }
-      return ResponseService.json(res, 200, user);
+      return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
       return ResponseService.sendError(err, res);
     }

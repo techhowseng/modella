@@ -33,6 +33,9 @@ export default class JobServices {
     try {
       const job = await this.prisma.job.findUnique({
         where: { id },
+        include: {
+          applicants: true
+        }
       });
       return job;
     } catch(err) {
@@ -42,7 +45,11 @@ export default class JobServices {
 
   static async getJobs(res: NextApiResponse ) {
     try {
-      const job = await this.prisma.job.findMany();
+      const job = await this.prisma.job.findMany({
+        include: {
+          applicants: true
+        }
+      });
       return job;
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -53,6 +60,9 @@ export default class JobServices {
     try {
       const job = await this.prisma.job.findMany({
         where: { clientId },
+        include: {
+          applicants: true
+        }
       });
       return job;
     } catch(err) {
@@ -87,6 +97,24 @@ export default class JobServices {
     try {
       const job = await this.prisma.job.delete({
         where: { id },
+      });
+      return job;
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async applyForJob(res: NextApiResponse, id: number, modelId: number) {
+    try {
+      const job = await this.prisma.job.update({
+        where: { id },
+        data: {
+          applicants: {
+            connect: {
+              id: modelId
+            }
+          }
+        }
       });
       return job;
     } catch(err) {

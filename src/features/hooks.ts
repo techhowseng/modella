@@ -9,6 +9,7 @@ import { SIGN_UP_STEPS } from "./Auth/SignUp/constants";
 import { getSessionUser } from "./Auth/slice";
 import { getCookieData } from "./functions";
 import { getUser } from "./ModelAccount/services";
+import { getUserDetails } from "./Auth/services";
 
 export const useGetUser = (id: string) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -63,6 +64,42 @@ export const useGetSessionUser = () => {
 
   return { userData };
 };
+
+export const useGetUserDetails = () => {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [user, setUserDetails] = useState<any>({});
+    const dispatch = useAppDispatch();
+  
+    const {
+      data: { user: sessionStoreUser },
+    } = useAppSelector(getSessionUser);
+  
+    const _getUser = async () => {
+      setLoading(true);
+      const res = await dispatch(getUserDetails());
+      if (res.payload.data.id) {
+        setUserDetails(res.payload.data);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        // Router.push("/404");
+      }
+    };
+
+    useEffect(() => {
+      // @ts-ignore
+      if (sessionStoreUser?.userId) {
+        setUserDetails(sessionStoreUser);
+      } else {
+        _getUser();
+      }
+    }, []);
+  
+    return {
+      user,
+      loading,
+    };
+  }
 
 export const useFieldsErrorCheck = (
   values: any,

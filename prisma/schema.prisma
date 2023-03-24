@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  engineType      = "binary"
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
@@ -12,20 +13,20 @@ datasource db {
 }
 
 model User {
-  id                String    @id @default(cuid())
-  counter           Int       @default(autoincrement())
-  email             String    @unique
-  password          String
-  type              Type      @default(Model)
-  isDeleted         Boolean   @default(false)
-  isAuthenticated   Boolean   @default(false)
-  createdAt         DateTime  @default(now()) @map(name: "created_at")
-  updatedAt         DateTime  @updatedAt @map(name: "updated_at")
-  model             Model?
-  client            Client?
-  Media             Media[]
-  accounts          Account[]
-  sessions          Session[]
+  id              String    @id @default(cuid())
+  counter         Int       @default(autoincrement())
+  email           String    @unique
+  password        String
+  type            Type      @default(Model)
+  isDeleted       Boolean   @default(false)
+  isAuthenticated Boolean   @default(false)
+  createdAt       DateTime  @default(now()) @map(name: "created_at")
+  updatedAt       DateTime  @updatedAt @map(name: "updated_at")
+  model           Model?
+  client          Client?
+  Media           Media[]
+  accounts        Account[]
+  sessions        Session[]
 
   @@map(name: "users")
 }
@@ -38,17 +39,17 @@ enum Type {
 }
 
 model Account {
-  id                 String     @id @default(cuid())
-  userId             String     @map("user_id")
+  id                 String    @id @default(cuid())
+  userId             String    @map("user_id")
   type               String
   provider           String?
-  providerAccountId  String?    @map("provider_account_id")
-  refresh_token      String?    @db.Text
-  access_token       String?    @db.Text
+  providerAccountId  String?   @map("provider_account_id")
+  refresh_token      String?   @db.Text
+  access_token       String?   @db.Text
   expires_at         DateTime?
   token_type         String?
   scope              String?
-  id_token           String?     @db.Text
+  id_token           String?   @db.Text
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
@@ -67,39 +68,48 @@ model Session {
 }
 
 model VerificationToken {
-  id         Int      @id @default(autoincrement())
-  email      String
-  password   String
-  type       Type     @default(Model)
-  token      String   @unique
-  expires    DateTime
+  id       Int      @id @default(autoincrement())
+  email    String
+  password String
+  type     Type     @default(Model)
+  token    String   @unique
+  expires  DateTime
 }
 
 model Model {
-  id              Int               @id @default(autoincrement())
-  userId          String            @unique
-  user            User              @relation(fields: [userId], references: [id])
+  id              Int        @id @default(autoincrement())
+  userId          String     @unique
+  user            User       @relation(fields: [userId], references: [id])
   firstname       String
   lastname        String
+  gender          Gender
   height          Int?
   bust            Int?
   waist           Int?
   hip             Int?
   shoeSize        Int?
-  weight          Decimal?          @db.Decimal(4,1)
+  weight          Decimal?   @db.Decimal(4, 1)
   complexion      String?
   dob             DateTime?
   social          Json?
   state           String?
   country         String?
   address         String?
-  isAvailable     Boolean?           @default(true)
+  isAvailable     Boolean?   @default(true)
   bio             String?
   phone           String?
   types           Types?
   unavailableDays String?
   contracts       Contract[]
   history         History[]
+  chat            Chat[]
+  job             Job[]
+}
+
+enum Gender {
+  Male
+  Female
+  NotGiven
 }
 
 enum Types {
@@ -125,33 +135,34 @@ enum Types {
 }
 
 model Client {
-  id              Int               @id @default(autoincrement())
-  user            User              @relation(fields: [userId], references: [id])
-  userId          String            @unique
-  companyName     String
-  phone           String
-  social          Json
-  state           String?
-  country         String?
-  address         String
-  isVetted        Boolean?           @default(false)
-  contracts       Contract[]
-  jobs            Job[]
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String     @unique
+  companyName String
+  phone       String
+  social      Json
+  state       String?
+  country     String?
+  address     String
+  isVetted    Boolean?   @default(false)
+  contracts   Contract[]
+  jobs        Job[]
+  Chat        Chat[]
 }
 
-model       Contract {
-  id            Int         @id @default(autoincrement())
-  client        Client      @relation(fields: [clientId], references: [id])
-  clientId      Int
-  model         Model       @relation(fields: [modelId], references: [id])
-  modelId       Int
-  status        Status      @default(Ongoing)
-  locations     String?
-  startDate     DateTime?
-  startTime     DateTime?
-  hours         Int?
-  days          Int?
-  fee           Decimal?    @db.Decimal(9,2)
+model Contract {
+  id        Int       @id @default(autoincrement())
+  client    Client    @relation(fields: [clientId], references: [id])
+  clientId  Int
+  model     Model     @relation(fields: [modelId], references: [id])
+  modelId   Int
+  status    Status    @default(Ongoing)
+  locations String?
+  startDate DateTime?
+  startTime DateTime?
+  hours     Int?
+  days      Int?
+  fee       Decimal?  @db.Decimal(9, 2)
 }
 
 enum Status {
@@ -172,12 +183,13 @@ model Job {
   client         Client  @relation(fields: [clientId], references: [id])
   clientId       Int
   jobRole        String
-  jobDescription String @db.Text
+  jobDescription String  @db.Text
   location       String?
   salary         String?
   jobType        String?
   jobLength      String?
   isOpen         Boolean @default(true)
+  applicants     Model[]
 }
 
 model Media {
@@ -193,4 +205,29 @@ enum ContentType {
   ProfileImages
   Gallery
   Misc
+}
+
+model Chat {
+  id            String        @id @default(cuid())
+  client        Client        @relation(fields: [clientId], references: [id])
+  clientId      Int
+  model         Model         @relation(fields: [modelId], references: [id])
+  modelId       Int
+  isContracted  Boolean       @default(false)
+  messages      Messages[]
+  isFlagged     Boolean       @default(false)
+
+  @@unique([clientId, modelId])
+}
+
+model Messages {
+  id              Int       @id @default(autoincrement())
+  chat            Chat      @relation(fields: [chatId], references: [id])
+  chatId          String
+  clientMessage   String
+  modelMessage    String
+  isRead          Boolean   @default(false)
+  isFlagged       Boolean   @default(false)
+  createdAt       DateTime  @default(now()) @map(name: "created_at")
+  updatedAt       DateTime  @updatedAt @map(name: "updated_at")
 }

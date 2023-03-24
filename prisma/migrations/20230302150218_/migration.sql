@@ -2,6 +2,9 @@
 CREATE TYPE "Type" AS ENUM ('Model', 'Client', 'Admin', 'SuperAdmin');
 
 -- CreateEnum
+CREATE TYPE "Gender" AS ENUM ('Male', 'Female', 'NotGiven');
+
+-- CreateEnum
 CREATE TYPE "Types" AS ENUM ('All', 'FashionEditorial', 'FashionCatalog', 'Commercial', 'Mature', 'Runway', 'Swimsuit', 'Lingerie', 'Fitness', 'Fit', 'Parts', 'Promotional', 'Glamour', 'Child', 'Petite', 'PlusSize', 'Freelance', 'Print', 'Other');
 
 -- CreateEnum
@@ -73,21 +76,22 @@ CREATE TABLE "Model" (
     "userId" TEXT NOT NULL,
     "firstname" TEXT NOT NULL,
     "lastname" TEXT NOT NULL,
-    "height" TEXT,
-    "bust" TEXT,
-    "waist" TEXT,
-    "hip" TEXT,
-    "shoeSize" TEXT,
-    "weight" TEXT,
-    "complexion" TEXT NOT NULL,
-    "DOB" TEXT NOT NULL,
+    "gender" "Gender" NOT NULL,
+    "height" INTEGER,
+    "bust" INTEGER,
+    "waist" INTEGER,
+    "hip" INTEGER,
+    "shoeSize" INTEGER,
+    "weight" DECIMAL(4,1),
+    "complexion" TEXT,
+    "dob" TIMESTAMP(3),
     "social" JSONB,
     "state" TEXT,
     "country" TEXT,
     "address" TEXT,
-    "isAvailable" BOOLEAN NOT NULL DEFAULT true,
-    "bio" TEXT NOT NULL,
-    "phone" JSONB,
+    "isAvailable" BOOLEAN DEFAULT true,
+    "bio" TEXT,
+    "phone" TEXT,
     "types" "Types",
     "unavailableDays" TEXT,
 
@@ -99,11 +103,12 @@ CREATE TABLE "Client" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
     "companyName" TEXT NOT NULL,
-    "phone" JSONB NOT NULL,
+    "phone" TEXT NOT NULL,
     "social" JSONB NOT NULL,
     "state" TEXT,
     "country" TEXT,
     "address" TEXT NOT NULL,
+    "isVetted" BOOLEAN DEFAULT false,
 
     CONSTRAINT "Client_pkey" PRIMARY KEY ("id")
 );
@@ -114,12 +119,12 @@ CREATE TABLE "Contract" (
     "clientId" INTEGER NOT NULL,
     "modelId" INTEGER NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'Ongoing',
-    "locations" JSONB NOT NULL,
-    "startDate" TEXT,
-    "startTime" TEXT,
-    "hours" TEXT,
-    "days" TEXT,
-    "fee" TEXT,
+    "locations" TEXT,
+    "startDate" TIMESTAMP(3),
+    "startTime" TIMESTAMP(3),
+    "hours" INTEGER,
+    "days" INTEGER,
+    "fee" DECIMAL(9,2),
 
     CONSTRAINT "Contract_pkey" PRIMARY KEY ("id")
 );
@@ -140,7 +145,7 @@ CREATE TABLE "Job" (
     "clientId" INTEGER NOT NULL,
     "jobRole" TEXT NOT NULL,
     "jobDescription" TEXT NOT NULL,
-    "locations" JSONB NOT NULL,
+    "location" TEXT,
     "salary" TEXT,
     "jobType" TEXT,
     "jobLength" TEXT,
@@ -157,6 +162,30 @@ CREATE TABLE "Media" (
     "contentType" "ContentType" NOT NULL,
 
     CONSTRAINT "Media_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Chat" (
+    "id" TEXT NOT NULL,
+    "clientId" INTEGER NOT NULL,
+    "modelId" INTEGER NOT NULL,
+    "isContracted" BOOLEAN NOT NULL DEFAULT false,
+    "isFlagged" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "Chat_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Messages" (
+    "id" SERIAL NOT NULL,
+    "chatId" TEXT NOT NULL,
+    "clientMessages" TEXT NOT NULL,
+    "modelMessages" TEXT NOT NULL,
+    "isFlagged" BOOLEAN NOT NULL DEFAULT false,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Messages_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -206,3 +235,12 @@ ALTER TABLE "Job" ADD CONSTRAINT "Job_clientId_fkey" FOREIGN KEY ("clientId") RE
 
 -- AddForeignKey
 ALTER TABLE "Media" ADD CONSTRAINT "Media_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Chat" ADD CONSTRAINT "Chat_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Chat" ADD CONSTRAINT "Chat_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Messages" ADD CONSTRAINT "Messages_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "Chat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

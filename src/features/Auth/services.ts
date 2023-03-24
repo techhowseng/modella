@@ -33,6 +33,18 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const getUserDetails = createAsyncThunk(
+  "get/user",
+  async () => {
+    try {
+      const response = await axiosInstance.get("/session");
+      return response.data;
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+);
+
 export const createSession = createAsyncThunk(
   "create/user/session",
   async (data: LoginSessionType) => {

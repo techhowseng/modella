@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "Model" ALTER COLUMN "complexion" DROP NOT NULL,
-ALTER COLUMN "isAvailable" DROP NOT NULL,
-ALTER COLUMN "bio" DROP NOT NULL;
