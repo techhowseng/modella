@@ -2,7 +2,9 @@ import JobCard from "components/JobCard";
 import Loading from "components/loading";
 import SearchBar from "components/SearchBar";
 import Select from "components/Select";
+import { getJobs } from "features/ClientAccount/slice";
 import { Job } from "features/ClientAccount/types";
+import { getJobsActions } from "features/JobDetails/services";
 import React, { useEffect, useState } from "react";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "store/hooks";
@@ -21,7 +23,7 @@ function Jobs() {
 
   const [sortValue, setSortValue] = useState("");
   return (
-    <div className="flex flex-col justify-center min-h-screen p-2 w-12/12 lg:w-9/12 my-0 mx-auto relative">
+    <div className="flex flex-col min-h-screen p-2 w-12/12 lg:w-9/12 my-0 mx-auto relative">
       <SearchBar />
       <div className="flex flex-col item-center w-full mx-auto py-4 sm:px-6 lg:px-8 relative overflow-hidden rounded-lg ">
         {loading && (

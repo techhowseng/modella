@@ -53,6 +53,6 @@ export const clientSlice = createSlice({
 export const { clientJobsAction } = clientSlice.actions;
 
 // selectors
-export const getClientJobs = (state: RootState) => state.jobs;
+export const getJobs = (state: RootState) => state.jobs;
 
 export default clientSlice.reducer;
