@@ -7,8 +7,6 @@ import React from "react";
 function ModelPage() {
   const { query } = useRouter();
 
-  console.log("query >>> ", query);
-
   return (
     <HeaderFooter title={`Model profile page | ${SITE_NAME}`}>
       <ModelAccountSreen userId={query.userId as string} />

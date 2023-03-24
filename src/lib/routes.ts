@@ -2,6 +2,7 @@ export const APP_ROUTES = {
   home: "/",
   auth: "/auth",
   about: "/about",
+  chat: "/chat",
   contact: "/contact",
   clientProfile: "/client",
   login: "/auth/login",

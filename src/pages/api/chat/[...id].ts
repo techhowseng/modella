@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import SessionRepository from "./repository";
+import { validationResult } from 'express-validator';
+import ChatRepository from "./repository";
+// import { validateUser, validateUpdateUser } from "./userValidation";
+import { bodyPermittedParams } from "helper/util";
 
 export default async function handle(
   req: NextApiRequest,
@@ -8,17 +11,17 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await SessionRepository.getUserSession(req, res));
+      res.json(await ChatRepository.getChat(req, res));
       break;
     case "POST":
-      res.json(await SessionRepository.loginUser(req, res));
+      res.json(await ChatRepository.postMessage(req, res));
       break;
     case "PUT":
+      res.json(await ChatRepository.markAsRead(req, res));
       break;
     case "PATCH":
       break;
     case "DELETE":
-      res.json(await SessionRepository.deleteSession(req, res));
       break;
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);

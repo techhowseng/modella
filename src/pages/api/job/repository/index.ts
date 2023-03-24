@@ -4,7 +4,7 @@ import SessionServices from "../../session/service";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
 import JobsServices, { TJob } from "../service";
-import { getClient, handleQuery } from "helper/util";
+import { getModel, getClient, handleQuery } from "helper/util";
 
 export default class JobsRepository {
   prisma: PrismaClient;
@@ -95,4 +95,17 @@ export default class JobsRepository {
       return ResponseService.sendError(err, res);
     }
   }
+
+  static async applyForJob(req: NextApiRequest, res: NextApiResponse<any>) {
+    try {
+      const { pid } = req.query;
+      const model = await getModel(req);
+      if (model) {
+      const jobs = await JobsServices.applyForJob(res, ~~pid, model.id);
+      return jobs;
+      }
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
+  } 
 }

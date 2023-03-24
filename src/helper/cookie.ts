@@ -45,10 +45,8 @@ export const removeCookie = function (key: string) {
 function getRawCookie(key: string, cookieStr?: string): string {
   const name = `${key}=`;
   const windowCookies: string =
-    typeof window !== "undefined"
-      ? window.document.cookie || (getNextCookie(key) as string)
-      : "";
-  const cookies = (cookieStr || windowCookies).split(";");
+    typeof window !== "undefined" ? (getNextCookie(key) as string) : "";
+  const cookies = (window.document.cookie ?? windowCookies ?? ";").split(";");
   const cookiesLen = cookies.length;
   let result = "";
 

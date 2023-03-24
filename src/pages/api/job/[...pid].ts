@@ -18,6 +18,7 @@ export default async function handle(
       res.json(await JobsRepository.getJob(req, res));
       break;
     case "POST":
+      res.json(await JobsRepository.applyForJob(req, res));
       break;
     case "PUT":
       await validateUpdateJob(req, res)

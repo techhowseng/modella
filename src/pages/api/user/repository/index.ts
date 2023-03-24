@@ -77,7 +77,7 @@ export default class UserRepository {
       email ? (input.email = email.toLowerCase()) : null;
       password ? (input.password = bcrypt.hashSync(password, 8)) : null;
       type ? (input.type = type) : null;
-      const updatedUser = await UserServices.updateUser(res, pid, input);
+      const updatedUser = await UserServices.updateUser(res, pid as string, input);
       if (updatedUser) {
         return (({
           id, email, type, isAuthenticated, updatedAt, isDeleted
