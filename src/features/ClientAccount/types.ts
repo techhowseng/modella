@@ -1,3 +1,5 @@
+import { Model } from "@prisma/client";
+
 export type CLIENT_ACCOUNT_MENU_ITEMS_TYPE = {
   name: string;
   icon: any;
@@ -25,5 +27,5 @@ export type JobAttributesType = {
   jobLength: string | null;
   isOpen?: boolean;
   experience?: string;
-  applied?: boolean;
+  applicants?: Model[];
 };

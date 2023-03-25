@@ -1,6 +1,8 @@
 import Button from "components/Button";
 import Loading from "components/loading";
 import { getSessionUser } from "features/Auth/slice";
+import { User } from "features/Auth/types";
+import { isApplied } from "features/functions";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
@@ -38,6 +40,8 @@ function JobDetails() {
     }
   };
 
+  const isAppliedToJob = isApplied(user as User, job?.applicants);
+
   if (loading) {
     return (
       <div className="flex min-h-[500px] p-2 w-full lg:w-12/12 my-0 mx-auto flex-nowrap justify-center items-center">
@@ -72,9 +76,9 @@ function JobDetails() {
                   loadingText={"Applying..."}
                   onClick={handleApply}
                   className={"w-[50%] h-[50px]"}
-                  disabled={!!successMessage || job?.applied}
+                  disabled={!!successMessage || isAppliedToJob}
                 >
-                  {successMessage || job?.applied ? "Applied" : "Apply"}
+                  {successMessage || isAppliedToJob ? "Applied" : "Apply"}
                 </Button>
               )}
             </div>

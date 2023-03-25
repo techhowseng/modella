@@ -2,6 +2,8 @@ import JobCard from "components/JobCard";
 import Loading from "components/loading";
 import SearchBar from "components/SearchBar";
 import Select from "components/Select";
+import { getSessionUser } from "features/Auth/slice";
+import { User } from "features/Auth/types";
 import { getJobs } from "features/ClientAccount/slice";
 import { Job } from "features/ClientAccount/types";
 import { getJobsActions } from "features/JobDetails/services";
@@ -11,6 +13,9 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 
 function Jobs() {
   const dispatch = useAppDispatch();
+  const {
+    data: { user },
+  } = useAppSelector(getSessionUser);
   const {
     data: { jobs },
     loading,
@@ -55,7 +60,7 @@ function Jobs() {
               </div>
               <div className="grid gap-2 mb-8 md:mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {jobs.map((job: Job) => (
-                  <JobCard isClient={false} job={job} key={job.id} />
+                  <JobCard user={user as User} isClient={false} job={job} key={job.id} />
                 ))}
               </div>
             </>

@@ -41,6 +41,7 @@ const PostedJobs = () => {
           <div className="grid gap-2 mb-8 rounded-lg md:mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
             {clientJobs.map((job: Job) => (
               <JobCard
+                user={user}
                 isClient={job.clientId === user.id}
                 job={job}
                 key={job.id}

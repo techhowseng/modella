@@ -1,11 +1,23 @@
 import Button from "components/Button";
+import { User } from "features/Auth/types";
 import { Job } from "features/ClientAccount/types";
+import { isApplied } from "features/functions";
 import { APP_ROUTES, resolveRoute } from "lib/routes";
 import Link from "next/link";
 import Router from "next/router";
 import React from "react";
 
-function JobCard({ job, isClient }: { isClient: boolean; job: Job }) {
+function JobCard({
+  user,
+  job,
+  isClient,
+}: {
+  user: User;
+  isClient: boolean;
+  job: Job;
+}) {
+  const isAppliedToJob = isApplied(user, job?.applicants);
+
   return (
     <div className="flex flex-col p-6 bg-white rounded-lg border">
       {!isClient && (
@@ -66,9 +78,9 @@ function JobCard({ job, isClient }: { isClient: boolean; job: Job }) {
             onClick={() => {
               Router.push(resolveRoute(APP_ROUTES.job, job.id));
             }}
-            disabled={job?.applied}
+            disabled={isAppliedToJob}
           >
-            {job?.applied ? "Applied" : "Apply"}
+            {isAppliedToJob ? "Applied" : "Apply"}
           </Button>
         )}
         {isClient && (
