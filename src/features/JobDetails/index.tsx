@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import Loading from "components/loading";
+import { getSessionUser } from "features/Auth/slice";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
@@ -16,11 +17,13 @@ function JobDetails() {
   const parsed = route.query;
   const dispatch = useAppDispatch();
   const {
+    data: { user },
+  } = useAppSelector(getSessionUser);
+  const {
     data: { job, isApplying },
     loading,
     error,
   } = useAppSelector(getJob);
-  console.log("🚀 ~ file: index.tsx:21 ~ JobDetails ~ job", job);
 
   useEffect(() => {
     dispatch(getJobAction(parsed.id as string));
@@ -57,19 +60,22 @@ function JobDetails() {
                 title={"Developer at Open AI"}
               />
 
-              <Button
-                loading={isApplying}
-                loadingText={"Applying..."}
-                onClick={handleApply}
-                className={"w-[50%] h-[50px]"}
-              >
-                {"Apply"}
-              </Button>
+              {/* @ts-ignore */}
+              {user?.type === "Model" && job?.isOpen && (
+                <Button
+                  loading={isApplying}
+                  loadingText={"Applying..."}
+                  onClick={handleApply}
+                  className={"w-[50%] h-[50px]"}
+                >
+                  {"Apply"}
+                </Button>
+              )}
             </div>
 
             <CriteriaBlock
               data={{
-                experience: job?.isOpen,
+                experience: job?.experience,
                 location: job?.location,
                 salary: job?.salary,
                 duration: job?.jobLength,
@@ -79,6 +85,8 @@ function JobDetails() {
             <JobDescription description={job?.jobDescription} />
 
             <Applicants
+              // @ts-ignore
+              isClient={user?.type === "Client"}
               applicants={[
                 {
                   id: 1,

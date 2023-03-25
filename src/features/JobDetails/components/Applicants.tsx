@@ -8,7 +8,13 @@ interface Applicants {
   title: string;
 }
 
-function Applicants({ applicants }: { applicants: Applicants[] }) {
+function Applicants({
+  isClient,
+  applicants,
+}: {
+  isClient?: boolean;
+  applicants: Applicants[];
+}) {
   return (
     <div className="flex flex-col mt-10">
       <h1 className="text-xl">Applicants (22)</h1>
@@ -36,9 +42,11 @@ function Applicants({ applicants }: { applicants: Applicants[] }) {
                           {applicant.title}
                         </p>
                       </div>
-                      <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                        <Button onClick={() => {}}>{"View Profile"}</Button>
-                      </div>
+                      {isClient && (
+                        <div className="inline-flex items-center text-base font-semibold text-gray-900">
+                          <Button onClick={() => {}}>{"View Profile"}</Button>
+                        </div>
+                      )}
                     </div>
                   </li>
                 ))

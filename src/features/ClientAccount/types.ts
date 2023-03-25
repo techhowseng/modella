@@ -24,4 +24,5 @@ export type JobAttributesType = {
   jobType: string | null;
   jobLength: string | null;
   isOpen?: boolean;
+  experience?: string;
 };
