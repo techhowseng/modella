@@ -35,7 +35,7 @@ function Jobs() {
         )}
 
         <div className="flex flex-col py-5">
-          {jobs && jobs.length > 0 ? (
+          {!loading && jobs && jobs.length > 0 ? (
             <>
               <div className="flex flex-row justify-between pb-5">
                 <h3 className="flex text-sm lg:text-lg font-semibold items-center">
@@ -59,14 +59,14 @@ function Jobs() {
                 ))}
               </div>
             </>
-          ) : (
+          ) : !loading ? (
             <div className="flex w-full justify-center item-center">
               <div className="flex text-center p-20 flex-col">
                 <HiOutlineDocumentSearch className="mx-auto" size={68} />
                 <h1>No Job Available</h1>
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

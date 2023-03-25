@@ -59,9 +59,9 @@ export const useGetSessionUser = () => {
     }
   }, [userData]);
   // @ts-ignore
-  if (session && session.message) {
-    dispatch(registerSessionUser(session.message));
-    return { userData: session.message };
+  if (session && session.data) {
+    dispatch(registerSessionUser(session.data));
+    return { userData: session.data };
   }
 
   return { userData };

@@ -11,19 +11,17 @@ export type JobsState = {
   isApplying?: boolean;
 };
 
-export type Job = {
+export type Job = JobAttributesType & {
   id: number;
   clientId: number;
+};
+
+export type JobAttributesType = {
   jobRole: string;
   jobDescription: string;
   location: string | null;
   salary: string | null;
   jobType: string | null;
   jobLength: string | null;
-  isOpen: boolean;
-};
-
-export type JobAttributesType = {
-  clientId: string;
-  jobRole: string;
+  isOpen?: boolean;
 };

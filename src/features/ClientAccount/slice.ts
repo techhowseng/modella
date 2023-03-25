@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getJobsActions } from "features/JobDetails/services";
 import { GlobalStateStructure } from "lib/globalTypes";
 import { RootState } from "store";
-import { getClientJobsActions } from "./services";
+import { createJob, getClientJobsActions } from "./services";
 import { JobsState, Job } from "./types";
 
 const initialState: GlobalStateStructure<JobsState> = {
@@ -38,6 +39,51 @@ export const clientSlice = createSlice({
       )
       .addCase(
         getClientJobsActions.rejected,
+        (state: GlobalStateStructure<JobsState>, payload: any) => {
+          state.loading = false;
+          state.error = true;
+          state.message = payload.error.message;
+        }
+      )
+      .addCase(createJob.pending, (state: GlobalStateStructure<JobsState>) => {
+        state.loading = true;
+      })
+      .addCase(
+        createJob.fulfilled,
+        (state: GlobalStateStructure<JobsState>, { payload }) => {
+          state.loading = false;
+          state.data.clientJobs = payload.data ?? payload;
+          if (payload.error) {
+            state.error = true;
+          }
+        }
+      )
+      .addCase(
+        createJob.rejected,
+        (state: GlobalStateStructure<JobsState>, payload: any) => {
+          state.loading = false;
+          state.error = true;
+          state.message = payload.error.message;
+        }
+      )
+      .addCase(
+        getJobsActions.pending,
+        (state: GlobalStateStructure<JobsState>) => {
+          state.loading = true;
+        }
+      )
+      .addCase(
+        getJobsActions.fulfilled,
+        (state: GlobalStateStructure<JobsState>, { payload }) => {
+          state.loading = false;
+          state.data.jobs = payload.data ?? payload;
+          if (payload.error) {
+            state.error = true;
+          }
+        }
+      )
+      .addCase(
+        getJobsActions.rejected,
         (state: GlobalStateStructure<JobsState>, payload: any) => {
           state.loading = false;
           state.error = true;

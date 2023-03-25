@@ -6,14 +6,13 @@ import { classNames } from "lib/functions";
 import { APP_ROUTES, userProfileRoute } from "lib/routes";
 import Link from "next/link";
 import { SITE_NAME } from "lib/constants";
-import { useGetSessionUser, useGetUser } from "features/hooks";
+import { useGetSessionUser } from "features/hooks";
 import { deleteSession } from "features/Auth/services";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getSessionUser } from "features/Auth/slice";
 import Router from "next/router";
 
 export default function Header() {
-  const { user } = useGetUser("user");
   const { userData } = useGetSessionUser();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector(getSessionUser);
@@ -101,7 +100,7 @@ export default function Header() {
                     {({ active }) => (
                       <Link
                         href={
-                          (userData.userId && userProfileRoute(userData)) ?? "#"
+                          (userData?.userId && userProfileRoute(userData)) ?? "#"
                         }
                         className={classNames(
                           active ? "bg-gray-100" : "",
