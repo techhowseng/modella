@@ -3,11 +3,9 @@ import { Job } from "features/ClientAccount/types";
 import { APP_ROUTES, resolveRoute } from "lib/routes";
 import Link from "next/link";
 import Router from "next/router";
-import React, { useState } from "react";
+import React from "react";
 
 function JobCard({ job, isClient }: { isClient: boolean; job: Job }) {
-  console.log("🚀 ~ file: index.tsx:10 ~ JobCard ~ job", job);
-
   return (
     <div className="flex flex-col p-6 bg-white rounded-lg border">
       {!isClient && (
@@ -68,8 +66,9 @@ function JobCard({ job, isClient }: { isClient: boolean; job: Job }) {
             onClick={() => {
               Router.push(resolveRoute(APP_ROUTES.job, job.id));
             }}
+            disabled={job?.applied}
           >
-            Apply
+            {job?.applied ? "Applied" : "Apply"}
           </Button>
         )}
         {isClient && (
@@ -82,8 +81,6 @@ function JobCard({ job, isClient }: { isClient: boolean; job: Job }) {
           </Button>
         )}
       </div>
-
-      {/* <Drawer isOpen={showDrawer} onClose={handleClose} /> */}
     </div>
   );
 }

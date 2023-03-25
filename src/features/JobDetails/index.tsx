@@ -2,7 +2,7 @@ import Button from "components/Button";
 import Loading from "components/loading";
 import { getSessionUser } from "features/Auth/slice";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import Applicants from "./components/Applicants";
 import CriteriaBlock from "./components/CriteriaBlock";
@@ -14,6 +14,7 @@ import { getJob } from "./slice";
 function JobDetails() {
   // const [loading, setLoading] = useState(false);
   const route = useRouter();
+  const [successMessage, setSuccessMessage] = useState("");
   const parsed = route.query;
   const dispatch = useAppDispatch();
   const {
@@ -29,8 +30,12 @@ function JobDetails() {
     dispatch(getJobAction(parsed.id as string));
   }, [parsed.id]);
 
-  const handleApply = () => {
-    dispatch(applyToJobAction(parsed.id as string));
+  const handleApply = async () => {
+    const res = await dispatch(applyToJobAction(parsed.id as string));
+    if (res.type.includes("apply/job/fulfilled")) {
+      //show toast
+      setSuccessMessage("Applied");
+    }
   };
 
   if (loading) {
@@ -67,8 +72,9 @@ function JobDetails() {
                   loadingText={"Applying..."}
                   onClick={handleApply}
                   className={"w-[50%] h-[50px]"}
+                  disabled={!!successMessage || job?.applied}
                 >
-                  {"Apply"}
+                  {successMessage || job?.applied ? "Applied" : "Apply"}
                 </Button>
               )}
             </div>
