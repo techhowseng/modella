@@ -27,7 +27,7 @@ function JobDetails() {
   }, [parsed.id]);
 
   const handleApply = () => {
-    dispatch(applyToJobAction(job?.id));
+    dispatch(applyToJobAction(parsed.id as string));
   };
 
   if (loading) {

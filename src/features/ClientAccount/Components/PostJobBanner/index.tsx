@@ -57,11 +57,7 @@ function PostJobBanner() {
       />
 
       {/* <!-- Main modal --> */}
-      <Modal
-        isOpen={isOpen}
-        onOpen={setIsOpen}
-        title={"Job Create Form"}
-      >
+      <Modal isOpen={isOpen} onOpen={setIsOpen} title={"Job Create Form"}>
         <PostJobCreateForm onClose={() => setIsOpen(false)} />
       </Modal>
     </div>

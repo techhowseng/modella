@@ -92,7 +92,6 @@ function Input({
         value={value}
         checked={!!value}
         autoComplete={autoComplete}
-        defaultValue={value}
         onChange={onChange}
         className={`base-input ${
           type === "checkbox" ? "w-2/2" : "w-full"
