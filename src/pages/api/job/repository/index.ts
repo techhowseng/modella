@@ -104,6 +104,7 @@ export default class JobsRepository {
       const jobs = await JobsServices.applyForJob(res, ~~pid, model.id);
       return jobs;
       }
+      return ResponseService.sendError({ message: "Token does not exist on database." }, res);
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
