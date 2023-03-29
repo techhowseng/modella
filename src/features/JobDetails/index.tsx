@@ -3,6 +3,8 @@ import Loading from "components/loading";
 import { getSessionUser } from "features/Auth/slice";
 import { User } from "features/Auth/types";
 import { isApplied } from "features/functions";
+import { SITE_NAME } from "lib/constants";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
@@ -52,6 +54,11 @@ function JobDetails() {
 
   return (
     <div className="flex flex-col min-h-screen p-2 w-full lg:w-9/12 my-0 mx-auto relative">
+      <Head>
+        <title>
+          {job?.jobRole} | {SITE_NAME} Jobs
+        </title>
+      </Head>
       <div>
         <div className="bg-white border border-gray-200 rounded-lg">
           <img

@@ -1650,10 +1650,6 @@ input:checked + .toggle-bg{
   margin-bottom: 2rem;
 }
 
-.mr-10{
-  margin-right: 2.5rem;
-}
-
 .mt-\[-100px\]{
   margin-top: -100px;
 }
@@ -1680,6 +1676,10 @@ input:checked + .toggle-bg{
 
 .mr-6{
   margin-right: 1.5rem;
+}
+
+.mr-10{
+  margin-right: 2.5rem;
 }
 
 .block{
@@ -2004,16 +2004,16 @@ input:checked + .toggle-bg{
   animation: spin 1s linear infinite;
 }
 
+.cursor-not-allowed{
+  cursor: not-allowed;
+}
+
 .cursor-pointer{
   cursor: pointer;
 }
 
 .cursor-default{
   cursor: default;
-}
-
-.cursor-not-allowed{
-  cursor: not-allowed;
 }
 
 .resize{
@@ -2178,16 +2178,16 @@ input:checked + .toggle-bg{
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.space-x-6 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-x-reverse: 0;
-  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
 .space-y-1 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-x-6 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]){
@@ -2436,11 +2436,6 @@ input:checked + .toggle-bg{
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
-.bg-blue-100{
-  --tw-bg-opacity: 1;
-  background-color: rgb(225 239 254 / var(--tw-bg-opacity));
-}
-
 .bg-green-500{
   --tw-bg-opacity: 1;
   background-color: rgb(14 159 110 / var(--tw-bg-opacity));
@@ -2463,6 +2458,11 @@ input:checked + .toggle-bg{
 .bg-amber-900{
   --tw-bg-opacity: 1;
   background-color: rgb(120 53 15 / var(--tw-bg-opacity));
+}
+
+.bg-blue-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(225 239 254 / var(--tw-bg-opacity));
 }
 
 .bg-white\/50{
@@ -3673,16 +3673,16 @@ input:checked + .toggle-bg{
     margin-left: 0.5rem;
   }
 
-  .lg\:mt-0{
-    margin-top: 0px;
-  }
-
   .lg\:mt-10{
     margin-top: 2.5rem;
   }
 
   .lg\:mt-16{
     margin-top: 4rem;
+  }
+
+  .lg\:mt-0{
+    margin-top: 0px;
   }
 
   .lg\:block{
