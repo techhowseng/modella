@@ -26,6 +26,7 @@ export default class HistoryRepository {
 			);
 			return history;
 			}
+			return ResponseService.sendError({ message: "Token does not exist on database." }, res);
 		} catch(err) {
       return ResponseService.sendError(err, res);
 		}

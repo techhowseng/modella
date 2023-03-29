@@ -1234,9 +1234,6 @@ select{
   height: 20rem;
 }
 
-.h-px{
-  height: 1px;
-  }
 .h-4{
   height: 1rem;
 }
@@ -1512,10 +1509,6 @@ select{
 
 .gap-4{
   gap: 1rem;
-}
-
-.gap-2{
-  gap: 0.5rem;
 }
 
 .gap-6{

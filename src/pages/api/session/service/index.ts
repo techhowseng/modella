@@ -78,6 +78,7 @@ export default class SessionServices {
           }
         }
       })
+      if (!session) return null
       return (({ email, type, model }) => ({ email, type, ...model }))(session.user)
     } catch(err) {
       ResponseService.sendError({ message: 'The user does not have an associated model.' }, res);

@@ -103,10 +103,10 @@ const contract = (client, model) => {
   ];
 }
 
-const job = (client) => {
+const job = (client1, client2) => {
   return [
     {
-      clientId: client.id,
+      clientId: client1.id,
       jobRole: "Glamour model",
       jobDescription: "A modelling job for a glamour magazine.",
       location: "Lekki phase 1",
@@ -115,12 +115,48 @@ const job = (client) => {
       jobLength: "2 days"
     },
     {
-      clientId: client.id,
-      jobRole: "Runway model",
-      jobDescription: "Ajob for arunway shoot.",
+      clientId: client1.id,
+      jobRole: "Fitness",
+      jobDescription: "A fitness shoot.",
       location: "Ajah",
-      salary: "150,000",
-      jobType: "Runway",
+      salary: "70,000",
+      jobType: "Fitness",
+      jobLength: "1 day"
+    },
+    {
+      clientId: client1.id,
+      jobRole: "Promotional model",
+      jobDescription: "Promotional",
+      location: "Victoria Island",
+      salary: "200,000",
+      jobType: "Promotional",
+      jobLength: "5 days"
+    },
+    {
+      clientId: client2.id,
+      jobRole: "Plus size model",
+      jobDescription: "A plus size shoot for a clothing line.",
+      location: "Ikoyi",
+      salary: "450,000",
+      jobType: "PLus size",
+      jobLength: "1 day"
+    },
+    {
+      clientId: client2.id,
+      jobRole: "child model",
+      jobDescription: "Child modelling",
+      location: "Lekki phase 1",
+      salary: "50,000",
+      jobType: "child",
+      jobLength: "1 days"
+    },
+    {
+      clientId: client2.id,
+      jobRole: "Lingerie",
+      jobDescription: "A Lingerie shoot",
+      location: "Badore",
+      salary: "180,000",
+      jobType: "Lingerie",
       jobLength: "1 day"
     },
   ];

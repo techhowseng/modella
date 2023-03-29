@@ -76,15 +76,15 @@ const load = async () => {
     });
     console.log('Added model data');
 
-    const createdClient = await prisma.client.findFirst();
+    const clients = await prisma.client.findMany();
     const createdModel = await prisma.model.findFirst();
     await prisma.contract.createMany({
-      data: contract(createdClient, createdModel),
+      data: contract(clients[0], createdModel),
     });
     console.log('Added contract data');
 
     await prisma.job.createMany({
-      data: job(createdClient),
+      data: job(clients[0], clients[1]),
     });
     console.log('Added job data');
 

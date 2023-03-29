@@ -141,6 +141,11 @@ model Client {
   companyName       String
   shortDescription  String?
   clientDescription String?
+  phone             String
+  social            Json
+  state             String?
+  country           String?
+  address           String?
   isVetted          Boolean?   @default(false)
   contracts         Contract[]
   jobs              Job[]
@@ -148,7 +153,7 @@ model Client {
 }
 
 model Contract {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(cuid())
   client    Client    @relation(fields: [clientId], references: [id])
   clientId  Int
   model     Model     @relation(fields: [modelId], references: [id])
@@ -176,7 +181,7 @@ model History {
 }
 
 model Job {
-  id             Int     @id @default(autoincrement())
+  id             String    @id @default(cuid())
   client         Client  @relation(fields: [clientId], references: [id])
   clientId       Int
   jobRole        String
@@ -219,7 +224,7 @@ model Chat {
 }
 
 model Messages {
-  id              Int       @id @default(autoincrement())
+  id              String    @id @default(cuid())
   chat            Chat      @relation(fields: [chatId], references: [id])
   chatId          String
   clientMessage   String
