@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getClientJobsActions } from "../services";
-import { getJobs } from "../slice";
+import { getJobs, setEditJob } from "../slice";
 import { Job } from "../types";
 
 const PostedJobs = () => {
@@ -42,9 +42,10 @@ const PostedJobs = () => {
             {clientJobs.map((job: Job) => (
               <JobCard
                 user={user}
-                isClient={job.clientId === user.id}
+                isClient={user.type === "Client"}
                 job={job}
                 key={job.id}
+                onEdit={(job: Job) => dispatch(setEditJob(job))}
               />
             ))}
           </div>

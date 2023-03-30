@@ -6,7 +6,7 @@ import { createJob, getClientJobsActions } from "./services";
 import { JobsState, Job } from "./types";
 
 const initialState: GlobalStateStructure<JobsState> = {
-  data: { clientJobs: [], jobs: [] },
+  data: { clientJobs: [], jobs: [], editJob: null },
   loading: false,
   error: false,
   message: "",
@@ -17,6 +17,9 @@ export const clientSlice = createSlice({
     clientJobsAction: (state, action: PayloadAction<Job[]>) => {
       const clientJobs = action.payload;
       state.data.clientJobs = clientJobs;
+    },
+    setEditJob: (state, action: PayloadAction<Job>) => {
+      state.data.editJob = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -96,7 +99,7 @@ export const clientSlice = createSlice({
 });
 
 // actions
-export const { clientJobsAction } = clientSlice.actions;
+export const { clientJobsAction, setEditJob } = clientSlice.actions;
 
 // selectors
 export const getJobs = (state: RootState) => state.jobs;

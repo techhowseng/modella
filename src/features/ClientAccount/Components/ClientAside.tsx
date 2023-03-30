@@ -3,7 +3,7 @@ import React from "react";
 import { useAppSelector } from "store/hooks";
 import DashMenuList from "./DashMenuList";
 
-function ClientAside() {
+function ClientAside({ active }) {
   const {
     data: { user },
   }: any = useAppSelector(getSessionUser);
@@ -28,7 +28,7 @@ function ClientAside() {
       </h5>
 
       <div className="flex flex-col justify-start">
-        <DashMenuList />
+        <DashMenuList active={active} />
       </div>
     </div>
   );

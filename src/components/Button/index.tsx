@@ -1,9 +1,11 @@
 import Loading from "components/loading";
+import Link from "next/link";
 import React from "react";
 
 function Button({
   type = "button",
   children,
+  href,
   onClick,
   className = "",
   loading = false,
@@ -18,7 +20,28 @@ function Button({
   loading?: boolean;
   disabled?: boolean;
   loadingText?: string;
+  href?: string;
 }) {
+  if (href) {
+    return (
+      <Link
+        {...rest}
+        href={href}
+        className={`w-full md:w-[180px] lg:w-[200px] !base-bg-color py-3 px-8 text-white font-semibold rounded-lg hover:!bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${
+          disabled && "opacity-50 cursor-not-allowed"
+        } ${className} `}
+      >
+        {loading ? (
+          <p>
+            <Loading />
+            {loadingText}
+          </p>
+        ) : (
+          children
+        )}
+      </Link>
+    );
+  }
   return (
     <button
       {...rest}

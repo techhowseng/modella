@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie } from "cookies-next";
 import { updateModel } from "features/BioData/services";
@@ -13,7 +14,7 @@ import {
   createClient,
   updateClient,
 } from "./services";
-import { User, UserState } from "./types";
+import { UserState } from "./types";
 
 const initialState: UserState = {
   data: { user: {} },
