@@ -22,14 +22,16 @@ export default class SessionRepository {
   static async loginUser(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const inputs = req.body;
-
       inputs.email = inputs.email.toLowerCase();
-
       const user = await existsInDB(inputs.email, "user", "email");
+
+      if (!user) throw new Error("Email doesn't exist.");
+
       const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
       );
+
       if (validPassword) {
         const jwtToken = jwt.sign(user, process.env.JWT_KEY, {
           expiresIn: "24hr",

@@ -2,8 +2,13 @@ import Button from "components/Button";
 import React from "react";
 import { MdAddCircleOutline } from "react-icons/md";
 import bannerBG from "assets/bannerBg.svg";
+import Modal from "components/Modal";
+import { useModal } from "components/Modal/hook";
+import PostJobCreateForm from "./PostJobCreateForm";
 
 function PostJobBanner() {
+  const { isOpen, setIsOpen } = useModal();
+
   return (
     <div className="z-10 border rounded-lg flex flex-col lg:flex-row item-center bg-white w-full mx-auto py-6 px-6 lg:px-8 justify-between relative overflow-hidden">
       <div className="flex space-x-6">
@@ -37,7 +42,7 @@ function PostJobBanner() {
       <div className="flex flex-row z-10 mt-4 lg:mt-0">
         <Button
           type="button"
-          onClick={() => console.log("Post a job")}
+          onClick={() => setIsOpen(!isOpen)}
           className="flex items-center text-white !w-full p-1 md:w-[0px] lg:w-[0px] mr-10 text-white lg:text-white space-x-2"
         >
           <MdAddCircleOutline size={54} />
@@ -50,6 +55,11 @@ function PostJobBanner() {
         src={bannerBG.src}
         alt="banner background image"
       />
+
+      {/* <!-- Main modal --> */}
+      <Modal isOpen={isOpen} onOpen={setIsOpen} title={"Job Create Form"}>
+        <PostJobCreateForm onClose={() => setIsOpen(false)} />
+      </Modal>
     </div>
   );
 }

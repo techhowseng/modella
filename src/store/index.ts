@@ -1,11 +1,13 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import authReducer from "features/Auth/slice";
-import clientJobsReducer from "features/ClientAccount/slice";
+import jobsReducer from "features/ClientAccount/slice";
+import jobReducer from "features/JobDetails/slice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    clientJobs: clientJobsReducer,
+    jobs: jobsReducer,
+    job: jobReducer,
   },
 });
 

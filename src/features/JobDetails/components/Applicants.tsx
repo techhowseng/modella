@@ -2,12 +2,19 @@ import Button from "components/Button";
 import React from "react";
 
 interface Applicants {
+  id: string | number;
   image: string;
   name: string;
   title: string;
 }
 
-function Applicants({ applicants }: { applicants: Applicants[] }) {
+function Applicants({
+  isClient,
+  applicants,
+}: {
+  isClient?: boolean;
+  applicants: Applicants[];
+}) {
   return (
     <div className="flex flex-col mt-10">
       <h1 className="text-xl">Applicants (22)</h1>
@@ -17,8 +24,8 @@ function Applicants({ applicants }: { applicants: Applicants[] }) {
           <div className="flow-root">
             <ul role="list" className="w-full divide-y divide-gray-200">
               {applicants.length > 0 ? (
-                applicants.map((applicant) => (
-                  <li className="py-3 sm:py-4">
+                applicants.map((applicant: Applicants) => (
+                  <li key={applicant.id} className="py-3 sm:py-4">
                     <div className="flex items-center space-x-4">
                       <div className="flex-shrink-0">
                         <img
@@ -35,9 +42,11 @@ function Applicants({ applicants }: { applicants: Applicants[] }) {
                           {applicant.title}
                         </p>
                       </div>
-                      <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                        <Button onClick={() => {}}>{"View Profile"}</Button>
-                      </div>
+                      {isClient && (
+                        <div className="inline-flex items-center text-base font-semibold text-gray-900">
+                          <Button onClick={() => {}}>{"View Profile"}</Button>
+                        </div>
+                      )}
                     </div>
                   </li>
                 ))
