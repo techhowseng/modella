@@ -1,7 +1,6 @@
-import { Model } from "@prisma/client";
+import { Model, User } from "@prisma/client";
 import { getCookie } from "helper/cookie";
 import { SESSION_NAME } from "lib/constants";
-import { User } from "./Auth/types";
 
 export const getCookieData = () => {
   return typeof window === "object" && getCookie(SESSION_NAME)

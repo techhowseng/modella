@@ -81,10 +81,10 @@ export default class JobServices {
     }
   }
 
-  static async updateJob(res: NextApiResponse, data: TJob) {
+  static async updateJob(res: NextApiResponse, data: TJob, pid: number) {
     try {
       const updatedJob = await this.prisma.job.update({
-        where: { id: data.id },
+        where: { id: pid },
         data
       });
       return updatedJob;

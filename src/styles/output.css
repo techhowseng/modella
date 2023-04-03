@@ -1557,6 +1557,11 @@ input:checked + .toggle-bg{
   margin-right: -0.75rem;
 }
 
+.my-20{
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
 .my-10{
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
@@ -3513,6 +3518,10 @@ input:checked + .toggle-bg{
 
   .md\:col-span-2{
     grid-column: span 2 / span 2;
+  }
+
+  .md\:col-span-6{
+    grid-column: span 6 / span 6;
   }
 
   .md\:mr-6{

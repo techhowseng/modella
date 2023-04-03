@@ -26,3 +26,15 @@ export const createJob = createAsyncThunk(
     }
   }
 );
+
+export const editJob = createAsyncThunk(
+  "update/client/jobs",
+  async (data: JobAttributesType) => {
+    try {
+      const response = await axiosInstance.put(`/job/${data.id}`, data);
+      return response.data;
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+);

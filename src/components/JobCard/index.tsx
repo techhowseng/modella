@@ -1,5 +1,5 @@
+import { User } from "@prisma/client";
 import Button from "components/Button";
-import { User } from "features/Auth/types";
 import { Job } from "features/ClientAccount/types";
 import { isApplied } from "features/functions";
 import { APP_ROUTES, resolveRoute } from "lib/routes";
@@ -11,12 +11,15 @@ function JobCard({
   user,
   job,
   isClient,
+  onEdit,
 }: {
   user: User;
   isClient: boolean;
   job: Job;
+  onEdit?: (job: Job) => void;
 }) {
   const isAppliedToJob = isApplied(user, job?.applicants);
+  const isOwner = String(job.clientId) === String(user.id);
 
   return (
     <div className="flex flex-col p-6 bg-white rounded-lg border">
@@ -83,11 +86,14 @@ function JobCard({
             {isAppliedToJob ? "Applied" : "Apply"}
           </Button>
         )}
-        {isClient && (
+        {isOwner && isClient && (
           <Button
             type="button"
             className="!base-bg-color !w-full"
-            onClick={() => {}}
+            onClick={() => {
+              onEdit && onEdit(job);
+              Router.push(`${APP_ROUTES.clientProfile}/jobs/${job.id}`);
+            }}
           >
             Edit
           </Button>

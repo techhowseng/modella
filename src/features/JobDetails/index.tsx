@@ -1,7 +1,7 @@
+import { User } from "@prisma/client";
 import Button from "components/Button";
 import Loading from "components/loading";
 import { getSessionUser } from "features/Auth/slice";
-import { User } from "features/Auth/types";
 import { isApplied } from "features/functions";
 import { SITE_NAME } from "lib/constants";
 import Head from "next/head";
@@ -104,15 +104,7 @@ function JobDetails() {
             <Applicants
               // @ts-ignore
               isClient={user?.type === "Client"}
-              applicants={[
-                {
-                  id: 1,
-                  name: "Bonnie Green",
-                  image:
-                    "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png",
-                  title: "Developer at Open AI",
-                },
-              ]}
+              applicants={job?.applicants}
             />
           </div>
         </div>
