@@ -5,13 +5,14 @@ import { createJob, editJob } from "features/ClientAccount/services";
 import { JobAttributesType } from "features/ClientAccount/types";
 import { useForm } from "features/hooks";
 import { T } from "helper/types";
-import React from "react";
+import React, { useState } from "react";
 import { useAppDispatch } from "store/hooks";
 import { JOB_FIELDS } from "./formFieldsData";
 import { jobFormDataSchema } from "./schema";
 
 const PostJobCreateForm = ({ defaultValues, onClose }: any) => {
   const dispatch = useAppDispatch();
+  const [editing, setEditing] = useState(false);
   const {
     formData: values,
     handleChange,
@@ -32,22 +33,25 @@ const PostJobCreateForm = ({ defaultValues, onClose }: any) => {
     },
     jobFormDataSchema,
     (formData: JobAttributesType) => {
+      setEditing(true);
       if (defaultValues?.id) {
         formData.id = defaultValues.id;
       }
-      dispatch(defaultValues?.id ? editJob(formData) : createJob(formData)).then(
-        (res) => {
-          if (res.payload.error) {
-            setErrorMessage(res.payload.data.message);
-          } else {
-            setSuccessMessage(res.payload.message ?? res.type);
-            setTimeout(() => {
-              setSuccessMessage("");
-              onClose && onClose();
-            }, 2000);
-          }
+      dispatch(
+        defaultValues?.id ? editJob(formData) : createJob(formData)
+      ).then((res) => {
+        if (res.payload.error) {
+          setEditing(false);
+          setErrorMessage(res.payload.data.message);
+        } else {
+          setSuccessMessage(res.payload.message ?? res.type);
+          setTimeout(() => {
+            setSuccessMessage("");
+            onClose && onClose();
+          }, 2000);
+          setEditing(false);
         }
-      );
+      });
     }
   );
 
@@ -94,7 +98,7 @@ const PostJobCreateForm = ({ defaultValues, onClose }: any) => {
                   className={"!base-bg-color text-white"}
                   onClick={handleSubmit}
                   type="submit"
-                  loading={loading}
+                  loading={editing}
                   loadingText="Saving..."
                 >
                   Submit

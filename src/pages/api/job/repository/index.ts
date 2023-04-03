@@ -14,7 +14,7 @@ export default class JobsRepository {
     this.prisma = prisma;
   }
 
-  static async createJob(req, res) {
+  static async createJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const client = await getClient(req);
       if (client) {
@@ -26,10 +26,11 @@ export default class JobsRepository {
     }
   }
 
-  static async updateJob(req, res) {
+  static async updateJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { body } = req;
-      const jobs = await JobsServices.updateJob(res, body);
+      const { pid } = req.query;
+      const jobs = await JobsServices.updateJob(res, body, Number(pid));
       return jobs;
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -52,7 +53,10 @@ export default class JobsRepository {
     }
   }
 
-  static async getAllClientJobs(res: NextApiResponse<any>, pid) {
+  static async getAllClientJobs(
+    res: NextApiResponse<any>,
+    pid: string | number[] | string[]
+  ) {
     try {
       const clientJobs = await JobsServices.getAllClientJobs(res, ~~pid[1]);
       return clientJobs;
@@ -100,8 +104,11 @@ export default class JobsRepository {
         const jobs = await JobsServices.applyForJob(res, ~~pid, model.id);
         return jobs;
       }
-      return ResponseService.sendError({ message: "Token does not exist on database." }, res);
-    } catch(err) {
+      return ResponseService.sendError(
+        { message: "Token does not exist on database." },
+        res
+      );
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
