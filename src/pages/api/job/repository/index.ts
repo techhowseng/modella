@@ -11,31 +11,28 @@ export default class JobsRepository {
   static prisma: PrismaClient;
 
   constructor() {
-      this.prisma = prisma;
+    this.prisma = prisma;
   }
 
-  static async createJob(req, res) {
+  static async createJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const client = await getClient(req);
       if (client) {
-      const jobs = await JobsServices.createJob(
-        res,
-        client.id,
-        req.body
-      );
-      return jobs;
+        const jobs = await JobsServices.createJob(res, client.id, req.body);
+        return jobs;
       }
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async updateJob(req, res) {
+  static async updateJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { body } = req;
-      const jobs = await JobsServices.updateJob(res, body);
+      const { pid } = req.query;
+      const jobs = await JobsServices.updateJob(res, body, Number(pid));
       return jobs;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
@@ -43,27 +40,28 @@ export default class JobsRepository {
   static async getJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      const page = req.body.page ?? 1;
-
       if (pid[0] == "client"){
         return await this.getAllClientJobs(req, res, pid);
       } else if (pid[0] == "search") {
         return await this.searchJobs(req, res);
       } else {
-        const contract = await JobsServices.getJob(res, pid[0]);
-        return contract;
+        const job = await JobsServices.getJob(res, pid[0]);
+        return job;
       }
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async getAllClientJobs(req: NextApiRequest, res: NextApiResponse<any>, pid) {
+  static async getAllClientJobs(
+    res: NextApiResponse<any>,
+    pid: string | number[] | string[]
+  ) {
     try {
       const page = pid[2]?.replace(/[^0-9]/g, '') ?? 1;
       const clientJobs = await JobsServices.getAllClientJobs(res, ~~pid[1], ~~page);
       return clientJobs;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
@@ -73,11 +71,11 @@ export default class JobsRepository {
       const page = req.query.page ?? 1;
       const jobs = await JobsServices.getJobs(res, ~~page);
       return jobs;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
-  }  
-  
+  }
+
   static async searchJobs(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid, page, ...allQueries } = req.query;
@@ -85,7 +83,7 @@ export default class JobsRepository {
       const queries = handleQuery(allQueries);
       const jobs = await JobsServices.searchJobs(res, queries, ~~pageNo);
       return jobs;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
@@ -95,7 +93,7 @@ export default class JobsRepository {
       const { pid } = req.query;
       const job = await JobsServices.deleteJob(res, pid as string);
       return job;
-    } catch(err) {
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
@@ -105,12 +103,15 @@ export default class JobsRepository {
       const { pid } = req.query;
       const model = await getModel(req);
       if (model) {
-      const jobs = await JobsServices.applyForJob(res, pid as string, model.id);
-      return jobs;
+        const jobs = await JobsServices.applyForJob(res, pid as string, model.id);
+        return jobs;
       }
-      return ResponseService.sendError({ message: "Token does not exist on database." }, res);
-    } catch(err) {
+      return ResponseService.sendError(
+        { message: "Token does not exist on database." },
+        res
+      );
+    } catch (err) {
       return ResponseService.sendError(err, res);
     }
-  } 
+  }
 }

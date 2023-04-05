@@ -36,7 +36,7 @@ function Login() {
           setErrorMessage(res.payload.data.message);
         } else {
           setSuccessMessage(res.payload.message || res.type);
-          Router.push(APP_ROUTES.jobs);
+          location.href = APP_ROUTES.jobs;
         }
       });
     }

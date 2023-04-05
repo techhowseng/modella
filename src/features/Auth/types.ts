@@ -1,9 +1,6 @@
-export type User = {
-  id: string;
-  email: string;
-  password: string;
-  type: string;
-};
+import { User } from "@prisma/client";
+
+export type ModelType = {};
 
 export interface UserState {
   data: { user: User | {} };
