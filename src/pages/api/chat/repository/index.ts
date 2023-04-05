@@ -98,13 +98,10 @@ export default class ChatRepository {
     try {
       const  { chatId, modelId, clientId } = req.body;
       if (chatId) return await ChatServices.getConversationByChatId(res, chatId);
-      const conversation = await ChatServices.getOrCreateConversation(res, clientId, modelId);
+      const conversation = await ChatServices.getOrCreateConversation(res, ~~clientId, ~~modelId);
       return conversation
-      // const conversation = await this.getConversations(req, res);
-      // return ResponseService.json(res, 200, "Success", {df: "randomfasdf"});
-
     } catch (err) {
-      // return ResponseService.sendError(err, res);
+      return ResponseService.sendError(err, res);
     }
   }
 

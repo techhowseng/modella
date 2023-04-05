@@ -45,7 +45,7 @@ export default class ClientRepository {
   static async getContract(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { id } = req.body;
-      const contract = await ContractServices.getContract(res, ~~id);
+      const contract = await ContractServices.getContract(res, id);
       return contract;
 
     } catch(err) {

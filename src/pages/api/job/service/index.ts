@@ -29,23 +29,37 @@ export default class JobServices {
     }
   }
 
-  static async getJob(res: NextApiResponse, id: number) {
+  static async getJob(res: NextApiResponse, id: string) {
     try {
       const job = await this.prisma.job.findUnique({
         where: { id },
         include: {
-          applicants: true
+          applicants: true,
+          client: {
+            select: {
+              companyName: true,
+              phone: true,
+              userId: true,
+              user: {
+                select: {
+                  Media: true,
+                }
+              }
+            }
+          }
         }
       });
-      return job;
+      return (({ ...client }) => ({ ...client }))(job);
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async getJobs(res: NextApiResponse ) {
+  static async getJobs(res: NextApiResponse, page: number) {
     try {
       const job = await this.prisma.job.findMany({
+        take: 10,
+        skip: 10 * (page - 1),
         include: {
           applicants: true
         }
@@ -56,9 +70,11 @@ export default class JobServices {
     }
   }
 
-  static async getAllClientJobs(res: NextApiResponse, clientId: number) {
+  static async getAllClientJobs(res: NextApiResponse, clientId: number, page: number) {
     try {
       const job = await this.prisma.job.findMany({
+        take: 10,
+        skip: 10 * (page - 1),
         where: { clientId },
         include: {
           applicants: true
@@ -70,9 +86,11 @@ export default class JobServices {
     }
   }
 
-  static async searchJobs(res: NextApiResponse, query: TJob) {
+  static async searchJobs(res: NextApiResponse, query: TJob, page: number) {
     try {
       const job = await this.prisma.job.findMany({
+        take: 10,
+        skip: 10 * (page - 1),
         where: query
       });
       return job;
@@ -93,7 +111,7 @@ export default class JobServices {
     }
   }
 
-  static async deleteJob(res: NextApiResponse, id: number) {
+  static async deleteJob(res: NextApiResponse, id: string) {
     try {
       const job = await this.prisma.job.delete({
         where: { id },
@@ -104,7 +122,7 @@ export default class JobServices {
     }
   }
 
-  static async applyForJob(res: NextApiResponse, id: number, modelId: number) {
+  static async applyForJob(res: NextApiResponse, id: string, modelId: number) {
     try {
       const job = await this.prisma.job.update({
         where: { id },
