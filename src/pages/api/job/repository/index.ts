@@ -40,13 +40,13 @@ export default class JobsRepository {
   static async getJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      if (pid[0] == "client") {
-        return await this.getAllClientJobs(res, pid);
+      if (pid[0] == "client"){
+        return await this.getAllClientJobs(req, res, pid);
       } else if (pid[0] == "search") {
         return await this.searchJobs(req, res);
       } else {
-        const contract = await JobsServices.getJob(res, ~~pid[0]);
-        return contract;
+        const job = await JobsServices.getJob(res, pid[0]);
+        return job;
       }
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -58,16 +58,18 @@ export default class JobsRepository {
     pid: string | number[] | string[]
   ) {
     try {
-      const clientJobs = await JobsServices.getAllClientJobs(res, ~~pid[1]);
+      const page = pid[2]?.replace(/[^0-9]/g, '') ?? 1;
+      const clientJobs = await JobsServices.getAllClientJobs(res, ~~pid[1], ~~page);
       return clientJobs;
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
   }
 
-  static async getJobs(res: NextApiResponse<any>) {
+  static async getJobs(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-      const jobs = await JobsServices.getJobs(res);
+      const page = req.query.page ?? 1;
+      const jobs = await JobsServices.getJobs(res, ~~page);
       return jobs;
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -76,10 +78,10 @@ export default class JobsRepository {
 
   static async searchJobs(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-      let param = req.query;
-      delete param.pid;
-      const queries = handleQuery(param);
-      const jobs = await JobsServices.searchJobs(res, queries);
+      const { pid, page, ...allQueries } = req.query;
+      const pageNo = page ?? 1;
+      const queries = handleQuery(allQueries);
+      const jobs = await JobsServices.searchJobs(res, queries, ~~pageNo);
       return jobs;
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -89,7 +91,7 @@ export default class JobsRepository {
   static async deleteJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      const job = await JobsServices.deleteJob(res, ~~pid);
+      const job = await JobsServices.deleteJob(res, pid as string);
       return job;
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -101,7 +103,7 @@ export default class JobsRepository {
       const { pid } = req.query;
       const model = await getModel(req);
       if (model) {
-        const jobs = await JobsServices.applyForJob(res, ~~pid, model.id);
+        const jobs = await JobsServices.applyForJob(res, pid as string, model.id);
         return jobs;
       }
       return ResponseService.sendError(

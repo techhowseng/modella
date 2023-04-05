@@ -84,5 +84,7 @@ export const validateSearchJob = initMiddleware(
     .withMessage('is not among the available optoins.'),,
     check('jobLength').isLength({min:2}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
+    check('page').isLength({min:1}).isNumeric().optional({ nullable: true })
+    .withMessage('page number is not valid.'),
   ], validationResult)
 )

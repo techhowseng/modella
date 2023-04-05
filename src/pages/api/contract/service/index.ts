@@ -33,7 +33,7 @@ export default class ContractServices {
   }
 
 
-  static async getContract(res, id: number) {
+  static async getContract(res, id: string) {
     try {
       const contractedModel = await this.prisma.contract.findUnique({
         where: { id },
@@ -45,7 +45,7 @@ export default class ContractServices {
     }
   }
 
-  static async updateContract(res, id: number, data: object) {
+  static async updateContract(res, id: string, data: object) {
     try {
       const updatedContract = await this.prisma.contract.update({
         where: { id },
