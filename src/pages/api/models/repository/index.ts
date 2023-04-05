@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ResponseService } from "../../../../services/ResponseService";
-import { getUser, getModel, handleQueryObject } from "helper/util";
-import SessionService from "../../session/service";
+import { handleQueryObject } from "helper/util";
 import prisma from "lib/prisma";
 import ModelServices, { TModel } from "../service";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -20,21 +19,25 @@ export default class ModelRepository {
 
 	static async getModels(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-      const { params } = req.query;
-      let param = req.query;
+      const { params, page, ...userParams } = req.query;
       if (params == "search"){
-        delete param.params;
-        const queries = handleQueryObject(param);
-        return await ModelServices.searchModels(res, queries);
+        const pageNo = page ?? 1;
+        const queries = handleQueryObject(userParams);
+        return await ModelServices.searchModels(res, queries, ~~pageNo);
       }
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
 	}
 
-  static async getAllModels(res: NextApiResponse<any>) {
-		const models = await ModelServices.getAllModels(res);
-		return models;
+  static async getAllModels(req: NextApiRequest, res: NextApiResponse<any>) {
+    try {
+      const { page } = req.query;
+      const pageNo = page ?? 1;
+      const models = await ModelServices.getAllModels(res, pageNo as number);
+      return models;
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
 	}
-
 }
