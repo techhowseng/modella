@@ -1,4 +1,7 @@
+import { validationResult } from "express-validator";
+import { queryPermittedParams } from "helper/util";
 import { NextApiRequest, NextApiResponse } from "next";
+import { validateModelsGet } from "./modelsValidation";
 import ModelRepository from "./repository/index";
 
 export default async function handle(
@@ -8,7 +11,11 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await ModelRepository.getAllModels(res));
+      await validateModelsGet(req, res)
+      const searchErrors = validationResult(req)
+      if (!searchErrors.isEmpty()) return res.status(422).json({ errors: searchErrors.array() });
+      queryPermittedParams(req);
+      res.json(await ModelRepository.getAllModels(req, res));
       break;
     case "POST":
       break;

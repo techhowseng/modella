@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import SessionServices from "../../session/service";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
 import JobsServices, { TJob } from "../service";
@@ -30,7 +29,7 @@ export default class JobsRepository {
     try {
       const { body } = req;
       const { pid } = req.query;
-      const jobs = await JobsServices.updateJob(res, body, Number(pid));
+      const jobs = await JobsServices.updateJob(res, body, pid as string);
       return jobs;
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -41,7 +40,7 @@ export default class JobsRepository {
     try {
       const { pid } = req.query;
       if (pid[0] == "client"){
-        return await this.getAllClientJobs(req, res, pid);
+        return await this.getAllClientJobs(req, res, pid as string[]);
       } else if (pid[0] == "search") {
         return await this.searchJobs(req, res);
       } else {
@@ -54,8 +53,9 @@ export default class JobsRepository {
   }
 
   static async getAllClientJobs(
+    req: NextApiRequest,
     res: NextApiResponse<any>,
-    pid: string | number[] | string[]
+    pid: string[]
   ) {
     try {
       const page = pid[2]?.replace(/[^0-9]/g, '') ?? 1;
