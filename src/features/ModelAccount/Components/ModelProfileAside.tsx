@@ -56,7 +56,8 @@ function ModelProfileAside({
           <Rating rating={3} />
         </div>
         <div className="flex flex-row justify-between	mt-3">
-          {isLoggedInUser ? (
+          {/* @ts-ignore */}
+          {isLoggedInUser && user?.type === "Model" ? (
             <>
               <LinkButton href={APP_ROUTES.bioData}>Edit Profile</LinkButton>
             </>
@@ -65,10 +66,10 @@ function ModelProfileAside({
               <Button onClick={undefined}>Message</Button>
               <div className="w-3" />
               <Button
-                className="!bg-transparent text-black base-border-color border-2 hover:text-white"
-                onClick={undefined}
+                className="!bg-transparent !base-color base-border-color border-2 hover:!text-white"
+                onClick={() => {}}
               >
-                Hire
+                Send Contract
               </Button>
             </>
           )}

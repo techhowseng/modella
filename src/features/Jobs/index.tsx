@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import JobCard from "components/JobCard";
+import JobCard from "features/Jobs/JobCard";
 import Loading from "components/loading";
 import SearchBar from "components/SearchBar";
 import Select from "components/Select";

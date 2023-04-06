@@ -2,10 +2,12 @@ import { User } from "@prisma/client";
 import Button from "components/Button";
 import Loading from "components/loading";
 import { getSessionUser } from "features/Auth/slice";
+import { setEditJob } from "features/ClientAccount/slice";
 import { isApplied } from "features/functions";
 import { SITE_NAME } from "lib/constants";
+import { APP_ROUTES } from "lib/routes";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import Applicants from "./components/Applicants";
@@ -77,7 +79,7 @@ function JobDetails() {
               />
 
               {/* @ts-ignore */}
-              {user?.type === "Model" && job?.isOpen && (
+              {user?.type === "Model" && job?.isOpen ? (
                 <Button
                   loading={isApplying}
                   loadingText={"Applying..."}
@@ -86,6 +88,19 @@ function JobDetails() {
                   disabled={!!successMessage || isAppliedToJob}
                 >
                   {successMessage || isAppliedToJob ? "Applied" : "Apply"}
+                </Button>
+              ) : (
+                <Button
+                  loading={isApplying}
+                  loadingText={"Applying..."}
+                  onClick={() => {
+                    dispatch(setEditJob(job));
+                    Router.push(`${APP_ROUTES.clientProfile}/jobs/${job.id}`);
+                  }}
+                  className={"w-[50%] h-[50px]"}
+                  // disabled={}
+                >
+                  {"Edit"}
                 </Button>
               )}
             </div>

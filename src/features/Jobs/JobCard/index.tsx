@@ -18,6 +18,7 @@ function JobCard({
   job: Job;
   onEdit?: (job: Job) => void;
 }) {
+  const route = location.pathname;
   const isAppliedToJob = isApplied(user, job?.applicants);
   const isOwner = String(job.clientId) === String(user.id);
 
@@ -90,10 +91,14 @@ function JobCard({
           <Button
             type="button"
             className="!base-bg-color !w-full"
-            onClick={() => {
-              onEdit && onEdit(job);
-              Router.push(`${APP_ROUTES.clientProfile}/jobs/${job.id}`);
-            }}
+            onClick={
+              route === "/jobs"
+                ? () => Router.push(resolveRoute(APP_ROUTES.job, job.id))
+                : () => {
+                    onEdit && onEdit(job);
+                    Router.push(`${APP_ROUTES.clientProfile}/jobs/${job.id}`);
+                  }
+            }
           >
             Edit
           </Button>

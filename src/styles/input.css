@@ -33,6 +33,10 @@ button {
 .hover\:base-color:hover {
   color: var(--base-color);
 }
+.\!base-color,
+.\!hover\:base-color:hover {
+  color: var(--base-color) !important;
+}
 .base-bg-color,
 .hover\:base-bg-color:hover {
   background-color: var(--base-color);
