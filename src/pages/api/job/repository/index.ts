@@ -15,7 +15,7 @@ export default class JobsRepository {
 
   static async createJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-      const client = await getClient(req);
+      const client = await getClient(req, res);
       if (client) {
         const jobs = await JobsServices.createJob(res, client.id, req.body);
         return jobs;
@@ -39,8 +39,8 @@ export default class JobsRepository {
   static async getJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      if (pid[0] == "client"){
-        return await this.getAllClientJobs(req, res, pid as string[]);
+      if (pid[0] == "client" || pid[0] == "model"){
+        return await this.getUserJobs(req, res, pid as string[]);
       } else if (pid[0] == "search") {
         return await this.searchJobs(req, res);
       } else {
@@ -52,15 +52,15 @@ export default class JobsRepository {
     }
   }
 
-  static async getAllClientJobs(
+  static async getUserJobs(
     req: NextApiRequest,
     res: NextApiResponse<any>,
     pid: string[]
   ) {
     try {
       const page = pid[2]?.replace(/[^0-9]/g, '') ?? 1;
-      const clientJobs = await JobsServices.getAllClientJobs(res, ~~pid[1], ~~page);
-      return clientJobs;
+      if (pid[0] == "client") return await JobsServices.getClientJobs(res, ~~pid[1], ~~page);
+      return await JobsServices.getModelJobs(res, ~~pid[1], ~~page);
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -101,9 +101,9 @@ export default class JobsRepository {
   static async applyForJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      const model = await getModel(req);
+      const model = await getModel(req, res);
       if (model) {
-        const jobs = await JobsServices.applyForJob(res, pid as string, model.id);
+        const jobs = await JobsServices.applyForJob(res, pid[0] as string, model.id);
         return jobs;
       }
       return ResponseService.sendError(

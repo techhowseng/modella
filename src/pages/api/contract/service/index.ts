@@ -1,6 +1,7 @@
 import { Status, PrismaClient } from "@prisma/client";
-import { ResponseService } from "../../../../services/ResponseService";
+import { NextApiResponse } from "next";
 import prisma from "lib/prisma";
+import { ResponseService } from "../../../../services/ResponseService";
 
 // @ts-ignore
 export type TContract = PrismaClient["contract"]["create"]["data"];
@@ -9,7 +10,7 @@ export default class ContractServices {
   static prisma: PrismaClient = prisma;
 
   static async createContract(
-    res,
+    res: NextApiResponse<any>,
     clientId: number,
     modelId: number,
     data: TContract
@@ -33,7 +34,7 @@ export default class ContractServices {
   }
 
 
-  static async getContract(res, id: string) {
+  static async getContract(res: NextApiResponse<any>, id: string) {
     try {
       const contractedModel = await this.prisma.contract.findUnique({
         where: { id },
@@ -45,7 +46,7 @@ export default class ContractServices {
     }
   }
 
-  static async updateContract(res, id: string, data: object) {
+  static async updateContract(res: NextApiResponse<any>, id: string, data: object) {
     try {
       const updatedContract = await this.prisma.contract.update({
         where: { id },
@@ -57,7 +58,7 @@ export default class ContractServices {
     }
   }
 
-  static async getAllModelContracts(res, id: number) {
+  static async getAllModelContracts(res: NextApiResponse<any>, id: number) {
     try {
       const modelContracts = await this.prisma.contract.findMany({
         where: { modelId: id },
@@ -68,7 +69,7 @@ export default class ContractServices {
     }
   }
 
-  static async getUserContracts(res, id: number, col) {
+  static async getUserContracts(res: NextApiResponse<any>, id: number, col) {
     try {
       const modelContracts = await this.prisma.contract.findMany({
         where: { 

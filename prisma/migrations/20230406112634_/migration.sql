@@ -103,11 +103,13 @@ CREATE TABLE "Client" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
     "companyName" TEXT NOT NULL,
+    "shortDescription" TEXT,
+    "clientDescription" TEXT,
     "phone" TEXT NOT NULL,
     "social" JSONB NOT NULL,
     "state" TEXT,
     "country" TEXT,
-    "address" TEXT NOT NULL,
+    "address" TEXT,
     "isVetted" BOOLEAN DEFAULT false,
 
     CONSTRAINT "Client_pkey" PRIMARY KEY ("id")
@@ -115,7 +117,7 @@ CREATE TABLE "Client" (
 
 -- CreateTable
 CREATE TABLE "Contract" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "clientId" INTEGER NOT NULL,
     "modelId" INTEGER NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'Ongoing',
@@ -141,7 +143,7 @@ CREATE TABLE "History" (
 
 -- CreateTable
 CREATE TABLE "Job" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "clientId" INTEGER NOT NULL,
     "jobRole" TEXT NOT NULL,
     "jobDescription" TEXT NOT NULL,
@@ -149,6 +151,7 @@ CREATE TABLE "Job" (
     "salary" TEXT,
     "jobType" TEXT,
     "jobLength" TEXT,
+    "experience" TEXT,
     "isOpen" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "Job_pkey" PRIMARY KEY ("id")
@@ -177,15 +180,22 @@ CREATE TABLE "Chat" (
 
 -- CreateTable
 CREATE TABLE "Messages" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "chatId" TEXT NOT NULL,
-    "clientMessages" TEXT NOT NULL,
-    "modelMessages" TEXT NOT NULL,
+    "clientMessage" TEXT NOT NULL,
+    "modelMessage" TEXT NOT NULL,
+    "isRead" BOOLEAN NOT NULL DEFAULT false,
     "isFlagged" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Messages_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_JobToModel" (
+    "A" TEXT NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
@@ -208,6 +218,15 @@ CREATE UNIQUE INDEX "Client_userId_key" ON "Client"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Media_userId_key" ON "Media"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Chat_clientId_modelId_key" ON "Chat"("clientId", "modelId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_JobToModel_AB_unique" ON "_JobToModel"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_JobToModel_B_index" ON "_JobToModel"("B");
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -244,3 +263,9 @@ ALTER TABLE "Chat" ADD CONSTRAINT "Chat_modelId_fkey" FOREIGN KEY ("modelId") RE
 
 -- AddForeignKey
 ALTER TABLE "Messages" ADD CONSTRAINT "Messages_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "Chat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_JobToModel" ADD CONSTRAINT "_JobToModel_A_fkey" FOREIGN KEY ("A") REFERENCES "Job"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_JobToModel" ADD CONSTRAINT "_JobToModel_B_fkey" FOREIGN KEY ("B") REFERENCES "Model"("id") ON DELETE CASCADE ON UPDATE CASCADE;

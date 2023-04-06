@@ -102,8 +102,8 @@ model Model {
   unavailableDays String?
   contracts       Contract[]
   history         History[]
-  chat            Chat[]
-  job             Job[]
+  chats            Chat[]
+  jobs             Job[]
 }
 
 enum Gender {
@@ -182,16 +182,16 @@ model History {
 
 model Job {
   id             String    @id @default(cuid())
-  client         Client  @relation(fields: [clientId], references: [id])
+  client         Client    @relation(fields: [clientId], references: [id])
   clientId       Int
   jobRole        String
-  jobDescription String  @db.Text
+  jobDescription String    @db.Text
   location       String?
   salary         String?
   jobType        String?
   jobLength      String?
   experience     String?
-  isOpen         Boolean @default(true)
+  isOpen         Boolean   @default(true)
   applicants     Model[]
 }
 

@@ -70,7 +70,7 @@ export default class JobServices {
     }
   }
 
-  static async getAllClientJobs(res: NextApiResponse, clientId: number, page: number) {
+  static async getClientJobs(res: NextApiResponse, clientId: number, page: number) {
     try {
       const job = await this.prisma.job.findMany({
         take: 10,
@@ -81,6 +81,20 @@ export default class JobServices {
         }
       });
       return job;
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async getModelJobs(res: NextApiResponse, id: number, page: number) {
+    try {
+      const job = await this.prisma.model.findUnique({
+        where: { id },
+        include: {
+          jobs: true
+        }
+      });
+      return (({ jobs }) => ({ jobs }))(job);
     } catch(err) {
       return ResponseService.sendError(err, res);
     }

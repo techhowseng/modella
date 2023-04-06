@@ -16,7 +16,7 @@ export default class ClientRepository {
   static async createContract(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const data = req.body;
-      const client = await getClient(req)
+      const client = await getClient(req, res)
       if (client) {
         delete data.modelId;
         const contract = await ContractServices.createContract(
@@ -44,8 +44,9 @@ export default class ClientRepository {
 
   static async getContract(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-      const { id } = req.body;
-      const contract = await ContractServices.getContract(res, id);
+      const { pid } = req.query;
+      console.log("------------", req.query)
+      const contract = await ContractServices.getContract(res, pid as string);
       return contract;
 
     } catch(err) {
@@ -57,8 +58,8 @@ export default class ClientRepository {
     try {
       let { pid } = req.query;
       let colCheck: string;
-      const client = await getClient(req);
-      const model = await getModel(req);
+      const client = await getClient(req, res);
+      const model = await getModel(req, res);
       if (client) {
         pid = client.id;
         colCheck = "clientId";
