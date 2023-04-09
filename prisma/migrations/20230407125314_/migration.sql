@@ -8,7 +8,7 @@ CREATE TYPE "Gender" AS ENUM ('Male', 'Female', 'NotGiven');
 CREATE TYPE "Types" AS ENUM ('All', 'FashionEditorial', 'FashionCatalog', 'Commercial', 'Mature', 'Runway', 'Swimsuit', 'Lingerie', 'Fitness', 'Fit', 'Parts', 'Promotional', 'Glamour', 'Child', 'Petite', 'PlusSize', 'Freelance', 'Print', 'Other');
 
 -- CreateEnum
-CREATE TYPE "Status" AS ENUM ('Ongoing', 'Done');
+CREATE TYPE "Status" AS ENUM ('Ongoing', 'Cancelled', 'Done');
 
 -- CreateEnum
 CREATE TYPE "ContentType" AS ENUM ('Thumbnail', 'ProfileImages', 'Gallery', 'Misc');
@@ -120,13 +120,9 @@ CREATE TABLE "Contract" (
     "id" TEXT NOT NULL,
     "clientId" INTEGER NOT NULL,
     "modelId" INTEGER NOT NULL,
+    "jobId" TEXT NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'Ongoing',
-    "locations" TEXT,
-    "startDate" TIMESTAMP(3),
-    "startTime" TIMESTAMP(3),
-    "hours" INTEGER,
-    "days" INTEGER,
-    "fee" DECIMAL(9,2),
+    "agreed" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Contract_pkey" PRIMARY KEY ("id")
 );
@@ -147,8 +143,12 @@ CREATE TABLE "Job" (
     "clientId" INTEGER NOT NULL,
     "jobRole" TEXT NOT NULL,
     "jobDescription" TEXT NOT NULL,
-    "location" TEXT,
-    "salary" TEXT,
+    "locations" TEXT,
+    "startDate" TIMESTAMP(3),
+    "startTime" TIMESTAMP(3),
+    "hours" INTEGER,
+    "days" INTEGER,
+    "fee" DECIMAL(9,2),
     "jobType" TEXT,
     "jobLength" TEXT,
     "experience" TEXT,
@@ -245,6 +245,9 @@ ALTER TABLE "Contract" ADD CONSTRAINT "Contract_clientId_fkey" FOREIGN KEY ("cli
 
 -- AddForeignKey
 ALTER TABLE "Contract" ADD CONSTRAINT "Contract_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Contract" ADD CONSTRAINT "Contract_jobId_fkey" FOREIGN KEY ("jobId") REFERENCES "Job"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "History" ADD CONSTRAINT "History_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
