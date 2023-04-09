@@ -1,7 +1,8 @@
-import { Status, PrismaClient } from "@prisma/client";
-import { NextApiResponse } from "next";
+import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "lib/prisma";
 import { ResponseService } from "../../../../services/ResponseService";
+import { getToken } from "helper/util";
 
 // @ts-ignore
 export type TContract = PrismaClient["contract"]["create"]["data"];
@@ -13,7 +14,7 @@ export default class ContractServices {
     res: NextApiResponse<any>,
     clientId: number,
     modelId: number,
-    data: TContract
+    jobId: string
   ) {
     try {
       const contractedModel = await this.prisma.contract.create({
@@ -24,7 +25,9 @@ export default class ContractServices {
           model: {
             connect: { id: modelId },
           },
-          ...data
+          job: {
+            connect: { id: jobId },
+          },
         },
       });
       return contractedModel;
@@ -77,6 +80,62 @@ export default class ContractServices {
         },
       });
       return modelContracts;
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async getModelContracts(req: NextApiRequest, res: NextApiResponse<any>) {
+    try {
+      const sessionToken = getToken(req);
+      const session = await this.prisma.session.findUnique({
+        where: { sessionToken },
+        select: {
+          user: {
+            select: {
+              model: {
+                select: {
+                  contracts: {
+                    select: {
+                      id: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      const contractsArray = session?.user?.model?.contracts
+      return contractsArray;
+    } catch(err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async getClientContracts(req: NextApiRequest, res: NextApiResponse<any>) {
+    try {
+      const sessionToken = getToken(req);
+      const session = await this.prisma.session.findUnique({
+        where: { sessionToken },
+        select: {
+          user: {
+            select: {
+              client: {
+                select: {
+                  contracts: {
+                    select: {
+                      id: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      const contractsArray = session?.user?.client?.contracts
+      return contractsArray;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }

@@ -88,17 +88,17 @@ const model = (user1, user2) => {
   ]
 }
 
-const contract = (client, model) => {
+const contract = (client, model, jobs) => {
   return [
     {
-      clientId: client.id,
-      modelId: model.id,
-      locations: "Lekki phase 1",
-      startDate: new Date("2023-03-03"),
-      startTime: new Date(1676817624900), 
-      hours: 2,
-      days: 1,
-      fee: 50000.00
+      clientId: client[0].id,
+      modelId: model[0].id,
+      jobId: jobs[0].id
+    },
+    {
+      clientId: client[0].id,
+      modelId: model[0].id,
+      jobId: jobs[0].id
     },
   ];
 }
@@ -109,8 +109,8 @@ const job = (client1, client2) => {
       clientId: client1.id,
       jobRole: "Glamour model",
       jobDescription: "A modelling job for a glamour magazine.",
-      location: "Lekki phase 1",
-      salary: "50,000",
+      locations: "Lekki phase 1",
+      fee: 50000,
       jobType: "Glamour",
       jobLength: "2 days"
     },
@@ -118,8 +118,8 @@ const job = (client1, client2) => {
       clientId: client1.id,
       jobRole: "Fitness",
       jobDescription: "A fitness shoot.",
-      location: "Ajah",
-      salary: "70,000",
+      locations: "Ajah",
+      fee: 70000,
       jobType: "Fitness",
       jobLength: "1 day"
     },
@@ -127,8 +127,8 @@ const job = (client1, client2) => {
       clientId: client1.id,
       jobRole: "Promotional model",
       jobDescription: "Promotional",
-      location: "Victoria Island",
-      salary: "200,000",
+      locations: "Victoria Island",
+      fee: 200000,
       jobType: "Promotional",
       jobLength: "5 days"
     },
@@ -136,8 +136,8 @@ const job = (client1, client2) => {
       clientId: client2.id,
       jobRole: "Plus size model",
       jobDescription: "A plus size shoot for a clothing line.",
-      location: "Ikoyi",
-      salary: "450,000",
+      locations: "Ikoyi",
+      fee: 450000,
       jobType: "PLus size",
       jobLength: "1 day"
     },
@@ -145,8 +145,8 @@ const job = (client1, client2) => {
       clientId: client2.id,
       jobRole: "child model",
       jobDescription: "Child modelling",
-      location: "Lekki phase 1",
-      salary: "50,000",
+      locations: "Lekki phase 1",
+      fee: 50000,
       jobType: "child",
       jobLength: "1 days"
     },
@@ -154,8 +154,8 @@ const job = (client1, client2) => {
       clientId: client2.id,
       jobRole: "Lingerie",
       jobDescription: "A Lingerie shoot",
-      location: "Badore",
-      salary: "180,000",
+      locations: "Badore",
+      fee: 180000,
       jobType: "Lingerie",
       jobLength: "1 day"
     },

@@ -77,16 +77,19 @@ const load = async () => {
     console.log('Added model data');
 
     const clients = await prisma.client.findMany();
-    const createdModel = await prisma.model.findFirst();
-    await prisma.contract.createMany({
-      data: contract(clients[0], createdModel),
-    });
-    console.log('Added contract data');
+    const models = await prisma.model.findMany();
 
     await prisma.job.createMany({
       data: job(clients[0], clients[1]),
     });
     console.log('Added job data');
+
+    const createdJobs = await prisma.job.findMany();
+
+    await prisma.contract.createMany({
+      data: contract(clients, models, createdJobs),
+    });
+    console.log('Added contract data');
 
   }  catch (e) {
     console.error(e)

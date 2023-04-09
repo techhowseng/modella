@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
-import ContractServices, { TContract } from "../service";
+import ContractServices from "../service";
 import { ResponseService } from "../../../../services/ResponseService";
-import { getClient, getModel, getUser } from "helper/util";
+import { getClient, getModel } from "helper/util";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default class ClientRepository {
@@ -22,8 +22,8 @@ export default class ClientRepository {
         const contract = await ContractServices.createContract(
           res,
           client.id,
-          req.body.modelId,
-          data
+          data.modelId,
+          data.jobId
         );
         return contract;
       }
@@ -34,8 +34,38 @@ export default class ClientRepository {
 
   static async updateContract(req: any, res: any) {
     try {
+      let contractExists;
       let { pid } = req.query;
-      const contract = await ContractServices.updateContract(res, pid, req.body);
+      let data = req.body;
+      if (req.body.agreed) {
+        const modelContracts = await ContractServices.getModelContracts(req, res)
+        if (modelContracts) {
+          contractExists = modelContracts.filter(contract => contract.id === pid).length;
+        }
+        if (!contractExists) {
+          return ResponseService.sendError({
+            message: "User is not authorized to update this contract.",
+            status: 401
+          }, res);
+        }
+        data = {
+          ...req.body,
+          agreed: req.body.agreed === "true",
+        }
+      } else {
+        const clientContracts = await ContractServices.getClientContracts(req, res)
+        if (clientContracts) {
+          contractExists = clientContracts.filter(contract => contract.id === pid).length;
+        }
+        if (!contractExists) {
+          return ResponseService.sendError({
+            message: "User is not authorized to update this contract.",
+            status: 401
+          }, res);
+        }
+      }
+      delete data.pid;
+      const contract = await ContractServices.updateContract(res, pid, data);
       return contract;
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -45,7 +75,6 @@ export default class ClientRepository {
   static async getContract(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      console.log("------------", req.query)
       const contract = await ContractServices.getContract(res, pid as string);
       return contract;
 

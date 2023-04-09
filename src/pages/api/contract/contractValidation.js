@@ -4,52 +4,22 @@ import validateMiddleware from "../../../lib/middlewares/validate-middleware";
 
 export const validateCreateContract = initMiddleware(
   validateMiddleware([
-    check('status').isIn(['Ongoing','Done'])
-    .withMessage('options must either be Ongoing or Done.'),,
     check('modelId').isInt()
-    .withMessage('is not a valid number.'),,
-    check('locations')
-    .isObject()
-    .withMessage('must be defined in an object.'),
-    check('startDate').isLength({min:3})
-    .withMessage('is not descriptive enough.'),
-    check('startTime').isLength({min:3})
-    .withMessage('is not descriptive enough.'),
-    check('hours').isLength({min:1})
-    .withMessage('is not descriptive enough.'),
-    check('days').isLength({min:1})
-    .withMessage('is not descriptive enough.'),
-    check('fee').isLength({min:3})
-    .withMessage('is not descriptive enough.'),
+    .withMessage('is not a valid number.'),
+    check('jobId').isLength({min:25})
+    .withMessage('The Job ID is incorrect.')
   ], validationResult)
 )
 
 export const validateUpdateContract = initMiddleware(
   validateMiddleware([
-    check('status').isIn(['Ongoing','Done'])
+    check('status').isIn(['Ongoing', 'Cancelled', 'Done'])
     .optional({ nullable: true })
-    .withMessage('options must either be Ongoing or Done.'),,
-    check('modelId').isInt()
+    .withMessage('Options must either be Ongoing, Cancelled or Done.'),
+    check('pid').isLength({min:25})
     .optional({ nullable: true })
-    .withMessage('is not a valid number.'),,
-    check('locations')
+    .withMessage('Contract ID is not the right length.'),
+    check('agreed').isBoolean().withMessage('Agreed property only accepts boolean')
     .optional({ nullable: true })
-    .isObject()
-    .withMessage('must be defined in an object.'),
-    check('startDate').isLength({min:3})
-    .optional({ nullable: true })
-    .withMessage('is not descriptive enough.'),
-    check('startTime').isLength({min:3})
-    .optional({ nullable: true })
-    .withMessage('is not descriptive enough.'),
-    check('hours').isLength({min:1})
-    .optional({ nullable: true })
-    .withMessage('is not descriptive enough.'),
-    check('days').isLength({min:1})
-    .optional({ nullable: true })
-    .withMessage('is not descriptive enough.'),
-    check('fee').isLength({min:3})
-    .optional({ nullable: true })
-    .withMessage('is not descriptive enough.'),
   ], validationResult)
 )

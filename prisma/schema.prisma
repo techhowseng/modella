@@ -158,17 +158,15 @@ model Contract {
   clientId  Int
   model     Model     @relation(fields: [modelId], references: [id])
   modelId   Int
+  job       Job       @relation(fields: [jobId], references: [id])
+  jobId     String
   status    Status    @default(Ongoing)
-  locations String?
-  startDate DateTime?
-  startTime DateTime?
-  hours     Int?
-  days      Int?
-  fee       Decimal?  @db.Decimal(9, 2)
+  agreed    Boolean   @default(false)
 }
 
 enum Status {
   Ongoing
+  Cancelled
   Done
 }
 
@@ -186,13 +184,18 @@ model Job {
   clientId       Int
   jobRole        String
   jobDescription String    @db.Text
-  location       String?
-  salary         String?
+  locations      String?
+  startDate      DateTime?
+  startTime      DateTime?
+  hours          Int?
+  days           Int?
+  fee            Decimal?  @db.Decimal(9, 2)
   jobType        String?
   jobLength      String?
   experience     String?
   isOpen         Boolean   @default(true)
   applicants     Model[]
+  contracts      Contract[]
 }
 
 model Media {
