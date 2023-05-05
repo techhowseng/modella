@@ -2,7 +2,7 @@ import Divider from "components/Divider";
 import React from "react";
 
 function CriteriaBlock({
-  data: { experience, location, salary, duration },
+  data: { experience, locations, fee, duration },
 }: any) {
   return (
     <div className="flex flex-col mt-10">
@@ -17,14 +17,14 @@ function CriteriaBlock({
             <Divider />
             <div className="max-w-full text-xl font-light flex flex-col items-center">
               <p className="text-sm">Location</p>
-              <p className="text-center" title={location}>
-                {location}
+              <p className="text-center" title={locations}>
+                {locations}
               </p>
             </div>
             <Divider />
             <div className="max-w-full text-xl font-light flex flex-col items-center">
-              <p className="text-sm">Salary</p>
-              <p className="text-center">{salary} per hr</p>
+              <p className="text-sm">Fee</p>
+              <p className="text-center">{fee} per hr</p>
             </div>
             <Divider />
             <div className="max-w-full text-xl font-light flex flex-col items-center">

@@ -11,7 +11,7 @@ import { getCookieData } from "./functions";
 import { getUser } from "./ModelAccount/services";
 import { getUserDetails } from "./Auth/services";
 
-export const useGetUser = (id: string) => {
+export const useGetUser = (id: string, fetch: boolean = false) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<any>({});
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ export const useGetUser = (id: string) => {
 
   useEffect(() => {
     // @ts-ignore
-    if (sessionStoreUser?.userId) {
+    if (!fetch && sessionStoreUser?.userId) {
       setUser(sessionStoreUser);
     } else {
       _getUser();
@@ -47,17 +47,17 @@ export const useGetUser = (id: string) => {
   };
 };
 
-export const useGetSessionUser = () => {
+export const useGetSessionUser = (authenticate?: boolean) => {
   const { data: session }: any = useSession();
   const userData = getCookieData();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!userData.id) {
+    if (authenticate && !userData.id) {
       router.push(APP_ROUTES.login);
     }
-  }, [userData]);
+  }, [authenticate, userData]);
   // @ts-ignore
   if (session && session.data) {
     dispatch(registerSessionUser(session.data));
@@ -68,40 +68,40 @@ export const useGetSessionUser = () => {
 };
 
 export const useGetUserDetails = () => {
-    const [loading, setLoading] = useState<boolean>(false);
-    const [user, setUserDetails] = useState<any>({});
-    const dispatch = useAppDispatch();
-  
-    const {
-      data: { user: sessionStoreUser },
-    } = useAppSelector(getSessionUser);
-  
-    const _getUser = async () => {
-      setLoading(true);
-      const res = await dispatch(getUserDetails());
-      if (res.payload.data.id) {
-        setUserDetails(res.payload.data);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        // Router.push("/404");
-      }
-    };
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUserDetails] = useState<any>({});
+  const dispatch = useAppDispatch();
 
-    useEffect(() => {
-      // @ts-ignore
-      if (sessionStoreUser?.userId) {
-        setUserDetails(sessionStoreUser);
-      } else {
-        _getUser();
-      }
-    }, []);
-  
-    return {
-      user,
-      loading,
-    };
-  }
+  const {
+    data: { user: sessionStoreUser },
+  } = useAppSelector(getSessionUser);
+
+  const _getUser = async () => {
+    setLoading(true);
+    const res = await dispatch(getUserDetails());
+    if (res.payload.data.id) {
+      setUserDetails(res.payload.data);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      // Router.push("/404");
+    }
+  };
+
+  useEffect(() => {
+    // @ts-ignore
+    if (sessionStoreUser?.userId) {
+      setUserDetails(sessionStoreUser);
+    } else {
+      _getUser();
+    }
+  }, []);
+
+  return {
+    user,
+    loading,
+  };
+};
 
 export const useFieldsErrorCheck = (
   values: any,

@@ -136,6 +136,7 @@ export const userSlice = createSlice({
         state.loading = false;
         state.data.user = {};
         deleteCookie(SESSION_NAME);
+        location.reload();
       })
       .addCase(deleteSession.rejected, (state, payload) => {
         state.loading = false;

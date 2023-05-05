@@ -12,16 +12,16 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getSessionUser } from "features/Auth/slice";
 import Router from "next/router";
 
-export default function Header() {
-  const { userData } = useGetSessionUser();
+export default function Header({ authenticate }) {
+  const { userData } = useGetSessionUser(authenticate);
   const dispatch = useAppDispatch();
   const { data } = useAppSelector(getSessionUser);
 
   useEffect(() => {
-    if (!data.user) {
+    if (!!authenticate && !data.user) {
       Router.push(APP_ROUTES.login);
     }
-  }, [data]);
+  }, [authenticate, data]);
 
   return (
     <Popover className="relative bg-white">
@@ -81,7 +81,7 @@ export default function Header() {
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src="https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0="
                     alt=""
                   />
                 </Menu.Button>
@@ -100,7 +100,8 @@ export default function Header() {
                     {({ active }) => (
                       <Link
                         href={
-                          (userData?.userId && userProfileRoute(userData)) ?? "#"
+                          (userData?.userId && userProfileRoute(userData)) ??
+                          "#"
                         }
                         className={classNames(
                           active ? "bg-gray-100" : "",

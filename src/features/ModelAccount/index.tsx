@@ -6,7 +6,8 @@ import { useGetUser } from "../hooks";
 
 function ModelAccountSreen({ userId }: { userId: string }) {
   const { userData } = useGetSessionUser();
-  const { loading, user } = useGetUser(userId);
+  const { loading, user } = useGetUser(userId, true);
+
   const isLoggedInUser = userData.userId === user.userId;
 
   return (
