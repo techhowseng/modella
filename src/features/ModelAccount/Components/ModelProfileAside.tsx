@@ -5,6 +5,7 @@ import Rating from "components/Rating";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
 import React from "react";
+import { RiImageEditFill } from "react-icons/ri";
 import { FaInstagram } from "react-icons/fa";
 import { FiFacebook, FiLinkedin, FiTwitter } from "react-icons/fi";
 
@@ -24,15 +25,23 @@ function ModelProfileAside({
 }) {
   return (
     <div>
-      <div className="image w-full h-40 bg-gray-300">
+      <div className="image w-full h-40 bg-gray-300 relative">
         <img
           className="w-full h-40 object-cover"
           srcSet="https://randomuser.me/api/portraits/women/12.jpg"
           src="https://randomuser.me/api/portraits/women/12.jpg"
-          alt={"Profile banner Image"}
+          alt={`${user.firstname} ${user.lastname}`}
+          loading="lazy"
           onLoad={() => console.log("loaded")}
           onError={() => console.log("error")}
         />
+        {/* @ts-ignore */}
+        {isLoggedInUser && user?.type === "Model" ? (
+          <button className="p-4 absolute top-0 right-0 group bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded">
+            <RiImageEditFill className="h-5 w-5 text-white" />
+            {/* <p>Remove</p> */}
+          </button>
+        ) : null}
       </div>
       <div className="p-6">
         <h1 className="text-2xl w-full font-bold mx-auto antialiased capitalize flex">
@@ -63,8 +72,8 @@ function ModelProfileAside({
             </>
           ) : (
             <>
-              <Button onClick={undefined}>Message</Button>
-              <div className="w-3" />
+              {/* <Button onClick={undefined}>Message</Button>
+              <div className="w-3" /> */}
               <Button
                 className="!bg-transparent !base-color base-border-color border-2 hover:!text-white"
                 onClick={() => {}}

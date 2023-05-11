@@ -16,7 +16,7 @@ function ModelAccountSreen({ userId }: { userId: string }) {
         <ModelProfileAside isLoggedInUser={isLoggedInUser} user={user} />
       </div>
       <div className="flex flex-col w-10/12 px-10">
-        <MasonryGallary />
+        <MasonryGallary isLoggedInUser={isLoggedInUser} user={user} />
       </div>
     </div>
   );
