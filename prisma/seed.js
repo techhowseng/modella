@@ -13,11 +13,11 @@ const load = async () => {
     await prisma.verificationToken.deleteMany();
     console.log('Deleted all verification token data in table');
 
-    await prisma.job.deleteMany();
-    console.log('Deleted all jobs in jobs table');
-
     await prisma.contract.deleteMany();
     console.log('Deleted all contracted models in table');
+    
+    await prisma.job.deleteMany();
+    console.log('Deleted all jobs in jobs table');
 
     await prisma.history.deleteMany();
     console.log('Deleted all model history data in table');

@@ -200,7 +200,7 @@ model Job {
 
 model Media {
   id          Int         @id @default(autoincrement())
-  userId      String      @unique
+  userId      String
   user        User        @relation(fields: [userId], references: [id])
   content     Json
   contentType ContentType
