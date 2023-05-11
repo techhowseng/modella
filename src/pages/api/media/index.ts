@@ -5,6 +5,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { validateCreateMedia, validateUploadImages } from "./mediaValidation";
 import MediaRepository from "./repository";
 
+interface Request extends NextApiRequest {
+  file: string
+}
+
 const upload = multer({ 
   storage: multer.memoryStorage() 
 })
@@ -25,14 +29,14 @@ const apiRoute = nextConnect({
   },
 });
 
-const uploadMiddleware = upload.single('content');
+const uploadMiddleware = upload.array('content', 5);
 apiRoute.use(uploadMiddleware);
 
 apiRoute.post(async(
-  req: NextApiRequest,
+  req: Request,
   res: NextApiResponse
 ) => {
-  res.json(await MediaRepository.createMedia(req, res));
+  res.json(await MediaRepository.uploadMedia(req, res));
 });
 
 apiRoute.get(async(

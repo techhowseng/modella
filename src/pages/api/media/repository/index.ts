@@ -18,29 +18,33 @@ export default class MediaRepository {
 		this.prisma = prisma;
 	}
 
-	static async createMedia(req, res) {
+	static async uploadMedia(req, res) {
 		try {
+			let returnedData = [];
 			const data = req.body;
-			const image = req.file;
+			const images = req.files;
 			const user = await getUser(req, res);
       if (user) {
-				const base64Image = await parser.format(path.extname(image.originalname).toString(), image.buffer);
+				for (const image of images) {
+					const base64Image = await parser.format(path.extname(image.originalname).toString(), image.buffer);
 
-				const result = await cloudinary.uploader.upload(base64Image.content, {
-					folder: data.contentType
-				})
+					const result = await cloudinary.uploader.upload(base64Image.content, {
+						folder: user.id
+					})
 
-				let content = {...data.imageDetails }
-				content["url"] = result.secure_url;
-				content["public_id"] = result.public_id;
+					let content = {};
+					content["url"] = result.secure_url;
+					content["public_id"] = result.public_id;
 
-				const media = await MediaServices.createMedia(
-					res,
-					user.id,
-					content,
-					data.contentType
-				);
-				return media;
+					const media = await MediaServices.createMedia(
+						res,
+						user.id,
+						content,
+						data.contentType
+					);
+					returnedData.push(media);
+				}
+				return ResponseService.json(res, 201, "Successfully uploaded images.", returnedData);
 			}
 		} catch(err) {
       return ResponseService.sendError(err, res);
@@ -91,36 +95,38 @@ export default class MediaRepository {
 		}
 	}
 
+	// I need to think about how I will delete old image from cloudinary
+	// so we do not have a congestion of images that have been updated from users
 	static async updateMedia(req, res) {
-		try {
-			const { id, userId, content, contentType } = req.body
-			const image = req.file;
-			const user = await getUser(req, res);
-			if (user && user.type != "Admin" && userId == user.id) {
-				return new Response('This user is not authorised to update the image.', {
-					status: 401,
-					headers: {
-						'WWW-Authenticate': 'Basic realm="Secure Area"',
-					},
-				})
-			}
-			const details = {
-				width: content.width,
-				height: content.height,
-				crop: content.crop
-			}
-			await cloudinary.uploader.destroy(content.public_id);
-			const result = await cloudinary.uploader.upload(image, {
-				folder: contentType,
-				...details
-			});
-			content["url"] = result.secure_url;
-			content["public_id"] = result.public_id;
-			const updatedMedia = await MediaServices.updateMedia(res, id, content, contentType);
-			return updatedMedia;
-		} catch(err) {
-      return ResponseService.sendError(err, res);
-		}
+	// 	try {
+	// 		const { id, userId, content, contentType } = req.body
+	// 		const image = req.file;
+	// 		const user = await getUser(req, res);
+			// if (user && user.type != "Admin" && userId == user.id) {
+			// 	return new Response('This user is not authorised to update the image.', {
+			// 		status: 401,
+			// 		headers: {
+			// 			'WWW-Authenticate': 'Basic realm="Secure Area"',
+			// 		},
+			// 	})
+			// }
+	// 		const details = {
+	// 			width: content.width,
+	// 			height: content.height,
+	// 			crop: content.crop
+	// 		}
+	// 		await cloudinary.uploader.destroy(content.public_id);
+	// 		const result = await cloudinary.uploader.upload(image, {
+	// 			folder: user["id"],
+	// 			...details
+	// 		});
+	// 		content["url"] = result.secure_url;
+	// 		content["public_id"] = result.public_id;
+	// 		const updatedMedia = await MediaServices.updateMedia(res, id, content, contentType);
+	// 		return updatedMedia;
+	// 	} catch(err) {
+  //     return ResponseService.sendError(err, res);
+	// 	}
 	}
 
   static async getMediaByType(req, res) {
