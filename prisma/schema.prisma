@@ -77,33 +77,35 @@ model VerificationToken {
 }
 
 model Model {
-  id              Int        @id @default(autoincrement())
-  userId          String     @unique
-  user            User       @relation(fields: [userId], references: [id])
-  firstname       String
-  lastname        String
-  gender          Gender
-  height          Int?
-  bust            Int?
-  waist           Int?
-  hip             Int?
-  shoeSize        Int?
-  weight          Decimal?   @db.Decimal(4, 1)
-  complexion      String?
-  dob             DateTime?
-  social          Json?
-  state           String?
-  country         String?
-  address         String?
-  isAvailable     Boolean?   @default(true)
-  bio             String?
-  phone           String?
-  types           Types?
-  unavailableDays String?
-  contracts       Contract[]
-  history         History[]
-  chats            Chat[]
-  jobs             Job[]
+  id                Int        @id @default(autoincrement())
+  userId            String     @unique
+  user              User       @relation(fields: [userId], references: [id])
+  firstname         String
+  lastname          String
+  gender            Gender
+  height            Int?
+  bust              Int?
+  waist             Int?
+  hip               Int?
+  shoeSize          Int?
+  weight            Decimal?   @db.Decimal(4, 1)
+  complexion        String?
+  dob               DateTime?
+  social            Json?
+  state             String?
+  country           String?
+  address           String?
+  isAvailable       Boolean?   @default(true)
+  bio               String?
+  phone             String?
+  types             Types?
+  unavailableDays   String?
+  thumbnailURL      String?
+  thumbnailPublicId String?
+  contracts         Contract[]
+  history           History[]
+  chats             Chat[]
+  jobs              Job[]
 }
 
 enum Gender {
@@ -147,6 +149,8 @@ model Client {
   country           String?
   address           String?
   isVetted          Boolean?   @default(false)
+  thumbnailURL      String?
+  thumbnailPublicId String?
   contracts         Contract[]
   jobs              Job[]
   Chat              Chat[]

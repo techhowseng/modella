@@ -17,7 +17,6 @@ export default class MediaServices {
     contentType: ContentType
   ) {
     //@ts-ignore
-    const { image } = content;
     try {
       const media = await this.prisma.media.create({
         data: {
@@ -36,7 +35,6 @@ export default class MediaServices {
 
   static async uploadProfileImages(res, id: string, content: object, contentType: ContentType) {
     try {
-
       let imagesObject = {}
       for (const key in content) {
         //@ts-ignore
@@ -67,7 +65,6 @@ export default class MediaServices {
 
   static async updateProfileImages(res, id: number, content: object, contentType: ContentType) {
     try {
-
       let imagesObject = {}
       for (const key in content) {
         //@ts-ignore
@@ -97,13 +94,11 @@ export default class MediaServices {
           contentType,
         },
       });
-      return updatedMedia;    //@ts-ignore
-
+      return updatedMedia;
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
   }
-
 
   static async getMedia(res, id: number) {
     try {
@@ -127,7 +122,6 @@ export default class MediaServices {
     }
   }
   
-
   static async updateMedia(res, id: number, content: TContent, contentType: ContentType) {
     try {
       const updatedMedia = await this.prisma.media.update({
@@ -143,13 +137,10 @@ export default class MediaServices {
     }
   }
 
-  static async deleteMedia(res, id: number, userId: string) {
+  static async deleteMedia(res, id: number) {
     try {
       const deletedMedia = await this.prisma.media.delete({
-        where: { 
-          id,
-          userId
-        }
+        where: { id }
       });
       return deletedMedia;
     } catch(err) {

@@ -1,12 +1,12 @@
-import { validationResult } from "express-validator";
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import { NextApiRequest, NextApiResponse } from "next";
-import { validateCreateMedia, validateUploadImages } from "./mediaValidation";
 import MediaRepository from "./repository";
 
 interface Request extends NextApiRequest {
-  file: string
+  file: string,
+  files: string,
+  
 }
 
 const upload = multer({ 

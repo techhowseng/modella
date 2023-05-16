@@ -1,33 +1,55 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import nextConnect from 'next-connect';
+import multer from 'multer';
 import ModelRepository from "./repository/index";
-import { validateCreateModel } from "./modelValidation";
-import { validationResult } from "express-validator";
-import { bodyPermittedParams } from "helper/util";
 
-export default async function handle(
+const upload = multer({ 
+  storage: multer.memoryStorage() 
+})
+
+const apiRoute = nextConnect({
+  onError(
+    error,
+    req: NextApiRequest,
+    res: NextApiResponse
+    ) {
+    res.status(501).json({ error: `Sorry something Happened! ${error.message}` });
+  },
+  onNoMatch(
+    req: NextApiRequest,
+    res: NextApiResponse
+  ) {
+    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+  },
+});
+
+const uploadMiddleware = upload.single('image');
+apiRoute.use(uploadMiddleware);
+
+apiRoute.post(async(
   req: NextApiRequest,
   res: NextApiResponse
-) {
-  const { method } = req;
-  switch (method) {
-    case "GET":
-      break;
-    case "POST":
-      await validateCreateModel(req, res);
-      const createErrors = validationResult(req);
-      if (!createErrors.isEmpty())
-        return res.status(422).json({ errors: createErrors.array() });
-      bodyPermittedParams(req);
-      res.json(await ModelRepository.createModel(req, res));
-      break;
-    case "PUT":
-      break;
-    case "PATCH":
-      break;
-    case "DELETE":
-      break;
-    default:
-      res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
-  }
-}
+) => {
+  res.json(await ModelRepository.uploadThumbnail(req, res));
+});
+
+apiRoute.put(async(
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  res.json(await ModelRepository.updateThumbnail(req, res));
+});
+
+apiRoute.delete(async(
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  res.json(await ModelRepository.deleteThumbnail(req, res));
+});
+
+export default apiRoute;
+export const config = {
+  api: {
+    bodyParser: false, // Disallow body parsing, consume as stream
+  },
+};
