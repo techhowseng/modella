@@ -88,7 +88,7 @@ export default class MediaRepository {
 				})
 			}
 			await cloudinary.uploader.destroy(public_id);
-			const deleteMedia = await MediaServices.deleteMedia(res, id, userId);
+			const deleteMedia = await MediaServices.deleteMedia(res, id);
 			return deleteMedia;
 		} catch(err) {
       return ResponseService.sendError(err, res);

@@ -1,9 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import path from 'path';
+import DatauriParser from 'datauri/parser';
+import { cloudinary } from "../../../../helper/cloudinary";
 import { ResponseService } from "../../../../services/ResponseService";
 import { getUser, getModel } from "helper/util";
 import prisma from "lib/prisma";
 import ModelServices, { TModel } from "../service";
+
+const parser = new DatauriParser();
 
 // @ts-ignore
 export type TUser = PrismaClient["session"]["create"]["data"];
@@ -67,6 +72,75 @@ export default class ModelRepository {
           data
         );
         return model;
+      }
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async uploadThumbnail(req, res: NextApiResponse<any>) {
+    try {
+			const image = req.file;
+      const user = await getUser(req, res);
+      if (user) {
+        const base64Image = await parser.format(path.extname(image.originalname).toString(), image.buffer);
+        const result = await cloudinary.uploader.upload(base64Image.content, {
+          folder: user.id
+        })
+
+        const model = await ModelServices.uploadThumbnail(
+          res,
+          user.id,
+          result.secure_url,
+          result.public_id
+        );
+        return model
+      }
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async updateThumbnail(req, res: NextApiResponse<any>) {
+    try {
+      const { thumbnailPublicId } = req.body;
+      const image = req.file;
+      const user = await getUser(req, res);
+      const success = await cloudinary.uploader.destroy(thumbnailPublicId);
+      if (success && user) {
+        const base64Image = await parser.format(path.extname(image.originalname).toString(), image.buffer);
+        const result = await cloudinary.uploader.upload(base64Image.content, {
+          folder: user.id
+        })
+
+        const model = await ModelServices.uploadThumbnail(
+          res,
+          user.id,
+          result.secure_url,
+          result.public_id
+        );
+        return model
+      } else {
+        return new Response('Unable to delete this image from cloud', {
+					status: 400
+				})
+      }
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
+  static async deleteThumbnail(req, res: NextApiResponse<any>) {
+    try {
+      const { thumbnailPublicId } = req.body;
+      const user = await getUser(req, res);
+      const success = await cloudinary.uploader.destroy(thumbnailPublicId);
+      if (success && user) {
+        const model = await ModelServices.uploadThumbnail(
+          res,
+          user.id
+        );
+        return model
       }
     } catch (err) {
       return ResponseService.sendError(err, res);

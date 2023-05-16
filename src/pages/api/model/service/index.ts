@@ -86,4 +86,26 @@ export default class UserServices {
       );
     }
   }
+
+  static async uploadThumbnail(
+    res: NextApiResponse<any>,
+    userId: string, 
+    thumbnailURL: string = null, 
+    thumbnailPublicId: string = null) {
+    try {
+      const updatedModel = await this.prisma.model.update({
+        where: { userId },
+        data: {
+          thumbnailURL,
+          thumbnailPublicId
+        }
+      });
+      return updatedModel;
+    } catch (err) {
+      return ResponseService.sendError(
+        { message: "Error updating models thumbnail." },
+        res
+      );
+    }
+  }
 }
