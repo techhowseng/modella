@@ -52,8 +52,9 @@ export default class UserServices {
           user: {
             select: {
               email: true,
-              type: true
-            }
+              type: true,
+              Media: true
+            },
           }
         }
       })

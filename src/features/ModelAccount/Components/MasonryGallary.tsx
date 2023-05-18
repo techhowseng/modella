@@ -63,9 +63,9 @@ function MasonryGallary({ isLoggedInUser, user }) {
 
       <div className="gap-1 columns-2 md:columns-3 lg:columns-3">
         {/* @ts-ignore */}
-        {[...Array(25).keys()].map((image) => (
+        {user?.Media?.map((image: any) => (
           <motion.div
-            key={image}
+            key={image.id}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -74,8 +74,8 @@ function MasonryGallary({ isLoggedInUser, user }) {
             <img
               loading="lazy"
               className="w-full"
-              src={`https://source.unsplash.com/random/${image}`}
-              alt=""
+              src={image.content.url}
+              alt={image.content.public_id}
             />
             {isLoggedInUser && user?.type === "Model" ? (
               <button className="p-4 absolute top-0 right-0 group hover:bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded">

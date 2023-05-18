@@ -4,10 +4,10 @@ import LinkButton from "components/LinkButton";
 import Rating from "components/Rating";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
-import React from "react";
-import { RiImageEditFill } from "react-icons/ri";
+import React, { useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { FiFacebook, FiLinkedin, FiTwitter } from "react-icons/fi";
+import MediaUpload from "features/MediaUpload";
 
 const SOCIAL_ICONS = {
   facebook: <FiFacebook className="text-[#3b5998]" />,
@@ -23,24 +23,24 @@ function ModelProfileAside({
   isLoggedInUser: boolean;
   user: Model;
 }) {
+  console.log("🚀 ~ file: ModelProfileAside.tsx:26 ~ user:", user)
+  const [preview, setPreview] = useState<string>("");
+
   return (
     <div>
       <div className="image w-full h-40 bg-gray-300 relative">
         <img
           className="w-full h-40 object-cover"
-          srcSet="https://randomuser.me/api/portraits/women/12.jpg"
-          src="https://randomuser.me/api/portraits/women/12.jpg"
-          alt={`${user.firstname} ${user.lastname}`}
+          // srcSet={user?.Media[0].content.url || preview || "https://randomuser.me/api/portraits/women/12.jpg"}
+          src={preview || "https://randomuser.me/api/portraits/women/12.jpg"}
+          alt={`${user?.firstname} ${user?.lastname}`}
           loading="lazy"
           onLoad={() => console.log("loaded")}
           onError={() => console.log("error")}
         />
         {/* @ts-ignore */}
         {isLoggedInUser && user?.type === "Model" ? (
-          <button className="p-4 absolute top-0 right-0 group bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded">
-            <RiImageEditFill className="h-5 w-5 text-white" />
-            {/* <p>Remove</p> */}
-          </button>
+          <MediaUpload type="profile" setPreview={setPreview} />
         ) : null}
       </div>
       <div className="p-6">
