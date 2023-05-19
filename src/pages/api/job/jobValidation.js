@@ -29,16 +29,16 @@ export const validateCreateJob = initMiddleware(
       check('jobRole').isLength({min:2})
       .withMessage('is not descriptive enough.'),
       check('jobDescription').isLength({min:5})
-      .withMessage('is not descriptive enough.'),,
+      .withMessage('is not descriptive enough.'),
       check('location').isLength({min:3})
       .withMessage('is not descriptive enough.')
       .optional({ nullable: true }),
       check('salary').isLength({min:3}).optional({ nullable: true })
-      .withMessage('is not descriptive enough.'),,
+      .withMessage('is not descriptive enough.'),
       check('jobType').isIn(types).optional({ nullable: true })
-      .withMessage('is not among the available optoins.'),,
+      .withMessage('is not among the available options.'),
       check('jobLength').isLength({min:2}).optional({ nullable: true })
-      .withMessage('is not descriptive enough.'),,
+      .withMessage('is not descriptive enough.'),
       check('isOpen').isBoolean().optional({ nullable: true })
       .withMessage('should be true or false.'),
   ], validationResult)
@@ -56,11 +56,11 @@ export const validateUpdateJob = initMiddleware(
     .withMessage('is not descriptive enough.')
     .optional({ nullable: true }),
     check('salary').isLength({min:3}).optional({ nullable: true })
-    .withMessage('is not descriptive enough.'),,
+    .withMessage('is not descriptive enough.'),
     check('jobType').isIn(types).optional({ nullable: true })
-    .withMessage('is not among the available optoins.'),,
+    .withMessage('is not among the available options.'),
     check('jobLength').isLength({min:2}).optional({ nullable: true })
-    .withMessage('is not descriptive enough.'),,
+    .withMessage('is not descriptive enough.'),
     check('isOpen').isBoolean().optional({ nullable: true })
     .withMessage('should be true or false.'),
   ], validationResult)
@@ -79,9 +79,9 @@ export const validateSearchJob = initMiddleware(
     .withMessage('is not descriptive enough.')
     .optional({ nullable: true }),
     check('salary').isLength({min:3}).optional({ nullable: true })
-    .withMessage('is not descriptive enough.'),,
+    .withMessage('is not descriptive enough.'),
     check('jobType').isIn(types).optional({ nullable: true })
-    .withMessage('is not among the available optoins.'),,
+    .withMessage('is not among the available optoins.'),
     check('jobLength').isLength({min:2}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
     check('page').isLength({min:1}).isNumeric().optional({ nullable: true })

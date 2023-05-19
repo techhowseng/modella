@@ -17,48 +17,49 @@ export default class ChatRepository {
 
   static async initiateSocket(req: NextApiRequest, res) {
     try {
-      if (res.socket.server.io) {
-        console.log('Socket is already running')
-      } else {
-        console.log('Socket is initializing')
-        const io = new Server(res.socket.server)
-        res.socket.server.io = io
-      }
-      res.end()
+      
+      // if (res.socket.server.io) {
+      //   console.log('Socket is already running')
+      // } else {
+      //   console.log('Socket is initializing')
+      //   const io = new Server(res.socket.server)
+      //   res.socket.server.io = io
+      // }
+      // res.end()
     
-      const io = new Server(res.socket.server);
-      res.socket.server.io = io;
+      // const io = new Server(res.socket.server);
+      // res.socket.server.io = io;
     
-      let clientSocketIds = [];
-      let createdUsers = [];
+      // let clientSocketIds = [];
+      // let createdUsers = [];
     
-      const getSocketByUserId = (userId) => {
-        let socket = {id: null};
-        for(let i = 0; i < clientSocketIds.length; i++) {
-          if(clientSocketIds[i].userId == userId) {
-            socket = clientSocketIds[i].socket;
-            break;
-          }
-        }
-        return socket;
-      }
+      // const getSocketByUserId = (userId) => {
+      //   let socket = {id: null};
+      //   for(let i = 0; i < clientSocketIds.length; i++) {
+      //     if(clientSocketIds[i].userId == userId) {
+      //       socket = clientSocketIds[i].socket;
+      //       break;
+      //     }
+      //   }
+      //   return socket;
+      // }
     
-      io.on('connection', socket => {
-        console.log('connected')
-        socket.on('createSocket', function(user) {
-          clientSocketIds = clientSocketIds.filter(item => item.userId != user.userId)
-          clientSocketIds.push({ socket: socket, userId:  user.userId });
-          createdUsers = createdUsers.filter(item => item.userId != user.userId);
-          createdUsers.push({...user, socketId: socket.id})
-          io.emit('createdUsers', createdUsers)
-        });
+      // io.on('connection', socket => {
+      //   console.log('connected')
+      //   socket.on('createSocket', function(user) {
+      //     clientSocketIds = clientSocketIds.filter(item => item.userId != user.userId)
+      //     clientSocketIds.push({ socket: socket, userId:  user.userId });
+      //     createdUsers = createdUsers.filter(item => item.userId != user.userId);
+      //     createdUsers.push({...user, socketId: socket.id})
+      //     io.emit('createdUsers', createdUsers)
+      //   });
 
-        socket.on('disconnect', () => {
-          console.log("disconnected")
-          clientSocketIds = clientSocketIds.filter(item => item.socket.id != socket.id)
-          createdUsers = createdUsers.filter(item => item.socketId != socket.id);
-          io.emit('createdUsers', createdUsers)
-        });
+      //   socket.on('disconnect', () => {
+      //     console.log("disconnected")
+      //     clientSocketIds = clientSocketIds.filter(item => item.socket.id != socket.id)
+      //     createdUsers = createdUsers.filter(item => item.socketId != socket.id);
+      //     io.emit('createdUsers', createdUsers)
+      //   });
     
         // socket.on('loggedin', function(user) {
         //   clientSocketIds.push({ socket: socket, userId:  user.user_id });
@@ -67,27 +68,27 @@ export default class ChatRepository {
         //   io.emit('createdUsers', createdUsers)
         // });
     
-        socket.on('create', function(data) {
-          console.log("create room")
-          socket.join(data.chatId);
-          let withSocket = getSocketByUserId(data.withUserId);
-          socket.broadcast.to(withSocket.id).emit("invite", { data })
-        });
+        // socket.on('create', function(data) {
+        //   console.log("create room")
+        //   socket.join(data.chatId);
+        //   let withSocket = getSocketByUserId(data.withUserId);
+        //   socket.broadcast.to(withSocket.id).emit("invite", { data })
+        // });
     
-        socket.on('joinRoom', function(data) {
-          console.log("join", data)
-          socket.join(data.chatId);
-        });
+        // socket.on('joinRoom', function(data) {
+        //   console.log("join", data)
+        //   socket.join(data.chatId);
+        // });
     
-        socket.on('message', function(data) {
-          console.log("sending message", data)
-          socket.broadcast.to(data.chatId)
-          socket.emit('message', data);
-        });
-      })
+        // socket.on('message', function(data) {
+        //   console.log("sending message", data)
+        //   socket.broadcast.to(data.chatId)
+        //   socket.emit('message', data);
+        // });
+      // })
       
-      console.log("Setting up socket");
-      res.end();
+      // console.log("Setting up socket");
+      // res.end();
 
     } catch (err) {
       return ResponseService.sendError(err, res);

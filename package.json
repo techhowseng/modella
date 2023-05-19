@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "concurrently \"npm run tailwind\" \"next\"",
+    "dev": "concurrently \"npm run tailwind\" \"next\" \" npm run chat\"",
     "build": "next build",
     "start": "next start",
+    "chat": "node src/backend/server.js",
     "seed": "node prisma/seed.js",
     "tailwind": "npx tailwindcss -i ./src/styles/input.css -o ./src/styles/output.css --watch"
   },
@@ -26,6 +27,7 @@
     "cookies-next": "^2.1.1",
     "datauri": "^4.1.0",
     "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "express-validator": "^6.14.2",
     "flowbite": "^1.6.5",
     "framer-motion": "^8.4.7",
@@ -49,6 +51,7 @@
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
     "uuidv4": "^6.2.13",
+    "ws": "^8.13.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
