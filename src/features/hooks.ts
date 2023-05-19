@@ -6,12 +6,17 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { SIGN_UP_STEPS } from "./Auth/SignUp/constants";
-import { getSessionUser, registerSessionUser } from "./Auth/slice";
+import {
+  getSessionUser,
+  registerSessionUser,
+  updateSelectedCountryOption,
+} from "./Auth/slice";
 import { getCookieData } from "./functions";
 import { getUser } from "./ModelAccount/services";
 import { getUserDetails } from "./Auth/services";
+import { useDispatch } from "react-redux";
 
-export const useGetUser = (id: string) => {
+export const useGetUser = (id: string, fetch: boolean = false) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<any>({});
   const dispatch = useAppDispatch();
@@ -34,7 +39,7 @@ export const useGetUser = (id: string) => {
 
   useEffect(() => {
     // @ts-ignore
-    if (sessionStoreUser?.userId) {
+    if (!fetch && sessionStoreUser?.userId) {
       setUser(sessionStoreUser);
     } else {
       _getUser();
@@ -47,17 +52,17 @@ export const useGetUser = (id: string) => {
   };
 };
 
-export const useGetSessionUser = () => {
+export const useGetSessionUser = (authenticate?: boolean) => {
   const { data: session }: any = useSession();
   const userData = getCookieData();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!userData.id) {
+    if (authenticate && !userData.id) {
       router.push(APP_ROUTES.login);
     }
-  }, [userData]);
+  }, [authenticate, userData]);
   // @ts-ignore
   if (session && session.data) {
     dispatch(registerSessionUser(session.data));
@@ -68,40 +73,40 @@ export const useGetSessionUser = () => {
 };
 
 export const useGetUserDetails = () => {
-    const [loading, setLoading] = useState<boolean>(false);
-    const [user, setUserDetails] = useState<any>({});
-    const dispatch = useAppDispatch();
-  
-    const {
-      data: { user: sessionStoreUser },
-    } = useAppSelector(getSessionUser);
-  
-    const _getUser = async () => {
-      setLoading(true);
-      const res = await dispatch(getUserDetails());
-      if (res.payload.data.id) {
-        setUserDetails(res.payload.data);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        // Router.push("/404");
-      }
-    };
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUserDetails] = useState<any>({});
+  const dispatch = useAppDispatch();
 
-    useEffect(() => {
-      // @ts-ignore
-      if (sessionStoreUser?.userId) {
-        setUserDetails(sessionStoreUser);
-      } else {
-        _getUser();
-      }
-    }, []);
-  
-    return {
-      user,
-      loading,
-    };
-  }
+  const {
+    data: { user: sessionStoreUser },
+  } = useAppSelector(getSessionUser);
+
+  const _getUser = async () => {
+    setLoading(true);
+    const res = await dispatch(getUserDetails());
+    if (res.payload.data.id) {
+      setUserDetails(res.payload.data);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      // Router.push("/404");
+    }
+  };
+
+  useEffect(() => {
+    // @ts-ignore
+    if (sessionStoreUser?.userId) {
+      setUserDetails(sessionStoreUser);
+    } else {
+      _getUser();
+    }
+  }, []);
+
+  return {
+    user,
+    loading,
+  };
+};
 
 export const useFieldsErrorCheck = (
   values: any,
@@ -121,11 +126,14 @@ export const useFieldsErrorCheck = (
 };
 
 export const useForm = (initialValues: any, schema: any, cb: any) => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialValues);
+  const [image, setImageFormData] = useState<FormData>();
   const [errorMessage, setErrorMessage] = React.useState("");
   const [successMessage, setSuccessMessage] = React.useState<string>("");
   const [stepState, setStepState] = React.useState(SIGN_UP_STEPS.MORE_DETAILS);
+  const [preview, setPreview] = useState<string>();
 
   useEffect(() => {
     if (isEmptyObject(formData)) {
@@ -135,6 +143,26 @@ export const useForm = (initialValues: any, schema: any, cb: any) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isCheckBox = e.target.type === "checkbox";
+
+    if (e.target.type === "select-one") {
+      dispatch(updateSelectedCountryOption(e.target.value));
+    }
+
+    if (e.target.type === "file") {
+      const files = e.target.files;
+      const imageFormData = new FormData();
+      const reader = new FileReader();
+
+      imageFormData.append("image", files[0]);
+      setImageFormData(imageFormData);
+
+      if (files.length) {
+        reader.readAsDataURL(files[0]);
+        reader.onload = (readerEvent) => {
+          setPreview(readerEvent.target.result as string);
+        };
+      }
+    }
 
     if (e.target.name.includes(".")) {
       const name = e.target.name.split(".")[0];
@@ -162,6 +190,14 @@ export const useForm = (initialValues: any, schema: any, cb: any) => {
     setStepState(stepState + 1);
   };
 
+  const handlePrevious = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setSuccessMessage("");
+    setErrorMessage("");
+    // validate data and dispatch action to move to next step here ...
+    setStepState(stepState - 1);
+  };
+
   // handle submit
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -178,7 +214,7 @@ export const useForm = (initialValues: any, schema: any, cb: any) => {
     const isValid = await schema.isValid(formData);
     if (isValid) {
       delete formData.confirmPassword;
-      cb(formData);
+      !!image ? cb(formData, image) : cb(formData);
       return setLoading(false);
     }
   };
@@ -193,7 +229,9 @@ export const useForm = (initialValues: any, schema: any, cb: any) => {
     successMessage,
     stepState,
     handleNext,
+    handlePrevious,
     loading,
     setFormData,
+    preview,
   };
 };

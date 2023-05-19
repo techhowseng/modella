@@ -18,6 +18,7 @@ function JobCard({
   job: Job;
   onEdit?: (job: Job) => void;
 }) {
+  const route = location.pathname;
   const isAppliedToJob = isApplied(user, job?.applicants);
   const isOwner = String(job.clientId) === String(user.id);
 
@@ -27,13 +28,16 @@ function JobCard({
         <div className="flex space-x-3 items-center">
           <img
             className="rounded-full w-10 h-10"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
-            alt="profile picture"
+            src={
+              job?.client?.user?.Media[0] ||
+              "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
+            }
+            alt={job?.client?.companyName}
           />
           <div className="space-y-0.5 font-medium text-black text-left">
-            <div>Bonnie Green</div>
+            <div>{job?.client?.companyName}</div>
             <div className="text-sm font-light text-gray-500">
-              Developer at Open AI
+              {job?.client?.companyName}
             </div>
           </div>
         </div>
@@ -44,7 +48,7 @@ function JobCard({
       </blockquote>
       <div className="text-gray-500 flex justify-between mb-2">
         <p className="text-sm">Type: {job.jobType}</p>
-        <p className="text-sm ml-4">{job.salary}</p>
+        <p className="text-sm ml-4">{job.fee}</p>
       </div>
       <div className="flex -space-x-4">
         <img
@@ -70,32 +74,53 @@ function JobCard({
         </Link>
       </div>
       <div className="mt-5">
-        {!isClient && (
+        {user?.id ? (
+          <>
+            {!isClient && (
+              <Button
+                type="button"
+                className="!base-bg-color !w-full"
+                data-drawer-target="drawer-right-example"
+                data-drawer-show="drawer-right-example"
+                data-drawer-placement="right"
+                aria-controls="drawer-right-example"
+                onClick={() => {
+                  Router.push(resolveRoute(APP_ROUTES.job, job.id));
+                }}
+                disabled={isAppliedToJob}
+              >
+                {isAppliedToJob ? "Applied" : "Apply"}
+              </Button>
+            )}
+            {isOwner && isClient && (
+              <Button
+                type="button"
+                className="!base-bg-color !w-full"
+                onClick={
+                  route === "/jobs"
+                    ? () => Router.push(resolveRoute(APP_ROUTES.job, job.id))
+                    : () => {
+                        onEdit && onEdit(job);
+                        Router.push(
+                          `${APP_ROUTES.clientProfile}/jobs/${job.id}`
+                        );
+                      }
+                }
+              >
+                Edit
+              </Button>
+            )}
+          </>
+        ) : (
           <Button
             type="button"
             className="!base-bg-color !w-full"
-            data-drawer-target="drawer-right-example"
-            data-drawer-show="drawer-right-example"
-            data-drawer-placement="right"
-            aria-controls="drawer-right-example"
             onClick={() => {
               Router.push(resolveRoute(APP_ROUTES.job, job.id));
             }}
             disabled={isAppliedToJob}
           >
-            {isAppliedToJob ? "Applied" : "Apply"}
-          </Button>
-        )}
-        {isOwner && isClient && (
-          <Button
-            type="button"
-            className="!base-bg-color !w-full"
-            onClick={() => {
-              onEdit && onEdit(job);
-              Router.push(`${APP_ROUTES.clientProfile}/jobs/${job.id}`);
-            }}
-          >
-            Edit
+            Apply
           </Button>
         )}
       </div>

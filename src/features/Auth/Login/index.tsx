@@ -6,7 +6,7 @@ import Input from "components/Input";
 import { useForm } from "features/hooks";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { LOGIN_FORM } from "../formFieldData";
@@ -18,6 +18,7 @@ import { LoginSessionType } from "../types";
 function Login() {
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector(getSessionUser);
+  const { query } = useRouter();
   const {
     handleChange,
     handleSubmit,
@@ -36,7 +37,11 @@ function Login() {
           setErrorMessage(res.payload.data.message);
         } else {
           setSuccessMessage(res.payload.message || res.type);
-          location.href = APP_ROUTES.jobs;
+          if (query.redirect) {
+            location.href = query.redirect as string;
+          } else {
+            location.href = APP_ROUTES.jobs;
+          }
         }
       });
     }

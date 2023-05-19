@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "lib/axiosInstance";
+import axiosInstance, { axiosMediaInstance } from "lib/axiosInstance";
 import { errorHandler } from "lib/errorhandler";
 import {
   AuthRegistrationCompleteFormType,
@@ -33,17 +33,14 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const getUserDetails = createAsyncThunk(
-  "get/user",
-  async () => {
-    try {
-      const response = await axiosInstance.get("/session");
-      return response.data;
-    } catch (error) {
-      return errorHandler(error);
-    }
+export const getUserDetails = createAsyncThunk("get/user", async () => {
+  try {
+    const response = await axiosInstance.get("/session");
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
   }
-);
+});
 
 export const createSession = createAsyncThunk(
   "create/user/session",
@@ -71,15 +68,30 @@ export const deleteSession = createAsyncThunk(
 
 export const createModel = createAsyncThunk(
   "register/user/model",
-  async (data: AuthRegistrationCompleteFormType) => {
+  async ({
+    id,
+    formData,
+  }: {
+    id: string;
+    formData: AuthRegistrationCompleteFormType;
+  }) => {
     try {
-      const response = await axiosInstance.post("/model", data);
+      const response = await axiosInstance.post(`/model/${id}`, formData);
       return response.data;
     } catch (error) {
       return errorHandler(error);
     }
   }
 );
+
+export const uploadModelThumbnail = async (data: FormData) => {
+  try {
+    const response = await axiosMediaInstance.post("/model", data);
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
 
 export const createClient = createAsyncThunk(
   "register/user/client",

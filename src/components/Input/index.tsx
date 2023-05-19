@@ -18,6 +18,7 @@ interface InputProps {
   error?: string;
   className?: string;
   options?: any[];
+  inputRef?: any;
 }
 
 function Input({
@@ -32,6 +33,7 @@ function Input({
   className = "",
   autoComplete,
   options = [],
+  inputRef,
 }: InputProps) {
   const [inputType, setInputType] = useState(type);
   const renderInput = () => {
@@ -68,7 +70,7 @@ function Input({
               if (typeof opt === "object") {
                 return (
                   <option key={index} value={opt.value}>
-                    {opt.value}
+                    {opt.label}
                   </option>
                 );
               } else {
@@ -85,6 +87,7 @@ function Input({
 
     return (
       <input
+        ref={inputRef}
         id={id}
         type={inputType}
         name={name}

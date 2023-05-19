@@ -31,7 +31,7 @@ export const CLIENT_SIGNUP_FORM = [
   },
 ];
 
-export const CLIENT_SIGNUP_COMPLETE_FORM = [
+export const CLIENT_SIGNUP_COMPLETE_FORM = (stateList: any[]) => [
   {
     label: "Company name",
     type: "text",
@@ -57,7 +57,7 @@ export const CLIENT_SIGNUP_COMPLETE_FORM = [
     label: "State",
     type: "select",
     name: "state",
-    options: getState("Nigeria"),
+    options: stateList,
   },
   {
     label: "Facebook Profile Link",
@@ -99,7 +99,7 @@ export const CREATOR_SIGNUP_FORM = [
   },
 ];
 
-export const CREATOR_SIGNUP_COMPLETE_FORM = [
+export const CREATOR_SIGNUP_COMPLETE_FORM = (stateList: any[]) => [
   {
     label: "First Name",
     type: "text",
@@ -123,7 +123,7 @@ export const CREATOR_SIGNUP_COMPLETE_FORM = [
   {
     label: "Date of birth",
     type: "date",
-    name: "DOB",
+    name: "dob",
   },
   {
     label: "Country",
@@ -135,6 +135,12 @@ export const CREATOR_SIGNUP_COMPLETE_FORM = [
     label: "State",
     type: "select",
     name: "state",
-    options: getState("Nigeria"),
+    options: stateList,
+  },
+  {
+    label: "Gender",
+    type: "select",
+    name: "gender",
+    options: ["Male", "Female", "NotGiven"],
   },
 ];

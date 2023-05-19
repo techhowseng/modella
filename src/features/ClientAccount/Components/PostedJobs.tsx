@@ -1,4 +1,4 @@
-import JobCard from "components/JobCard";
+import JobCard from "features/Jobs/JobCard";
 import Loading from "components/loading";
 import { getSessionUser } from "features/Auth/slice";
 import React, { useEffect } from "react";

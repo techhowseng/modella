@@ -5,6 +5,7 @@ import { updateModel } from "features/BioData/services";
 import { getUser } from "features/ModelAccount/services";
 import { deleteCookie } from "helper/cookie";
 import { SESSION_NAME } from "lib/constants";
+import { getStatesList } from "lib/getCountries";
 import { RootState } from "store";
 import {
   registerUser,
@@ -17,7 +18,7 @@ import {
 import { UserState } from "./types";
 
 const initialState: UserState = {
-  data: { user: {} },
+  data: { user: {}, selectedCountryOption: "", stateList: [] },
   loading: false,
   error: false,
   message: "",
@@ -28,6 +29,14 @@ export const userSlice = createSlice({
     registerSessionUser: (state, action: PayloadAction<User>) => {
       const user = action.payload;
       state.data.user = user;
+    },
+    updateSelectedCountryOption: (state, action: PayloadAction<string>) => {
+      const countryId = action.payload;
+      state.data.selectedCountryOption = countryId;
+      state.data.stateList = getStatesList(countryId);
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -136,6 +145,7 @@ export const userSlice = createSlice({
         state.loading = false;
         state.data.user = {};
         deleteCookie(SESSION_NAME);
+        location.reload();
       })
       .addCase(deleteSession.rejected, (state, payload) => {
         state.loading = false;
@@ -148,9 +158,11 @@ export const userSlice = createSlice({
 });
 
 // actions
-export const { registerSessionUser } = userSlice.actions;
+export const { registerSessionUser, updateSelectedCountryOption, setLoading } =
+  userSlice.actions;
 
 // selectors
 export const getSessionUser = (state: RootState) => state.auth;
+export const getStateList = ({ auth }: RootState) => auth.data.stateList;
 
 export default userSlice.reducer;

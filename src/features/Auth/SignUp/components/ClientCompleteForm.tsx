@@ -3,16 +3,16 @@ import Button from "components/Button";
 import Input from "components/Input";
 import { clientCompleteFormDataSchema } from "features/Auth/schema";
 import { createClient } from "features/Auth/services";
-import { getSessionUser } from "features/Auth/slice";
+import { getSessionUser, getStateList } from "features/Auth/slice";
 import { ClientRegistrationCompleteFormType } from "features/Auth/types";
 import { useForm } from "features/hooks";
 import { APP_ROUTES } from "lib/routes";
 import Router from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { CLIENT_SIGNUP_COMPLETE_FORM } from "../../formFieldData";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 
-const ClientCompleteForm = () => {
+const ClientCompleteForm = ({ stateList }: { stateList?: any[] }) => {
   const dispatch = useAppDispatch();
   const [successMessage, setSuccessMessage] = React.useState<string>("");
   const { data, loading, error, message } = useAppSelector(getSessionUser);
@@ -54,6 +54,11 @@ const ClientCompleteForm = () => {
     }
   );
 
+  // useEffect(() => {
+  //   console.log("stateList >>>> ", values, stateList);
+  // }, [stateList]);
+  // console.log("stateList 2 >>>> ", values, stateList);
+
   return (
     <div className="flex-1 w-full lg:my-10 py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 flex flex-col justify-center">
       <div className="flex flex-col lg:mt-10">
@@ -73,7 +78,7 @@ const ClientCompleteForm = () => {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
               {/* @ts-ignore */}
-              {CLIENT_SIGNUP_COMPLETE_FORM.map(
+              {CLIENT_SIGNUP_COMPLETE_FORM(stateList).map(
                 (field: {
                   name: string;
                   label: string;

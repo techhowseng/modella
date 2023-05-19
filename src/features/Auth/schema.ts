@@ -27,6 +27,8 @@ export const signUpCompleteFormDataSchema = yup.object().shape({
   address: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
+  dob: yup.string().required("DOB is required"),
+  gender: yup.string(),
 });
 
 const urlTest =
@@ -46,4 +48,5 @@ export const clientCompleteFormDataSchema = yup.object().shape({
     twitter: yup.string().matches(urlTest, "Please Enter a valid url"),
     instagram: yup.string().matches(urlTest, "Please Enter a valid url"),
   }),
+  image: yup.object(),
 });

@@ -8,7 +8,10 @@ import React from "react";
 
 function JobDetailsPage(props: any) {
   return (
-    <HeaderFooter title={`${props.jobRole} | ${SITE_NAME} Jobs`}>
+    <HeaderFooter
+      title={`${props.jobRole} | ${SITE_NAME} Jobs`}
+      authenticate={false}
+    >
       <JobDetails />
     </HeaderFooter>
   );

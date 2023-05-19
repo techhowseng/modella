@@ -4,7 +4,7 @@ import statesList from "lib/provinces.json";
 
 export const getCountries = () => {
   return countriesList.map((country) => ({
-    value: country.name,
+    value: country.id,
     label: country.name,
   }));
 };
@@ -20,7 +20,14 @@ export const getCountriesList = () => {
 };
 
 export const getStatesList = (countryId: string) => {
-  return statesList.filter((state) => state.country_id === countryId);
+  return statesList
+    .filter((state) => state.country_id === countryId)
+    .map((item) => {
+      return {
+        value: item.country_id,
+        label: item.name,
+      };
+    });
 };
 
 export const getCountryPhoneCode = () => {
