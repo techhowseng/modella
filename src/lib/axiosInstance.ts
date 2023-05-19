@@ -11,6 +11,16 @@ const axiosInstance = axios.create({
   },
 });
 
+export const axiosMediaInstance = axios.create({
+  baseURL: "http://localhost:3000/api",
+  headers: {
+    "Content-Type": "multipart/form-data",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    Authorization: `Bearer ${getSessionToken()}`,
+  },
+});
+
 // var isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
 // axiosInstance.interceptors.request.use((config) => {

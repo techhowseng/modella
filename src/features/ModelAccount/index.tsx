@@ -6,7 +6,8 @@ import { useGetUser } from "../hooks";
 
 function ModelAccountSreen({ userId }: { userId: string }) {
   const { userData } = useGetSessionUser();
-  const { loading, user } = useGetUser(userId);
+  const { loading, user } = useGetUser(userId, true);
+
   const isLoggedInUser = userData.userId === user.userId;
 
   return (
@@ -15,7 +16,7 @@ function ModelAccountSreen({ userId }: { userId: string }) {
         <ModelProfileAside isLoggedInUser={isLoggedInUser} user={user} />
       </div>
       <div className="flex flex-col w-10/12 px-10">
-        <MasonryGallary />
+        <MasonryGallary isLoggedInUser={isLoggedInUser} user={user} />
       </div>
     </div>
   );

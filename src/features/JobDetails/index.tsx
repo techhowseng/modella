@@ -2,10 +2,12 @@ import { User } from "@prisma/client";
 import Button from "components/Button";
 import Loading from "components/loading";
 import { getSessionUser } from "features/Auth/slice";
+import { setEditJob } from "features/ClientAccount/slice";
 import { isApplied } from "features/functions";
 import { SITE_NAME } from "lib/constants";
+import { APP_ROUTES } from "lib/routes";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import Applicants from "./components/Applicants";
@@ -16,7 +18,6 @@ import { applyToJobAction, getJobAction } from "./services";
 import { getJob } from "./slice";
 
 function JobDetails() {
-  // const [loading, setLoading] = useState(false);
   const route = useRouter();
   const [successMessage, setSuccessMessage] = useState("");
   const parsed = route.query;
@@ -64,28 +65,61 @@ function JobDetails() {
           <img
             className="w-full rounded-t-lg max-h-48 bg-cover object-cover"
             src="https://images.pexels.com/photos/262039/pexels-photo-262039.jpeg?cs=srgb&dl=pexels-pixabay-262039.jpg&fm=jpg"
-            alt=""
+            alt="Manikeen walk-way model"
           />
           <div className="p-5">
             <div className="flex justify-between">
               <ProfileImage
-                name={"Bonnie Green"}
+                name={job?.client?.companyName}
                 image={
+                  job?.client?.user.Media[0] ||
                   "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
                 }
-                title={"Developer at Open AI"}
+                title={job?.client?.companyName}
               />
 
               {/* @ts-ignore */}
-              {user?.type === "Model" && job?.isOpen && (
+              {user?.id ? (
+                <>
+                  {/* @ts-ignore */}
+                  {user?.type === "Model" && job?.isOpen ? (
+                    <Button
+                      loading={isApplying}
+                      loadingText={"Applying..."}
+                      onClick={handleApply}
+                      className={"w-[50%] h-[50px]"}
+                      disabled={!!successMessage || isAppliedToJob}
+                    >
+                      {successMessage || isAppliedToJob ? "Applied" : "Apply"}
+                    </Button>
+                  ) : (
+                    <Button
+                      loading={isApplying}
+                      loadingText={"Applying..."}
+                      onClick={() => {
+                        dispatch(setEditJob(job));
+                        Router.push(
+                          `${APP_ROUTES.clientProfile}/jobs/${job.id}`
+                        );
+                      }}
+                      className={"w-[50%] h-[50px]"}
+                      // disabled={}
+                    >
+                      {"Edit"}
+                    </Button>
+                  )}
+                </>
+              ) : (
                 <Button
                   loading={isApplying}
                   loadingText={"Applying..."}
-                  onClick={handleApply}
+                  onClick={() =>
+                    Router.push(`${APP_ROUTES.login}?redirect=${location.href}`)
+                  }
                   className={"w-[50%] h-[50px]"}
-                  disabled={!!successMessage || isAppliedToJob}
+                  // disabled={!!successMessage || isAppliedToJob}
                 >
-                  {successMessage || isAppliedToJob ? "Applied" : "Apply"}
+                  {"Apply"}
                 </Button>
               )}
             </div>
@@ -93,8 +127,8 @@ function JobDetails() {
             <CriteriaBlock
               data={{
                 experience: job?.experience,
-                location: job?.location,
-                salary: job?.salary,
+                locations: job?.locations,
+                fee: job?.fee,
                 duration: job?.jobLength,
               }}
             />

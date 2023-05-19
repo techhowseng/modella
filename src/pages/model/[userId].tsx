@@ -8,7 +8,7 @@ function ModelPage() {
   const { query } = useRouter();
 
   return (
-    <HeaderFooter title={`Model profile page | ${SITE_NAME}`}>
+    <HeaderFooter title={`Model profile page | ${SITE_NAME}`} authenticate={false}>
       <ModelAccountSreen userId={query.userId as string} />
     </HeaderFooter>
   );

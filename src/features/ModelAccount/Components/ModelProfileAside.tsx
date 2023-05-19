@@ -4,9 +4,10 @@ import LinkButton from "components/LinkButton";
 import Rating from "components/Rating";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { FiFacebook, FiLinkedin, FiTwitter } from "react-icons/fi";
+import MediaUpload from "features/MediaUpload";
 
 const SOCIAL_ICONS = {
   facebook: <FiFacebook className="text-[#3b5998]" />,
@@ -22,17 +23,24 @@ function ModelProfileAside({
   isLoggedInUser: boolean;
   user: Model;
 }) {
+  const [preview, setPreview] = useState<string>("");
+
   return (
     <div>
-      <div className="image w-full h-40 bg-gray-300">
+      <div className="image w-full h-40 bg-gray-300 relative">
         <img
           className="w-full h-40 object-cover"
-          srcSet="https://randomuser.me/api/portraits/women/12.jpg"
-          src="https://randomuser.me/api/portraits/women/12.jpg"
-          alt={"Profile banner Image"}
+          // srcSet={user?.Media[0].content.url || preview || "https://randomuser.me/api/portraits/women/12.jpg"}
+          src={preview || "https://randomuser.me/api/portraits/women/12.jpg"}
+          alt={`${user?.firstname} ${user?.lastname}`}
+          loading="lazy"
           onLoad={() => console.log("loaded")}
           onError={() => console.log("error")}
         />
+        {/* @ts-ignore */}
+        {isLoggedInUser && user?.type === "Model" ? (
+          <MediaUpload type="profile" setPreview={setPreview} />
+        ) : null}
       </div>
       <div className="p-6">
         <h1 className="text-2xl w-full font-bold mx-auto antialiased capitalize flex">
@@ -56,19 +64,20 @@ function ModelProfileAside({
           <Rating rating={3} />
         </div>
         <div className="flex flex-row justify-between	mt-3">
-          {isLoggedInUser ? (
+          {/* @ts-ignore */}
+          {isLoggedInUser && user?.type === "Model" ? (
             <>
               <LinkButton href={APP_ROUTES.bioData}>Edit Profile</LinkButton>
             </>
           ) : (
             <>
-              <Button onClick={undefined}>Message</Button>
-              <div className="w-3" />
+              {/* <Button onClick={undefined}>Message</Button>
+              <div className="w-3" /> */}
               <Button
-                className="!bg-transparent text-black base-border-color border-2 hover:text-white"
-                onClick={undefined}
+                className="!bg-transparent !base-color base-border-color border-2 hover:!text-white"
+                onClick={() => {}}
               >
-                Hire
+                Send Contract
               </Button>
             </>
           )}

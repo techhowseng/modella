@@ -11,7 +11,7 @@ function Applicants({
 }) {
   return (
     <div className="flex flex-col mt-10">
-      <h1 className="text-xl">Applicants (22)</h1>
+      <h1 className="text-xl">Applicants ({applicants?.length || 0})</h1>
 
       <div className="text-sm font-light text-gray-500">
         <div className="w-full max-w-md mt-2 px-4 bg-white border border-gray-200 rounded-lg">

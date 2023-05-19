@@ -23,18 +23,18 @@ const ModelAttributes = ({ userData }: any) => {
     loading,
   } = useForm(
     {
-      height: userData?.height || "",
-      bust: userData?.bust || "",
-      waist: userData?.waist || "",
-      hip: userData?.hip || "",
-      shoeSize: userData?.shoeSize || "",
-      weight: userData?.weight || "",
+      height: userData?.height || 0,
+      bust: userData?.bust || 0,
+      waist: userData?.waist || 0,
+      hip: userData?.hip || 0,
+      shoeSize: userData?.shoeSize || 0,
+      weight: userData?.weight || 0,
       complexion: userData?.complexion || "",
       isAvailable: userData?.isAvailable || false,
     },
     modelAttributesFormDataSchema,
     (formData: ModelAttributesType) => {
-      dispatch(updateModel(formData)).then((res) => {
+      dispatch(updateModel({ id: userData.userId, formData })).then((res) => {
         if (res.payload.error) {
           setErrorMessage(res.payload.data.message);
         } else {

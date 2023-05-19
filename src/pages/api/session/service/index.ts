@@ -73,7 +73,7 @@ export default class SessionServices {
         include: {
           user: {
             include: {
-              model: true
+              model: true,
             }
           }
         }

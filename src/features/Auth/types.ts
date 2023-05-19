@@ -3,7 +3,7 @@ import { User } from "@prisma/client";
 export type ModelType = {};
 
 export interface UserState {
-  data: { user: User | {} };
+  data: { user: User | {}; selectedCountryOption: string; stateList: any[] };
   loading: boolean;
   error: boolean;
   message: string;
@@ -26,10 +26,12 @@ export type AuthRegistrationFormType = {
 };
 
 export type AuthRegistrationCompleteFormType = {
+  image?: FormData;
+  file?: any;
   firstname: string;
   lastname: string;
   phone: {};
-  DOB: string;
+  dob: string;
   address: string;
   state: string;
   country: string;
