@@ -63,12 +63,8 @@ export default class MediaRepository {
 
 	static async getMediaByUser(req: any, res: any) {
 		try {
-			let { userId } = req.body;
-			if ( !userId) {
-				const user = await getUser(req, res);
-				userId = user ? user.id : userId
-			}
-			const media = await MediaServices.getMediaByUser(res, userId);
+      const { userId, page } = req.query;
+			const media = await MediaServices.getMediaByUser(res, userId, page);
 			return media;
 		} catch(err) {
       return ResponseService.sendError(err, res);
@@ -77,7 +73,7 @@ export default class MediaRepository {
 
 	static async deleteMedia(req, res) {
 		try {
-			const { id, userId, public_id} = req.body;
+			const { id, userId, public_id } = req.body;
 			const user = await getUser(req, res);
 			if (user && user.type != "Admin" && userId == user.id) {
 				return new Response('This user is not authorised to update the image.', {
@@ -145,29 +141,29 @@ export default class MediaRepository {
 		}
   }
 
-	static async uploadProfileImages(req: any, res: any) {
-		try {
-			let { content, type, userId } = req.body
-			if (!userId) {
-				const user = await getUser(req, res);
-				if (user) {
-					userId = user.id
-				}
-			}
-			const uploadedImages = await MediaServices.uploadProfileImages(res, userId, content, type);
-			return uploadedImages;
-		} catch(err) {
-      return ResponseService.sendError(err, res);
-		}
-	}
+	// static async uploadProfileImages(req: any, res: any) {
+	// 	try {
+	// 		let { content, type, userId } = req.body
+	// 		if (!userId) {
+	// 			const user = await getUser(req, res);
+	// 			if (user) {
+	// 				userId = user.id
+	// 			}
+	// 		}
+	// 		const uploadedImages = await MediaServices.uploadProfileImages(res, userId, content, type);
+	// 		return uploadedImages;
+	// 	} catch(err) {
+  //     return ResponseService.sendError(err, res);
+	// 	}
+	// }
 
-	static async updateProfileImages(req: any, res: any) {
-		try {
-			const { content, type, id } = req.body
-			const uploadedImages = await MediaServices.updateProfileImages(res, id, content, type);
-			return uploadedImages;
-		} catch(err) {
-      return ResponseService.sendError(err, res);
-		}
-	}
+	// static async updateProfileImages(req: any, res: any) {
+	// 	try {
+	// 		const { content, type, id } = req.body
+	// 		const uploadedImages = await MediaServices.updateProfileImages(res, id, content, type);
+	// 		return uploadedImages;
+	// 	} catch(err) {
+  //     return ResponseService.sendError(err, res);
+	// 	}
+	// }
 }

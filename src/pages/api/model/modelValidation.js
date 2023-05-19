@@ -2,12 +2,20 @@ import { check, validationResult } from 'express-validator';
 import initMiddleware from "../../../lib/middlewares/init-middleware";
 import validateMiddleware from "../../../lib/middlewares/validate-middleware";
 
+const types = [
+  "Male",
+  "Female",
+  "NotGiven"
+];
+
 export const validateCreateModel = initMiddleware(
   validateMiddleware([
     check('firstname').isLength({min:2})
     .withMessage('is not long enough.'),
     check('lastname').isLength({min:2})
     .withMessage('is not long enough.'),
+    check('gender').isIn(types).optional({ nullable: true })
+    .withMessage('is not among the available optoins.'),
     check('height').isLength({min:3}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
     check('bust').isLength({min:2}).optional({ nullable: true })
@@ -22,7 +30,7 @@ export const validateCreateModel = initMiddleware(
     .withMessage('is not descriptive enough.'),
     check('complexion').isLength({min:4}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
-    check('DOB').isLength({min:5})
+    check('dob').isLength({min:5})
     .withMessage('is not written in the right format.'),
     check('social').isObject().optional({ nullable: true })
     .withMessage('should be sent as an object.'),
@@ -63,7 +71,7 @@ export const validateUpdateModel = initMiddleware(
     .withMessage('is not descriptive enough.'),
     check('complexion').isLength({min:4}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
-    check('DOB').isLength({min:5})
+    check('dob').isLength({min:5})
     .optional({ nullable: true })
     .withMessage('is not written in the right format.'),
     check('social').isObject().optional({ nullable: true })

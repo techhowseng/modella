@@ -36,7 +36,7 @@ export const validateCreateJob = initMiddleware(
       check('salary').isLength({min:3}).optional({ nullable: true })
       .withMessage('is not descriptive enough.'),,
       check('jobType').isIn(types).optional({ nullable: true })
-      .withMessage('is not among the available optoins.'),,
+      .withMessage('is not among the available optoins.'),
       check('jobLength').isLength({min:2}).optional({ nullable: true })
       .withMessage('is not descriptive enough.'),,
       check('isOpen').isBoolean().optional({ nullable: true })

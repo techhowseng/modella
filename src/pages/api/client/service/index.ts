@@ -45,8 +45,9 @@ export default class ClientServices {
 
   static async getAllClients(res: any) {
     try {
-      const client = await this.prisma.client.findMany();
-      return client;
+      const clients = await this.prisma.client.findMany();
+      console.log("clients------", clients)
+      return clients;
     } catch (err) {
       return ResponseService.sendError(err, res);
     }

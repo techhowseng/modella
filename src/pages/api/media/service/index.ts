@@ -33,72 +33,72 @@ export default class MediaServices {
     }
   }
 
-  static async uploadProfileImages(res, id: string, content: object, contentType: ContentType) {
-    try {
-      let imagesObject = {}
-      for (const key in content) {
-        //@ts-ignore
-        const result = await cloudinary.uploader.upload(content[key].uri, {
-          folder: contentType
-        })
-        imagesObject[key] = {};
-        imagesObject[key].url = result.secure_url;
-        imagesObject[key].public_id = result.public_id;
-        imagesObject[key].width = content[key].width;
-        imagesObject[key].height = content[key].height;
-        imagesObject[key].crop = content[key].crop;
-      }
-      const media = await this.prisma.media.create({
-        data: {
-          content: imagesObject,
-          contentType,
-          user: {
-            connect: { id },
-          },
-        },
-      });
-      return media;
-    } catch(err) {
-      return ResponseService.sendError(err, res);
-    }
-  }
+  // static async uploadProfileImages(res, id: string, content: object, contentType: ContentType) {
+  //   try {
+  //     let imagesObject = {}
+  //     for (const key in content) {
+  //       //@ts-ignore
+  //       const result = await cloudinary.uploader.upload(content[key].uri, {
+  //         folder: contentType
+  //       })
+  //       imagesObject[key] = {};
+  //       imagesObject[key].url = result.secure_url;
+  //       imagesObject[key].public_id = result.public_id;
+  //       imagesObject[key].width = content[key].width;
+  //       imagesObject[key].height = content[key].height;
+  //       imagesObject[key].crop = content[key].crop;
+  //     }
+  //     const media = await this.prisma.media.create({
+  //       data: {
+  //         content: imagesObject,
+  //         contentType,
+  //         user: {
+  //           connect: { id },
+  //         },
+  //       },
+  //     });
+  //     return media;
+  //   } catch(err) {
+  //     return ResponseService.sendError(err, res);
+  //   }
+  // }
 
-  static async updateProfileImages(res, id: number, content: object, contentType: ContentType) {
-    try {
-      let imagesObject = {}
-      for (const key in content) {
-        //@ts-ignore
-        await cloudinary.uploader.destroy(content[key][public_id]);
+  // static async updateProfileImages(res, id: number, content: object, contentType: ContentType) {
+  //   try {
+  //     let imagesObject = {}
+  //     for (const key in content) {
+  //       //@ts-ignore
+  //       await cloudinary.uploader.destroy(content[key][public_id]);
 
-        //@ts-ignore
-        const result = await cloudinary.uploader.upload(content[key][uri], {
-          folder: contentType
-        })
-        imagesObject[key] = {};
-        imagesObject[key].url = result.secure_url;
-        imagesObject[key].public_id = result.public_id;
-        imagesObject[key].width = content[key].width;
-        imagesObject[key].height = content[key].height;
-        imagesObject[key].crop = content[key].crop;
-      }
+  //       //@ts-ignore
+  //       const result = await cloudinary.uploader.upload(content[key][uri], {
+  //         folder: contentType
+  //       })
+  //       imagesObject[key] = {};
+  //       imagesObject[key].url = result.secure_url;
+  //       imagesObject[key].public_id = result.public_id;
+  //       imagesObject[key].width = content[key].width;
+  //       imagesObject[key].height = content[key].height;
+  //       imagesObject[key].crop = content[key].crop;
+  //     }
 
-      let selectedMedia = await prisma.media.findFirst({
-        where: { id }
-      });
+  //     let selectedMedia = await prisma.media.findFirst({
+  //       where: { id }
+  //     });
       
-      selectedMedia = {...selectedMedia, ...imagesObject}
-      const updatedMedia = await this.prisma.media.update({
-        where: { id },
-        data: {
-          content: selectedMedia,
-          contentType,
-        },
-      });
-      return updatedMedia;
-    } catch(err) {
-      return ResponseService.sendError(err, res);
-    }
-  }
+  //     selectedMedia = {...selectedMedia, ...imagesObject}
+  //     const updatedMedia = await this.prisma.media.update({
+  //       where: { id },
+  //       data: {
+  //         content: selectedMedia,
+  //         contentType,
+  //       },
+  //     });
+  //     return updatedMedia;
+  //   } catch(err) {
+  //     return ResponseService.sendError(err, res);
+  //   }
+  // }
 
   static async getMedia(res, id: number) {
     try {
@@ -111,10 +111,12 @@ export default class MediaServices {
     }
   }
 
-  static async getMediaByUser(res, userId: string) {
+  static async getMediaByUser(res, userId: string, page: number = 1) {
     try {
       const media = await this.prisma.media.findMany({
         where: { userId },
+        take: 10,
+        skip: 10 * (page - 1),
       });
       return media;
     } catch(err) {
@@ -148,12 +150,12 @@ export default class MediaServices {
     }
   }
 
-  static async getMediaByType(res, userId: string, type: ContentType) {
+  static async getMediaByType(res, userId: string, contentType: ContentType) {
     try {
       const media = await this.prisma.media.findMany({
         where: {
           userId,
-          contentType: type
+          contentType
         }
       });
       return media;
