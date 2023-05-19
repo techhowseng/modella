@@ -10,7 +10,7 @@ import AlertMessage from "components/AlertMessage";
 import { useAppDispatch } from "store/hooks";
 import { updateModel } from "../services";
 
-const PersonalInformation = ({ bio, phone, dob }: any) => {
+const PersonalInformation = ({ userData, bio, phone, dob }: any) => {
   const dispatch = useAppDispatch();
 
   const {
@@ -32,7 +32,7 @@ const PersonalInformation = ({ bio, phone, dob }: any) => {
     },
     bioCompleteFormDataSchema,
     (formData: BioCompleteFormType) => {
-      dispatch(updateModel(formData)).then((res) => {
+      dispatch(updateModel({ id: userData.userId, formData })).then((res) => {
         if (res.payload.error) {
           setErrorMessage(res.payload.data.message);
         } else {

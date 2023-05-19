@@ -23,7 +23,6 @@ function ModelProfileAside({
   isLoggedInUser: boolean;
   user: Model;
 }) {
-  console.log("🚀 ~ file: ModelProfileAside.tsx:26 ~ user:", user)
   const [preview, setPreview] = useState<string>("");
 
   return (

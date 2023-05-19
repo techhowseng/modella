@@ -7,6 +7,7 @@ import SocialForm from "./components/SocialForm";
 
 function BioDataForm() {
   const { loading, user } = useGetUser("user");
+  console.log("🚀 ~ file: index.tsx:10 ~ BioDataForm ~ user:", user)
 
   if (!user.id && loading) {
     return <>Loading...</>;
@@ -15,9 +16,10 @@ function BioDataForm() {
   return (
     <div className="flex flex-col justify-center min-h-screen p-2 w-full lg:w-9/12 my-0 mx-auto">
       <PersonalInformation
+        userData={user}
         bio={user.bio}
-        phone={user?.phone?.phone_1 || user?.phone?.number_1}
-        dob={user.DOB}
+        phone={user?.phone || user?.phone?.phone_1 || user?.phone?.number_1}
+        dob={user.dob}
       />
 
       {/* Divider */}
@@ -38,7 +40,7 @@ function BioDataForm() {
       </div>
       {/* End Divider */}
 
-      <SocialForm socials={user?.social} />
+      <SocialForm userData={user} socials={user?.social} />
     </div>
   );
 }

@@ -8,12 +8,12 @@ export const BIO_DATA_FIELDS = [
   {
     label: "phone",
     type: "text",
-    name: "phone.phone_1",
+    name: "phone",
   },
   {
     label: "Date of Birth",
     type: "date",
-    name: "DOB",
+    name: "dob",
   },
 ];
 
@@ -47,7 +47,7 @@ export const MODEL_ATTRIBUTES_DATA_FIELDS = [
     name: "height",
   },
   {
-    label: "Your Burst Size",
+    label: "Your Bust Size",
     type: "text",
     name: "bust",
   },

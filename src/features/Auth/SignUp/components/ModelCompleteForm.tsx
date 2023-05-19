@@ -3,54 +3,67 @@ import Button from "components/Button";
 import Input from "components/Input";
 import { useFieldsErrorCheck, useForm } from "features/hooks";
 import { signUpCompleteFormDataSchema } from "features/Auth/schema";
-import { createModel } from "features/Auth/services";
-import { getSessionUser } from "features/Auth/slice";
+import { createModel, uploadModelThumbnail } from "features/Auth/services";
 import { AuthRegistrationCompleteFormType } from "features/Auth/types";
 import { APP_ROUTES } from "lib/routes";
-import Router from "next/router";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "store/hooks";
+import { useAppDispatch } from "store/hooks";
 import { CREATOR_SIGNUP_COMPLETE_FORM } from "../../formFieldData";
 import { SIGN_UP_STEPS } from "../constants";
 import ProfessionalAssetsComponent from "./ProfessionalAssetsComponent";
 import SetUpProfile from "./SetUpProfile";
+import { setLoading } from "features/Auth/slice";
 
-function ModelCompleteForm() {
+function ModelCompleteForm({
+  userData,
+  loading,
+  stateList,
+}: {
+  userData: any;
+  loading: boolean;
+  stateList?: any[];
+}) {
   const dispatch = useAppDispatch();
   const [successMessage, setSuccessMessage] = React.useState<string>("");
-  const { data, loading, error, message } = useAppSelector(getSessionUser);
   const {
     formData: values,
     handleChange,
     handleSubmit,
     handleNext,
+    handlePrevious,
     stepState,
     errorMessage,
     setErrorMessage,
+    preview,
   } = useForm(
     {
       firstname: "",
       lastname: "",
       phone: "",
       address: "",
-      DOB: "",
+      dob: "",
       state: "",
       country: "",
+      gender: "",
     },
     signUpCompleteFormDataSchema,
-    (formData: AuthRegistrationCompleteFormType) => {
-      formData.phone = {
-        phone_1: formData.phone,
-      };
+    async (formData: AuthRegistrationCompleteFormType, image: FormData) => {
+      formData.dob = new Date(formData.dob).toISOString();
+      delete formData.file;
 
-      dispatch(createModel(formData)).then((res) => {
+      dispatch(createModel({ id: userData.id, formData })).then(async (res) => {
+        dispatch(setLoading(true));
         if (res.payload.error) {
+          await handlePrevious();
           setErrorMessage(res.payload.data.message);
         } else {
-          if (res.payload.DOB) {
-            Router.push(APP_ROUTES.bioData);
+          const imageUploadRes = await uploadModelThumbnail(image);
+
+          setSuccessMessage("Congrates! Your account has been created!");
+          if (res.payload.dob) {
+            dispatch(setLoading(false));
+            location.href = APP_ROUTES.bioData;
           }
-          setSuccessMessage(res.payload.message);
         }
       });
     }
@@ -95,20 +108,29 @@ function ModelCompleteForm() {
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 items-center">
                 {/* @ts-ignore */}
-                {CREATOR_SIGNUP_COMPLETE_FORM.map((field) => (
-                  <Input
-                    key={field.name}
-                    label={field.label}
-                    name={field.name}
-                    type={field.type}
-                    options={field.options}
-                    onChange={handleChange}
-                  />
-                ))}
+                {CREATOR_SIGNUP_COMPLETE_FORM(stateList).map(
+                  (field: {
+                    name: string;
+                    label: string;
+                    type: string;
+                    options: any[];
+                  }) => (
+                    <Input
+                      key={field.name}
+                      label={field.label}
+                      name={field.name}
+                      type={field.type}
+                      options={field.options}
+                      onChange={handleChange}
+                    />
+                  )
+                )}
               </div>
             </>
           )}
-          {stepState === SIGN_UP_STEPS.PROFILE_PICTURE && <SetUpProfile />}
+          {stepState === SIGN_UP_STEPS.PROFILE_PICTURE && (
+            <SetUpProfile preview={preview} handleChange={handleChange} />
+          )}
           {stepState === SIGN_UP_STEPS.SET_UP_PROFILE && (
             <ProfessionalAssetsComponent />
           )}

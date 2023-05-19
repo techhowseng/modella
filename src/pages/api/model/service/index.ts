@@ -33,11 +33,11 @@ export default class UserServices {
           user: {
             select: {
               email: true,
-              type: true
-            }
-          }
-        }
-      })
+              type: true,
+            },
+          },
+        },
+      });
       return (({ user, ...model }) => ({ ...user, ...model }))(model);
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -53,11 +53,11 @@ export default class UserServices {
             select: {
               email: true,
               type: true,
-              Media: true
+              Media: true,
             },
-          }
-        }
-      })
+          },
+        },
+      });
       return (({ user, ...model }) => ({ ...user, ...model }))(model);
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -73,7 +73,17 @@ export default class UserServices {
     }
   }
 
-  static async updateModel(res: NextApiResponse<any>, userId: string, data: any) {
+  static async updateModel(
+    res: NextApiResponse<any>,
+    userId: string,
+    data: any
+  ) {
+    ["shoeSize", "bust", "height", "waist", "hip"].filter((item) => {
+      if (Number(data[item])) {
+        data[item] = parseInt(data[item], 10);
+      }
+    });
+
     try {
       const updatedModel = await this.prisma.model.update({
         where: { userId },
@@ -90,16 +100,17 @@ export default class UserServices {
 
   static async uploadThumbnail(
     res: NextApiResponse<any>,
-    userId: string, 
-    thumbnailURL: string = null, 
-    thumbnailPublicId: string = null) {
+    userId: string,
+    thumbnailURL: string = null,
+    thumbnailPublicId: string = null
+  ) {
     try {
       const updatedModel = await this.prisma.model.update({
         where: { userId },
         data: {
           thumbnailURL,
-          thumbnailPublicId
-        }
+          thumbnailPublicId,
+        },
       });
       return updatedModel;
     } catch (err) {

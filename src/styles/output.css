@@ -1800,8 +1800,16 @@ input:checked + .toggle-bg{
   height: 3.5rem;
 }
 
+.h-\[108px\]{
+  height: 108px;
+}
+
 .max-h-48{
   max-height: 12rem;
+}
+
+.max-h-\[100\%\]{
+  max-height: 100%;
 }
 
 .min-h-screen{
@@ -1892,6 +1900,18 @@ input:checked + .toggle-bg{
   width: 50%;
 }
 
+.w-\[\]{
+  width: ;
+}
+
+.w-\[100\%\]{
+  width: 100%;
+}
+
+.w-\[108px\]{
+  width: 108px;
+}
+
 .min-w-\[33\%\]{
   min-width: 33%;
 }
@@ -1922,6 +1942,10 @@ input:checked + .toggle-bg{
 
 .max-w-md{
   max-width: 28rem;
+}
+
+.max-w-\[100\%\]{
+  max-width: 100%;
 }
 
 .flex-1{

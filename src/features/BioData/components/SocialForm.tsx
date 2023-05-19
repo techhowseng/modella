@@ -10,7 +10,7 @@ import { socialsFormDataSchema } from "../schema";
 import { updateModel } from "../services";
 import { SocialFormType } from "../types";
 
-const SocialForm = ({ socials }: { socials: any }) => {
+const SocialForm = ({ userData, socials }: { userData: any; socials: any }) => {
   const dispatch = useAppDispatch();
   const {
     formData: values,
@@ -32,7 +32,7 @@ const SocialForm = ({ socials }: { socials: any }) => {
     },
     socialsFormDataSchema,
     (formData: SocialFormType) => {
-      dispatch(updateModel(formData)).then((res) => {
+      dispatch(updateModel({ id: userData.userId, formData })).then((res) => {
         if (res.payload.error) {
           setErrorMessage(res.payload.data.message);
         } else {

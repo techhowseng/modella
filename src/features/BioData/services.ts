@@ -9,9 +9,15 @@ import {
 
 export const updateModel = createAsyncThunk(
   "update/user/model",
-  async (data: BioCompleteFormType | SocialFormType | ModelAttributesType) => {
+  async ({
+    id,
+    formData,
+  }: {
+    id: string;
+    formData: BioCompleteFormType | SocialFormType | ModelAttributesType;
+  }) => {
     try {
-      const response = await axiosInstance.put("/model", data);
+      const response = await axiosInstance.put(`/model/${id}`, formData);
       return response.data;
     } catch (error) {
       return errorHandler(error);
