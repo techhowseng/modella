@@ -1,6 +1,6 @@
 export type BioCompleteFormType = {
   bio: string;
-  DOB: string;
+  dob: string;
   phone: {
     phone_1: string;
   };

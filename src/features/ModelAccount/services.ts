@@ -17,11 +17,16 @@ export const getUser = createAsyncThunk(
   }
 );
 
-// export const getUser = async (id: string) => {
-//   try {
-//     const response = await axiosInstance.get(`/model/${id}`);
-//     return response.data;
-//   } catch (error) {
-//     return errorHandler(error);
-//   }
-// };
+export const getUserMedia = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/media/${id}`);
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getUserMediaAction = createAsyncThunk(
+  "get/user/media",
+  getUserMedia
+);

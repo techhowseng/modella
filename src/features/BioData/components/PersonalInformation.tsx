@@ -25,13 +25,12 @@ const PersonalInformation = ({ userData, bio, phone, dob }: any) => {
   } = useForm(
     {
       bio: bio || "",
-      phone: {
-        phone_1: phone || "",
-      },
-      DOB: dob || "",
+      phone: phone || "",
+      dob: dob || "",
     },
     bioCompleteFormDataSchema,
     (formData: BioCompleteFormType) => {
+      formData.dob = new Date(formData.dob).toISOString();
       dispatch(updateModel({ id: userData.userId, formData })).then((res) => {
         if (res.payload.error) {
           setErrorMessage(res.payload.data.message);
@@ -72,11 +71,7 @@ const PersonalInformation = ({ userData, bio, phone, dob }: any) => {
                         type={field.type}
                         onChange={handleChange}
                         label={field.label}
-                        value={
-                          field.name.includes(".")
-                            ? values[field.name.split(".")[0]]?.phone_1
-                            : values[field.name]
-                        }
+                        value={values[field.name]}
                         name={field.name}
                         id={field.name}
                         placeholder={field?.placeholder ?? ""}

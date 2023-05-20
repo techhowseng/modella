@@ -2,7 +2,7 @@ import { User } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie } from "cookies-next";
 import { updateModel } from "features/BioData/services";
-import { getUser } from "features/ModelAccount/services";
+import { getUser, getUserMediaAction } from "features/ModelAccount/services";
 import { deleteCookie } from "helper/cookie";
 import { SESSION_NAME } from "lib/constants";
 import { getStatesList } from "lib/getCountries";
@@ -18,7 +18,7 @@ import {
 import { UserState } from "./types";
 
 const initialState: UserState = {
-  data: { user: {}, selectedCountryOption: "", stateList: [] },
+  data: { user: {}, MediaList: [], selectedCountryOption: "", stateList: [] },
   loading: false,
   error: false,
   message: "",
@@ -148,6 +148,18 @@ export const userSlice = createSlice({
         location.reload();
       })
       .addCase(deleteSession.rejected, (state, payload) => {
+        state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
+      })
+      .addCase(getUserMediaAction.pending, (state, payload) => {
+        state.loading = true;
+      })
+      .addCase(getUserMediaAction.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.data.MediaList = payload;
+      })
+      .addCase(getUserMediaAction.rejected, (state, payload) => {
         state.loading = false;
         state.error = true;
         state.message = payload.error.message;

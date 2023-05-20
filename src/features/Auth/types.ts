@@ -1,9 +1,15 @@
 import { User } from "@prisma/client";
 
 export type ModelType = {};
+export type MediaListType = any;
 
 export interface UserState {
-  data: { user: User | {}; selectedCountryOption: string; stateList: any[] };
+  data: {
+    user: User | {};
+    MediaList: MediaListType[];
+    selectedCountryOption: string;
+    stateList: any[];
+  };
   loading: boolean;
   error: boolean;
   message: string;

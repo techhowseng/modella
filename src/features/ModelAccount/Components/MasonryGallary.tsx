@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import bannerBG from "assets/bannerBg.svg";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlinePicture } from "react-icons/ai";
 import Button from "components/Button";
 import { useModal } from "components/Modal/hook";
 import { MdAddCircleOutline } from "react-icons/md";
 import Modal from "components/Modal";
+import { useDispatch } from "react-redux";
+import { getUserMediaAction } from "../services";
+import Loading from "components/loading";
 
-function MasonryGallary({ isLoggedInUser, user }) {
+function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
   const { isOpen, setIsOpen } = useModal();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {};
+
+  useEffect(() => {
+    if (user.userId) {
+      // @ts-ignore
+      dispatch(getUserMediaAction(user.userId));
+    }
+  }, [user]);
 
   return (
     <div>
@@ -61,31 +72,49 @@ function MasonryGallary({ isLoggedInUser, user }) {
         />
       </div>
 
-      <div className="gap-1 columns-2 md:columns-3 lg:columns-3">
-        {/* @ts-ignore */}
-        {user?.Media?.map((image: any) => (
-          <motion.div
-            key={image.id}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative mb-1 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20"
-          >
-            <img
-              loading="lazy"
-              className="w-full"
-              src={image.content.url}
-              alt={image.content.public_id}
-            />
-            {isLoggedInUser && user?.type === "Model" ? (
-              <button className="p-4 absolute top-0 right-0 group hover:bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded">
-                <AiOutlineDelete className="h-5 w-5 text-white" />
-                {/* <p>Remove</p> */}
-              </button>
-            ) : null}
-          </motion.div>
-        ))}
-      </div>
+      <>
+        {loading && (
+          <div className="flex w-full justify-center item-center">
+            <div className="flex text-center p-20 flex-col">
+              <Loading color="base-color" w={14} h={14} />
+            </div>
+          </div>
+        )}
+        {!loading && mediaList.length > 0 ? (
+          <div className="gap-1 columns-2 md:columns-3 lg:columns-3">
+            {/* @ts-ignore */}
+            {mediaList?.map((image: any) => (
+              <motion.div
+                key={image.id}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="relative mb-1 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20"
+              >
+                <img
+                  loading="lazy"
+                  className="w-full"
+                  src={image.content.url}
+                  alt={image.content.public_id}
+                />
+                {isLoggedInUser && user?.type === "Model" ? (
+                  <button className="p-4 absolute top-0 right-0 group hover:bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded">
+                    <AiOutlineDelete className="h-5 w-5 text-white" />
+                    {/* <p>Remove</p> */}
+                  </button>
+                ) : null}
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex w-full justify-center">
+            <div className="flex text-center p-20 flex-col items-center">
+              <AiOutlinePicture size={54} />
+              <p className="flex">No Gallery Photo</p>
+            </div>
+          </div>
+        )}
+      </>
 
       {/* <!-- Upload modal --> */}
       <Modal

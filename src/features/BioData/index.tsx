@@ -1,3 +1,4 @@
+import Loading from "components/loading";
 import { getSessionUser } from "features/Auth/slice";
 import { useGetUser } from "features/hooks";
 import React from "react";
@@ -7,10 +8,15 @@ import SocialForm from "./components/SocialForm";
 
 function BioDataForm() {
   const { loading, user } = useGetUser("user");
-  console.log("🚀 ~ file: index.tsx:10 ~ BioDataForm ~ user:", user)
 
   if (!user.id && loading) {
-    return <>Loading...</>;
+    return (
+      <div className="flex w-full justify-center item-center">
+        <div className="flex text-center p-20 flex-col">
+          <Loading color="base-color" w={14} h={14} />
+        </div>
+      </div>
+    );
   }
 
   return (

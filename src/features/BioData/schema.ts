@@ -2,10 +2,8 @@ import * as yup from "yup";
 
 export const bioCompleteFormDataSchema = yup.object().shape({
   bio: yup.string().required("Bio is required"),
-  DOB: yup.string().required("Last Name is required"),
-  phone: yup.object().shape({
-    phone_1: yup.string(),
-  }),
+  dob: yup.string().required("Last Name is required"),
+  phone: yup.string(),
 });
 
 const urlTest =

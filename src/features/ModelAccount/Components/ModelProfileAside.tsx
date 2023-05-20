@@ -30,8 +30,16 @@ function ModelProfileAside({
       <div className="image w-full h-40 bg-gray-300 relative">
         <img
           className="w-full h-40 object-cover"
-          // srcSet={user?.Media[0].content.url || preview || "https://randomuser.me/api/portraits/women/12.jpg"}
-          src={preview || "https://randomuser.me/api/portraits/women/12.jpg"}
+          srcSet={
+            user?.thumbnailURL ||
+            preview ||
+            "https://randomuser.me/api/portraits/women/12.jpg"
+          }
+          src={
+            user?.thumbnailURL ||
+            preview ||
+            "https://randomuser.me/api/portraits/women/12.jpg"
+          }
           alt={`${user?.firstname} ${user?.lastname}`}
           loading="lazy"
           onLoad={() => console.log("loaded")}
