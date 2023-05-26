@@ -8,6 +8,9 @@ import React, { useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { FiFacebook, FiLinkedin, FiTwitter } from "react-icons/fi";
 import MediaUpload from "features/MediaUpload";
+import { updateThumbnailAction } from "../services";
+import { useDispatch } from "react-redux";
+import Loading from "components/loading";
 
 const SOCIAL_ICONS = {
   facebook: <FiFacebook className="text-[#3b5998]" />,
@@ -18,36 +21,57 @@ const SOCIAL_ICONS = {
 
 function ModelProfileAside({
   user,
+  profileImageLoading,
   isLoggedInUser,
 }: {
   isLoggedInUser: boolean;
+  profileImageLoading: boolean;
   user: Model;
 }) {
+  const dispatch = useDispatch();
   const [preview, setPreview] = useState<string>("");
+
+  const handleUpload = async (image: FormData) => {
+    // Assign the thumbnailPublicId and upload the image data.
+    image.set("thumbnailPublicId", user.thumbnailPublicId);
+    // @ts-ignore
+    dispatch(updateThumbnailAction(image));
+  };
 
   return (
     <div>
       <div className="image w-full h-40 bg-gray-300 relative">
-        <img
-          className="w-full h-40 object-cover"
-          srcSet={
-            user?.thumbnailURL ||
-            preview ||
-            "https://randomuser.me/api/portraits/women/12.jpg"
-          }
-          src={
-            user?.thumbnailURL ||
-            preview ||
-            "https://randomuser.me/api/portraits/women/12.jpg"
-          }
-          alt={`${user?.firstname} ${user?.lastname}`}
-          loading="lazy"
-          onLoad={() => console.log("loaded")}
-          onError={() => console.log("error")}
-        />
+        {profileImageLoading ? (
+          <div className="flex h-full w-full justify-center items-center">
+            <Loading color="base-color" w={10} h={10} />
+          </div>
+        ) : (
+          <img
+            className="w-full h-40 object-cover"
+            srcSet={
+              preview ||
+              user?.thumbnailURL ||
+              "https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png"
+            }
+            src={
+              preview ||
+              user?.thumbnailURL ||
+              "https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png"
+            }
+            alt={`${user?.firstname} ${user?.lastname}`}
+            loading="lazy"
+            onLoad={() => console.log("loaded")}
+            onError={() => console.log("error")}
+          />
+        )}
         {/* @ts-ignore */}
         {isLoggedInUser && user?.type === "Model" ? (
-          <MediaUpload type="profile" setPreview={setPreview} />
+          <MediaUpload
+            payloadKey={"image"}
+            handleUpload={handleUpload}
+            type="profile"
+            setPreview={setPreview}
+          />
         ) : null}
       </div>
       <div className="p-6">

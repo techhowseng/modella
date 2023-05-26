@@ -2,7 +2,7 @@ import { User } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie } from "cookies-next";
 import { updateModel } from "features/BioData/services";
-import { getUser, getUserMediaAction } from "features/ModelAccount/services";
+import { getUser, getUserMediaAction, updateThumbnailAction } from "features/ModelAccount/services";
 import { deleteCookie } from "helper/cookie";
 import { SESSION_NAME } from "lib/constants";
 import { getStatesList } from "lib/getCountries";
@@ -20,6 +20,7 @@ import { UserState } from "./types";
 const initialState: UserState = {
   data: { user: {}, MediaList: [], selectedCountryOption: "", stateList: [] },
   loading: false,
+  profileImageLoading: false,
   error: false,
   message: "",
 };
@@ -161,6 +162,18 @@ export const userSlice = createSlice({
       })
       .addCase(getUserMediaAction.rejected, (state, payload) => {
         state.loading = false;
+        state.error = true;
+        state.message = payload.error.message;
+      })
+      .addCase(updateThumbnailAction.pending, (state, payload) => {
+        state.profileImageLoading = true;
+      })
+      .addCase(updateThumbnailAction.fulfilled, (state, { payload }) => {
+        state.profileImageLoading = false;
+        state.data.user = payload;
+      })
+      .addCase(updateThumbnailAction.rejected, (state, payload) => {
+        state.profileImageLoading = false;
         state.error = true;
         state.message = payload.error.message;
       });
