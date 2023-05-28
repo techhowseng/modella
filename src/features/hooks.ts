@@ -130,10 +130,13 @@ export const useForm = (initialValues: any, schema: any, cb: any) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialValues);
   const [image, setImageFormData] = useState<FormData>();
+  const [multipleImageFormData, setMultipleImageFormData] =
+    useState<FileList>();
   const [errorMessage, setErrorMessage] = React.useState("");
   const [successMessage, setSuccessMessage] = React.useState<string>("");
   const [stepState, setStepState] = React.useState(SIGN_UP_STEPS.MORE_DETAILS);
   const [preview, setPreview] = useState<string>();
+  const [dragActive, setDragActive] = useState(false);
 
   useEffect(() => {
     if (isEmptyObject(formData)) {
@@ -219,6 +222,42 @@ export const useForm = (initialValues: any, schema: any, cb: any) => {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setMultipleImageFormData(e.target.files);
+    }
+  };
+
+  const handleDrop = (e: any, name?: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      // at least one file has been dropped so do something
+      setMultipleImageFormData(e.dataTransfer.files);
+    }
+  };
+
+  const handleDrag = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleRemoveFile = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    index?: number
+  ) => {
+    e.preventDefault();
+    const fileListArr = Array.from(multipleImageFormData);
+    fileListArr.splice(index, 1);
+    setMultipleImageFormData(fileListArr as unknown as FileList);
+  };
+
   return {
     formData,
     handleChange,
@@ -233,5 +272,12 @@ export const useForm = (initialValues: any, schema: any, cb: any) => {
     loading,
     setFormData,
     preview,
+    dragActive,
+    handleFileChange,
+    handleDrop,
+    handleDrag,
+    handleRemoveFile,
+    setMultipleImageFormData,
+    multipleImageFormData,
   };
 };

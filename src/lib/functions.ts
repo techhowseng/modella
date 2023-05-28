@@ -9,3 +9,11 @@ export const isTokenExpired = (token: string) => {
   const decoded: any = jwt_decode(token);
   return decoded.exp * 1000 < new Date().getTime();
 };
+
+export const getFileExtension = (filename: string) => {
+  if (filename) {
+    return filename.split(".").pop();
+  }
+  return "";
+};
+

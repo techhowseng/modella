@@ -2,7 +2,11 @@ import { User } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie } from "cookies-next";
 import { updateModel } from "features/BioData/services";
-import { getUser, getUserMediaAction, updateThumbnailAction } from "features/ModelAccount/services";
+import {
+  getUser,
+  getUserMediaAction,
+  updateThumbnailAction,
+} from "features/ModelAccount/services";
 import { deleteCookie } from "helper/cookie";
 import { SESSION_NAME } from "lib/constants";
 import { getStatesList } from "lib/getCountries";
@@ -38,6 +42,9 @@ export const userSlice = createSlice({
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
+    },
+    updateMediaList: (state, action: PayloadAction<{}>) => {
+      state.data.MediaList = [...state.data.MediaList, action.payload];
     },
   },
   extraReducers: (builder) => {
@@ -183,8 +190,12 @@ export const userSlice = createSlice({
 });
 
 // actions
-export const { registerSessionUser, updateSelectedCountryOption, setLoading } =
-  userSlice.actions;
+export const {
+  registerSessionUser,
+  updateSelectedCountryOption,
+  setLoading,
+  updateMediaList,
+} = userSlice.actions;
 
 // selectors
 export const getSessionUser = (state: RootState) => state.auth;

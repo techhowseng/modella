@@ -9,12 +9,11 @@ import Modal from "components/Modal";
 import { useDispatch } from "react-redux";
 import { getUserMediaAction } from "../services";
 import Loading from "components/loading";
+import ImportGallery from "./ImportGallery";
 
 function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
   const { isOpen, setIsOpen } = useModal();
   const dispatch = useDispatch();
-
-  const handleSubmit = () => {};
 
   useEffect(() => {
     if (user.userId) {
@@ -104,7 +103,7 @@ function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
                   </button>
                 ) : null}
               </motion.div>
-            ))}
+            )).reverse()}
           </div>
         ) : (
           <div className="flex w-full justify-center">
@@ -117,14 +116,8 @@ function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
       </>
 
       {/* <!-- Upload modal --> */}
-      <Modal
-        isOpen={isOpen}
-        onOpen={setIsOpen}
-        onClick={handleSubmit}
-        buttonText={"Upload"}
-        title={"Upload Photos"}
-      >
-        {/* <PostJobCreateForm onClose={() => setIsOpen(false)} /> */}
+      <Modal isOpen={isOpen} onOpen={setIsOpen} title={"Upload Photos"}>
+        <ImportGallery closeModal={() => setIsOpen(false)} />
       </Modal>
     </div>
   );

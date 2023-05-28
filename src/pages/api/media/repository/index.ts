@@ -1,6 +1,6 @@
-import DatauriParser from 'datauri/parser';
+import DatauriParser from "datauri/parser";
 import { ContentType, PrismaClient } from "@prisma/client";
-import path from 'path';
+import path from "path";
 import prisma from "lib/prisma";
 import { cloudinary } from "../../../../helper/cloudinary";
 import { getUser, getModelOrClient } from "helper/util";
@@ -11,12 +11,12 @@ import { ResponseService } from "../../../../services/ResponseService";
 const parser = new DatauriParser();
 
 export default class MediaRepository {
-	prisma: PrismaClient;
-	static prisma: PrismaClient;
+  prisma: PrismaClient;
+  static prisma: PrismaClient;
 
-	constructor() {
-		this.prisma = prisma;
-	}
+  constructor() {
+    this.prisma = prisma;
+  }
 
 	static async uploadMedia(req, res) {
 		try {
@@ -37,12 +37,17 @@ export default class MediaRepository {
 			}
 
       if (user) {
-				for (const image of images) {
-					const base64Image = await parser.format(path.extname(image.originalname).toString(), image.buffer);
-
-					const result = await cloudinary.uploader.upload(base64Image.content, {
-						folder: user.id
-					})
+        for (const image of images) {
+          const base64Image = await parser.format(
+            path.extname(image.originalname).toString(),
+            image.buffer
+          );
+          try {
+            const result = await cloudinary.uploader
+              .upload(base64Image.content, {
+                folder: user.id,
+              })
+              .catch((err: any) => console.log("err >>>> ", err));
 
 					content["url"] = result.secure_url;
 					content["public_id"] = result.public_id;
@@ -61,28 +66,28 @@ export default class MediaRepository {
 			}
 		} catch(err) {
       return ResponseService.sendError(err, res);
-		}
-	}
+    }
+  }
 
-	static async getMedia(req, res) {
-		try {
-			const { id } = req.body;
-			const media = await MediaServices.getMedia(res, ~~id);
-			return media;
-		} catch(err) {
+  static async getMedia(req, res) {
+    try {
+      const { id } = req.body;
+      const media = await MediaServices.getMedia(res, ~~id);
+      return media;
+    } catch (err) {
       return ResponseService.sendError(err, res);
-		}
-	}
+    }
+  }
 
-	static async getMediaByUser(req: any, res: any) {
-		try {
+  static async getMediaByUser(req: any, res: any) {
+    try {
       const { userId, page } = req.query;
-			const media = await MediaServices.getMediaByUser(res, userId, page);
-			return media;
-		} catch(err) {
+      const media = await MediaServices.getMediaByUser(res, userId, page);
+      return media;
+    } catch (err) {
       return ResponseService.sendError(err, res);
-		}
-	}
+    }
+  }
 
 	static async deleteMedia(req, res) {
 		try {
@@ -96,8 +101,8 @@ export default class MediaRepository {
 			}
 		} catch(err) {
       return ResponseService.sendError(err, res);
-		}
-	}
+    }
+  }
 
 	static async updateMedia(req, res) {
 		try {
@@ -133,18 +138,22 @@ export default class MediaRepository {
 	}
 
   static async getMediaByType(req, res) {
-		try {
-			let { userId, type } = req.body
-			if (!userId) {
-				const user = await getUser(req, res);
-				if (user) {
-					userId = user.id
-				}
-			}
-			const updatedMedia = await MediaServices.getMediaByType(res, userId, type);
-			return updatedMedia;
-		} catch(err) {
+    try {
+      let { userId, type } = req.body;
+      if (!userId) {
+        const user = await getUser(req, res);
+        if (user) {
+          userId = user.id;
+        }
+      }
+      const updatedMedia = await MediaServices.getMediaByType(
+        res,
+        userId,
+        type
+      );
+      return updatedMedia;
+    } catch (err) {
       return ResponseService.sendError(err, res);
-		}
+    }
   }
 }
