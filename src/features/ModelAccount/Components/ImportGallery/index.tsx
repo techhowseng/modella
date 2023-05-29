@@ -8,11 +8,10 @@ import { importGallerySchema } from "./schema";
 import ImageList from "./ImageList";
 import { useUploadForm } from "./hooks";
 
-const ImportGallery = ({ closeModal }) => {
+const ImportGallery = ({ closeModal, isGalleryLimit }) => {
   const toastId = React.useRef(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loadingImage, setLoadingImage] = useState(false);
-  const [currentUploading, setCurrentUploading] = useState();
   const { isSuccess, uploadForm, progress } = useUploadForm("media");
 
   const {
@@ -83,65 +82,76 @@ const ImportGallery = ({ closeModal }) => {
             </div>
           </div>
         ) : null}
-        <div className={`${isInProgress ? "opacity-50" : ""}`}>
-          {multipleImageFormData?.length > 0 ? (
-            <>
-              <ImageList
-                imagesFormData={multipleImageFormData}
-                progress={progress}
-                onListChange={handleRemoveFile}
-              />
-              <div className="mt-10">
-                <Button
-                  onClick={handleSubmitImages}
-                  loading={loadingImage}
-                  loadingText={"Uploading..."}
-                >
-                  Upload
-                </Button>
-              </div>
-            </>
-          ) : (
-            <Card
-              className="cursor-pointer min-h-[300px]"
-              draggable
-              aria-label="import-gallery"
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-            >
-              <div className="flex flex-col justify-center items-center">
-                <FiUploadCloud size={54} />
-                {dragActive ? (
-                  <>
-                    <h2 className="mt-5 text-2xl">Drop your photos here</h2>
-                  </>
-                ) : (
-                  <>
-                    <h2 className="mt-5 text-2xl">Drag and Drop photos here</h2>
-                    <h4 className="my-5">Or</h4>
-                    <Button
-                      onClick={() => {
-                        fileInputRef.current?.click();
-                      }}
-                    >
-                      Browse
-                    </Button>
-                    <input
-                      name={"file"}
-                      onChange={handleFileChange}
-                      ref={fileInputRef}
-                      multiple
-                      type="file"
-                      className="hidden"
-                    />
-                  </>
-                )}
-              </div>
-            </Card>
-          )}
-        </div>
+        {isGalleryLimit ? (
+          <div className="z-10 p-6 bg-color-[rgba(0, 0, 0, .5)] w-full h-full flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center gap-x-2">
+              <p className="font-bold text-xl text-red-500">Gallery Upload Limit!</p>
+              <p className="text-md">Limit has been reached.</p>
+            </div>
+          </div>
+        ) : (
+          <div className={`${isInProgress ? "opacity-40" : ""}`}>
+            {multipleImageFormData?.length > 0 ? (
+              <>
+                <ImageList
+                  imagesFormData={multipleImageFormData}
+                  progress={progress}
+                  onListChange={handleRemoveFile}
+                />
+                <div className="mt-10">
+                  <Button
+                    onClick={handleSubmitImages}
+                    loading={loadingImage}
+                    loadingText={"Uploading..."}
+                  >
+                    Upload
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <Card
+                className="cursor-pointer min-h-[300px]"
+                draggable
+                aria-label="import-gallery"
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+              >
+                <div className="flex flex-col justify-center items-center">
+                  <FiUploadCloud size={54} />
+                  {dragActive ? (
+                    <>
+                      <h2 className="mt-5 text-2xl">Drop your photos here</h2>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="mt-5 text-2xl">
+                        Drag and Drop photos here
+                      </h2>
+                      <h4 className="my-5">Or</h4>
+                      <Button
+                        onClick={() => {
+                          fileInputRef.current?.click();
+                        }}
+                      >
+                        Browse
+                      </Button>
+                      <input
+                        name={"file"}
+                        onChange={handleFileChange}
+                        ref={fileInputRef}
+                        multiple
+                        type="file"
+                        className="hidden"
+                      />
+                    </>
+                  )}
+                </div>
+              </Card>
+            )}
+          </div>
+        )}
       </form>
     </div>
   );

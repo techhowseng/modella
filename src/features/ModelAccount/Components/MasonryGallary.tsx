@@ -135,7 +135,7 @@ function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
 
       {/* <!-- Upload modal --> */}
       <Modal isOpen={isOpen} onOpen={setIsOpen} title={"Upload Photos"}>
-        <ImportGallery closeModal={() => setIsOpen(false)} />
+        <ImportGallery closeModal={() => setIsOpen(false)} isGalleryLimit={mediaList.length >= 10} />
       </Modal>
     </div>
   );
