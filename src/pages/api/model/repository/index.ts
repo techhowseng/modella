@@ -4,7 +4,7 @@ import path from 'path';
 import DatauriParser from 'datauri/parser';
 import { cloudinary } from "../../../../helper/cloudinary";
 import { ResponseService } from "../../../../services/ResponseService";
-import { getUser, getModel } from "helper/util";
+import { getUser, getModelOrClient } from "helper/util";
 import prisma from "lib/prisma";
 import ModelServices, { TModel } from "../service";
 
@@ -42,7 +42,7 @@ export default class ModelRepository {
     try {
       const { pid } = req.query;
       if (pid == "user") {
-        const model = await getModel(req, res);
+        const model = await getModelOrClient(req, res);
         return model;
       } else if (pid.length == 25) {
         const model = await ModelServices.getModelByUserId(res, pid as string);

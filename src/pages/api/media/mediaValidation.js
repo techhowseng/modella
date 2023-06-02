@@ -19,3 +19,12 @@ export const validateUploadImages = initMiddleware(
     check('contentType').isIn(['ProfileImages']),
   ], validationResult)
 )
+
+export const validateDeleteImage = initMiddleware(
+  validateMiddleware([
+    check('id').isLength({min:1})
+    .withMessage('The image ID is not valid.'),
+    check('public_id').isLength({min:46})
+    .withMessage('The userId is not valid.'),
+  ], validationResult)
+)

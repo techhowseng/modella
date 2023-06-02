@@ -2223,10 +2223,6 @@ input:checked + .toggle-bg{
   border-color: rgb(229 231 235 / var(--tw-divide-opacity));
 }
 
-.self-center{
-  align-self: center;
-}
-
 .overflow-hidden{
   overflow: hidden;
 }
@@ -2549,16 +2545,16 @@ input:checked + .toggle-bg{
   padding: 2.5rem;
 }
 
+.p-20{
+  padding: 5rem;
+}
+
 .p-2\.5{
   padding: 0.625rem;
 }
 
 .p-5{
   padding: 1.25rem;
-}
-
-.p-20{
-  padding: 5rem;
 }
 
 .px-6{

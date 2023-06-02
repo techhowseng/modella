@@ -55,12 +55,7 @@ export default class SessionRepository {
       if (cookies && cookies.sessionToken) {
         token = cookies.sessionToken;
       }
-      let sessionUser = (await SessionServices.getSession(res, token)) as User;
-      if (sessionUser.type === "Client") {
-        user = await SessionServices.getClientSession(res, token);
-      } else if (sessionUser.type === "Model") {
-        user = await SessionServices.getModelSession(res, token);
-      }
+      user = await SessionServices.getModelOrClient(res, token);
       return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
       return ResponseService.sendError(err, res);

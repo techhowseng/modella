@@ -11,7 +11,6 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      console.log(" get clients")
       res.json(await ClientRepository.getAllClients(res));
       break;
     case "POST":

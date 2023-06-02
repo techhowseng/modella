@@ -77,41 +77,52 @@ model VerificationToken {
 }
 
 model Model {
-  id                Int        @id @default(autoincrement())
-  userId            String     @unique
-  user              User       @relation(fields: [userId], references: [id])
+  id                Int           @id @default(autoincrement())
+  userId            String        @unique
+  user              User          @relation(fields: [userId], references: [id])
   firstname         String
   lastname          String
-  gender            Gender
+  gender            Genders
   height            Int?
   bust              Int?
   waist             Int?
   hip               Int?
   shoeSize          Int?
-  weight            Decimal?   @db.Decimal(4, 1)
-  complexion        String?
+  weight            Decimal?      @db.Decimal(4, 1)
+  complexion        Complexions
   dob               DateTime?
   social            Json?
   state             String?
   country           String?
   address           String?
-  isAvailable       Boolean?   @default(true)
+  isAvailable       Boolean?      @default(true)
   bio               String?
   phone             String?
   types             Types?
   unavailableDays   String?
   thumbnailURL      String?
   thumbnailPublicId String?
+  mediaCount        Int           @default(0)
   contracts         Contract[]
   history           History[]
   chats             Chat[]
   jobs              Job[]
 }
 
-enum Gender {
+enum Genders {
   Male
   Female
   NotGiven
+}
+
+enum Complexions {
+  Pale
+  Light
+  Fair
+  Medium
+  Brown
+  Dark
+  DeepDark
 }
 
 enum Types {
@@ -151,6 +162,7 @@ model Client {
   isVetted          Boolean?   @default(false)
   thumbnailURL      String?
   thumbnailPublicId String?
+  mediaCount        Int        @default(0)
   contracts         Contract[]
   jobs              Job[]
   Chat              Chat[]
@@ -226,6 +238,7 @@ model Chat {
   isContracted  Boolean       @default(false)
   messages      Messages[]
   isFlagged     Boolean       @default(false)
+  unread        Boolean       @default(true)
 
   @@unique([clientId, modelId])
 }
@@ -236,7 +249,7 @@ model Messages {
   chatId          String
   clientMessage   String
   modelMessage    String
-  isRead          Boolean   @default(false)
+  unread          Boolean   @default(true)
   isFlagged       Boolean   @default(false)
   createdAt       DateTime  @default(now()) @map(name: "created_at")
   updatedAt       DateTime  @updatedAt @map(name: "updated_at")

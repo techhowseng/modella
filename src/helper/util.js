@@ -39,15 +39,9 @@ export const isUserAdmin = async (request, response) => {
   return Boolean(user && user.type == "Admin");
 }
 
-export const getClient = async (request, response) => {
+export const getModelOrClient = async (request, response) => {
   const token = getToken(request);
-  const client = await SessionService.getClientSession(response, token);
-  return client;
-}
-
-export const getModel = async (request, response) => {
-  const token = getToken(request);
-  const model = await SessionService.getModelSession(response, token);
+  const model = await SessionService.getModelOrClient(response, token);
   return model;
 }
 

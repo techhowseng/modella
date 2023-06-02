@@ -6,7 +6,7 @@ import { NextApiResponse } from "next";
 // @ts-ignore
 export type TModel = PrismaClient["model"]["create"]["data"];
 
-export default class UserServices {
+export default class ModelServices {
   static prisma: PrismaClient = prisma;
 
   static async createModel(res: any, id: string, data: TModel) {
@@ -38,6 +38,12 @@ export default class UserServices {
           },
         },
       });
+      if (!model) { 
+        return ResponseService.sendError(
+          { message: "A model with this ID does not exist." },
+          res
+        );
+      }
       return (({ user, ...model }) => ({ ...user, ...model }))(model);
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -58,6 +64,12 @@ export default class UserServices {
           },
         },
       });
+      if (!model) { 
+        return ResponseService.sendError(
+          { message: "A model with this ID does not exist." },
+          res
+        );
+      }
       return (({ user, ...model }) => ({ ...user, ...model }))(model);
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -116,6 +128,26 @@ export default class UserServices {
     } catch (err) {
       return ResponseService.sendError(
         { message: "Error updating models thumbnail." },
+        res
+      );
+    }
+  }
+
+  static async updateMediaCount(res: any, modelId: number, addedCount: string) {
+    try {
+      const updatedClient = await this.prisma.model.update({
+        where: { id: modelId },
+        data: {
+          mediaCount: {
+            increment: ~~addedCount,
+          },
+        }
+
+      });
+      return updatedClient;
+    } catch (err) {
+      return ResponseService.sendError(
+        { message: "There was an error updating the model count data." },
         res
       );
     }

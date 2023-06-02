@@ -45,6 +45,12 @@ export default class JobServices {
           },
         },
       });
+      if (!job) { 
+        return ResponseService.sendError(
+          { message: "A job with this ID does not exist." },
+          res
+        );
+      }
       return (({ ...client }) => ({ ...client }))(job);
     } catch (err) {
       return ResponseService.sendError(err, res);

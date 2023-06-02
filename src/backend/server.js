@@ -17,6 +17,7 @@ const clients = new Map();
 const getSocketByUserId = (userId) => {
   let socket = {id: null};
   socket = clients.get(userId);
+  console.log("socket=========", socket)
   return socket;
 }
       
@@ -29,7 +30,6 @@ io.on('connection', (socket) => {
 
   // Handle incoming messages from clients
   socket.on('sendMessage', (data) => {
-    console.log("in send message")
     handleMessage(socket, data);
   });
 
@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
   socket.on('createRoom', function(data) {
     console.log("create room")
     socket.join(data.chatId);
-    let withSocket = getSocketByUserId(data.withUserId);
+    let withSocket = getSocketByUserId(data.modelId);
     socket.broadcast.to(withSocket.id).emit("invite", { data })
   });
 

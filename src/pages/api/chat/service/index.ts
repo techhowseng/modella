@@ -32,29 +32,25 @@ export default class ChatServices {
     }
   }
 
-  // static async createConversation(
-  //   res,
-  //   clientId: number,
-  //   modelId: number
-  // ) {
-  //   try {
-  //     const chat = await prisma.chat.create({
-  //       data: {
-  //         client: {
-  //           connect: { id: clientId },
-  //         },
-  //         model: {
-  //           connect: { id: modelId },
-  //         },
-  //       }
-  //     });
-  //     return chat;
-  //   } catch (err) {
-  //     return ResponseService.sendError(
-  //       { message: "Unable to start a conversation"},
-  //       res);
-  //   }
-  // }
+  static async getunreadChats(
+    res,
+    type: string,
+    id: number
+  ) {
+    try {
+      const chat = await prisma.chat.findMany({
+        where: {
+          [type]: id,
+          unread: true
+        }
+      });
+      return chat;
+    } catch (err) {
+      return ResponseService.sendError(
+        { message: "Unable to retrieve chats."},
+        res);
+    }
+  }
 
   static async getConversationByChatId(res, id: string) {
     try {

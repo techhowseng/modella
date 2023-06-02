@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import prisma from "lib/prisma";
 import ContractServices from "../service";
 import { ResponseService } from "../../../../services/ResponseService";
-import { getClient, getModel } from "helper/util";
+import { getModelOrClient } from "helper/util";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default class ClientRepository {
@@ -16,7 +16,7 @@ export default class ClientRepository {
   static async createContract(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const data = req.body;
-      const client = await getClient(req, res)
+      const client = await getModelOrClient(req, res)
       if (client) {
         delete data.modelId;
         const contract = await ContractServices.createContract(
@@ -87,13 +87,12 @@ export default class ClientRepository {
     try {
       let { pid } = req.query;
       let colCheck: string;
-      const client = await getClient(req, res);
-      const model = await getModel(req, res);
-      if (client) {
-        pid = client.id;
+      const user = await getModelOrClient(req, res);
+      if (user.type == "Client") {
+        pid = user.id;
         colCheck = "clientId";
       } else {
-        pid = model.id;
+        pid = user.id;
         colCheck = "modelId";
       }
       const contract = await ContractServices.getUserContracts(res, pid, colCheck);

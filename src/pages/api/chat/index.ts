@@ -12,7 +12,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      return res.json(await ChatRepository.initiateSocket(req, res));
+      return res.json(await ChatRepository.getNewMessagesNotifications(req, res));
     case "POST":
       return res.json(await ChatRepository.initiateOrGetConversation(req, res));
     case "PUT":

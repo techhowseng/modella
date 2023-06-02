@@ -22,11 +22,11 @@ export default class UserServices {
 
   static async getAllModels(res: NextApiResponse<any>, page: number) {
     try {
-      const model = await this.prisma.model.findMany({
+      const models = await this.prisma.model.findMany({
         take: 10,
         skip: 10 * (page - 1)
       });
-      return model;
+      return models;
     } catch (err) {
       return ResponseService.sendError(err, res);
     }

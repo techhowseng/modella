@@ -8,6 +8,16 @@ const types = [
   "NotGiven"
 ];
 
+const Complexions = [
+  "Pale",
+  "Light",
+  "Fair",
+  "Medium",
+  "Brown",
+  "Dark",
+  "DeepDark"
+]
+
 export const validateCreateModel = initMiddleware(
   validateMiddleware([
     check('firstname').isLength({ min: 2 })
@@ -26,8 +36,8 @@ export const validateCreateModel = initMiddleware(
       .withMessage('is not descriptive enough.'),
     check('weight').isLength({ min: 2 }).optional({ nullable: true })
       .withMessage('is not descriptive enough.'),
-    check('complexion').isLength({ min: 4 }).optional({ nullable: true })
-      .withMessage('is not descriptive enough.'),
+    check('complexion').isIn(types).optional({ nullable: true })
+      .withMessage('is not one of the options available.'),
     check('dob').isLength({ min: 5 })
       .withMessage('is not written in the right format.'),
     check('social').isObject().optional({ nullable: true })
