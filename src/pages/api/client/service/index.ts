@@ -37,6 +37,12 @@ export default class ClientServices {
           }
         }
       })
+      if (!client) { 
+        return ResponseService.sendError(
+          { message: "A client with this ID does not exist." },
+          res
+        );
+      }
       return (({ user, ...client }) => ({ ...user, ...client }))(client);
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -46,7 +52,6 @@ export default class ClientServices {
   static async getAllClients(res: any) {
     try {
       const clients = await this.prisma.client.findMany();
-      console.log("clients------", clients)
       return clients;
     } catch (err) {
       return ResponseService.sendError(err, res);

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
-import { getModel } from "helper/util";
+import { getModelOrClient } from "helper/util";
 import HistoryServices, { THistory } from "../service";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -16,7 +16,7 @@ export default class HistoryRepository {
 	static async createHistory(req: NextApiRequest, res: NextApiResponse<any>) {
 		try {
 			const { job, description } = req.body;
-			const model =  await getModel(req, res)
+			const model =  await getModelOrClient(req, res)
       if (model) {
 			const history = await HistoryServices.createHistory(
 				res,
@@ -34,12 +34,8 @@ export default class HistoryRepository {
 
 	static async getHistory(req: NextApiRequest, res: NextApiResponse<any>) {
 		try {
-			let { modelId } = req.body;
-			if (!modelId) {
-				const model = await getModel(req, res)
-				modelId = model ? model.id : null;
-			}
-			const history = await HistoryServices.getHistory(res, ~~modelId);
+			const model = await getModelOrClient(req, res)
+			const history = await HistoryServices.getHistory(res, ~~model.id);
 			return history;
 		} catch(err) {
       return ResponseService.sendError(err, res);

@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { uuid } from "uuidv4";
 import UserServices, { TUser } from "../service";
 import SessionServices from "../../session/service";
-import { getUser } from "../../../../helper/util";
+import { getUser, getModelOrClient } from "../../../../helper/util";
 import NotificationService from "../../../../services/NotificationService";
 import { ResponseService } from "../../../../services/ResponseService";
 import { EntityExistsError } from "helper/errors";
@@ -93,14 +93,8 @@ export default class UserRepository {
   static async getUser(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      const user = await UserServices.getUser(res, pid as string);
-      if (user) {
-        return (({
-          id, email, type, isAuthenticated, updatedAt, isDeleted
-        }) => ({
-          id, email, type, isAuthenticated, updatedAt, isDeleted
-        }))(user);
-      }
+			const user = await getModelOrClient(req, res);
+      return user;
     } catch (err) {
       return ResponseService.sendError(err, res);
     }

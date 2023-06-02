@@ -55,7 +55,6 @@ export default class ClientRepository {
 
   static async getAllClients(res) {
     try {
-      console.log("in get all client")
       const clients = await ClientServices.getAllClients(res);
       return clients;
     } catch(err) {

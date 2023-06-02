@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { ResponseService } from "../../../../services/ResponseService";
 import { TWENTY_FOUR_HOURS_FROM_NOW } from "helper/constants";
 import prisma from "lib/prisma";
+import ClientAside from "features/ClientAccount/Components/ClientAside";
 
 // @ts-ignore
 export type TSession = PrismaClient["session"]["create"]["data"];
@@ -59,13 +60,14 @@ export default class SessionServices {
           }
         }
       })
+      if (!session) return null;
       return (({ email, type, client }) => ({ email, type, ...client }))(session.user)
     } catch(err) {
       return ResponseService.sendError({message: "There was an error retrieving the token details"}, res);
     }
   }
 
-  static async getModelSession(res: any, sessionToken: string | null) {
+  static async getModelOrClient(res: any, sessionToken: string | null) {
     try {
       if (!sessionToken) return null;
       const session = await this.prisma.session.findUnique({
@@ -74,12 +76,13 @@ export default class SessionServices {
           user: {
             include: {
               model: true,
+              client: true
             }
           }
         }
       })
       if (!session) return null
-      return (({ email, type, model }) => ({ email, type, ...model }))(session.user)
+      return (({ id: userId, email, type, model, client }) => ({ userId, email, type, ...model, ...client }))(session.user)
     } catch(err) {
       ResponseService.sendError({ message: 'The user does not have an associated model.' }, res);
     }

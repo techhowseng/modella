@@ -1,7 +1,10 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import { NextApiRequest, NextApiResponse } from "next";
+import { validationResult } from 'express-validator';
+import { bodyPermittedParams } from "helper/util";
 import MediaRepository from "./repository";
+import { validateDeleteImage } from "./mediaValidation";
 
 interface Request extends NextApiRequest {
   file: string,
@@ -57,6 +60,10 @@ apiRoute.delete(async(
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  await validateDeleteImage(req, res)
+  const createErrors = validationResult(req)
+  if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+  bodyPermittedParams(req);
   res.json(await MediaRepository.deleteMedia(req, res));
 });
 

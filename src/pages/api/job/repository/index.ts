@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { ResponseService } from "../../../../services/ResponseService";
 import prisma from "lib/prisma";
 import JobsServices, { TJob } from "../service";
-import { getModel, getClient, handleQuery } from "helper/util";
+import { getModelOrClient, handleQuery } from "helper/util";
 
 export default class JobsRepository {
   prisma: PrismaClient;
@@ -15,7 +15,7 @@ export default class JobsRepository {
 
   static async createJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-      const client = await getClient(req, res);
+      const client = await getModelOrClient(req, res);
       if (client) {
         const jobs = await JobsServices.createJob(res, client.id, req.body);
         return jobs;
@@ -101,7 +101,7 @@ export default class JobsRepository {
   static async applyForJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      const model = await getModel(req, res);
+      const model = await getModelOrClient(req, res);
       if (model) {
         const jobs = await JobsServices.applyForJob(res, pid[0] as string, model.id);
         return jobs;
