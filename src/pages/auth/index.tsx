@@ -2,7 +2,7 @@ import { SITE_NAME } from "lib/constants";
 import Head from "next/head";
 import React from "react";
 import Auth from "features/Auth";
-import { User } from "features/Auth/types";
+import { User } from "@prisma/client";
 
 function AuthPage() {
   return (
