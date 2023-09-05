@@ -5394,9 +5394,6 @@ input:checked + .toggle-bg{
   background-color: rgb(126 58 242 / var(--tw-bg-opacity));
 }
 
-.px-6{
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 .dark .dark\:bg-green-600{
   --tw-bg-opacity: 1;
   background-color: rgb(5 122 85 / var(--tw-bg-opacity));
