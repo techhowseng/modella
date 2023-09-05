@@ -9,6 +9,7 @@ export const checkExistingUser = async (email: string) => {
 }
 
 export const existsInDB = async (data, model, columnName) => {
+  // @ts-ignore
   const existingValue = await prisma[model].findFirst({
     where: {
       [columnName]: data

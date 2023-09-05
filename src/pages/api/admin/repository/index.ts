@@ -49,10 +49,10 @@ export default class AdminRepository {
           const userMedia = await AdminServices.deleteUserMedia(res, pid[1]);
           return userMedia;
         } 
-        // else {
-        //   const deleted = await AdminServices.dynamicDelete(res, pid[0], pid[1]);
-        //   return deleted;
-        // }
+        else {
+          const deleted = await AdminServices.dynamicDelete(res, pid[0], pid[1]);
+          return deleted;
+        }
       } else {
         return ResponseService.sendError({ 
           message: "This user is not authorized to take this action.",
