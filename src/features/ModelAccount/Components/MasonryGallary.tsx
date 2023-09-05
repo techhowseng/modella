@@ -9,12 +9,14 @@ import Modal from "components/Modal";
 import { useDispatch } from "react-redux";
 import { getUserMediaAction } from "../services";
 import Loading from "components/loading";
+import ImportGallery from "./ImportGallery";
+import CarouselModal from "components/Modal/CarouselModal";
 
 function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
   const { isOpen, setIsOpen } = useModal();
+  const { isOpen: galleryModalIsOpen, setIsOpen: setGalleryModalIsOpen } =
+    useModal();
   const dispatch = useDispatch();
-
-  const handleSubmit = () => {};
 
   useEffect(() => {
     if (user.userId) {
@@ -83,28 +85,46 @@ function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
         {!loading && mediaList.length > 0 ? (
           <div className="gap-1 columns-2 md:columns-3 lg:columns-3">
             {/* @ts-ignore */}
-            {mediaList?.map((image: any) => (
-              <motion.div
-                key={image.id}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="relative mb-1 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20"
-              >
-                <img
-                  loading="lazy"
-                  className="w-full"
-                  src={image.content.url}
-                  alt={image.content.public_id}
-                />
-                {isLoggedInUser && user?.type === "Model" ? (
-                  <button className="p-4 absolute top-0 right-0 group hover:bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded">
-                    <AiOutlineDelete className="h-5 w-5 text-white" />
-                    {/* <p>Remove</p> */}
-                  </button>
-                ) : null}
-              </motion.div>
-            ))}
+            {mediaList
+              ?.map((image: any) => (
+                <motion.div
+                  key={image.id}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="relative cursor-pointer mb-1 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20"
+                  onClick={() => setGalleryModalIsOpen(true)}
+                >
+                  <img
+                    loading="lazy"
+                    className="w-full"
+                    src={image.content.url}
+                    alt={image.content.public_id}
+                  />
+                  {isLoggedInUser && user?.type === "Model" ? (
+                    <button
+                      onClick={() => {}}
+                      className="p-4 absolute top-0 right-0 group hover:bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded"
+                    >
+                      <AiOutlineDelete className="h-5 w-5 text-white" />
+                      {/* <p>Remove</p> */}
+                    </button>
+                  ) : null}
+                </motion.div>
+              ))
+              .reverse()}
+
+            {/* <!-- Gallery modal --> */}
+            <CarouselModal
+              isOpen={galleryModalIsOpen}
+              onOpen={setGalleryModalIsOpen}
+              images={mediaList?.map((image: any) => {
+                return {
+                  src: image.content.url,
+                  caption: image.content.public_id,
+                };
+              })}
+            />
           </div>
         ) : (
           <div className="flex w-full justify-center">
@@ -117,14 +137,11 @@ function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
       </>
 
       {/* <!-- Upload modal --> */}
-      <Modal
-        isOpen={isOpen}
-        onOpen={setIsOpen}
-        onClick={handleSubmit}
-        buttonText={"Upload"}
-        title={"Upload Photos"}
-      >
-        {/* <PostJobCreateForm onClose={() => setIsOpen(false)} /> */}
+      <Modal isOpen={isOpen} onOpen={setIsOpen} title={"Upload Photos"}>
+        <ImportGallery
+          closeModal={() => setIsOpen(false)}
+          isGalleryLimit={mediaList.length >= 10}
+        />
       </Modal>
     </div>
   );

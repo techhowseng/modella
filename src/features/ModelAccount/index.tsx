@@ -11,6 +11,7 @@ function ModelAccountSreen({ userId }: { userId: string }) {
   const { loading, user } = useGetUser(userId, true);
   const {
     loading: mediaLoading,
+    profileImageLoading,
     data: { MediaList },
   } = useAppSelector(getSessionUser);
 
@@ -19,7 +20,7 @@ function ModelAccountSreen({ userId }: { userId: string }) {
   return (
     <div className="flex flex-row justify-center min-h-screen p-2 w-9/12 my-0 mx-auto">
       <div className="flex flex-col w-4/12 bg-white">
-        <ModelProfileAside isLoggedInUser={isLoggedInUser} user={user} />
+        <ModelProfileAside profileImageLoading={profileImageLoading} isLoggedInUser={isLoggedInUser} user={user} />
       </div>
       <div className="flex flex-col w-10/12 px-10">
         <MasonryGallary

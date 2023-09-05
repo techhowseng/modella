@@ -11,6 +11,7 @@ export interface UserState {
     stateList: any[];
   };
   loading: boolean;
+  profileImageLoading: boolean;
   error: boolean;
   message: string;
 }

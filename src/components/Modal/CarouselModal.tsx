@@ -1,14 +1,17 @@
+import Carousel from "components/Carousel";
+import { UsablePicture } from "helper/types";
 import React from "react";
 import { MdClose } from "react-icons/md";
 
-const Modal = ({
-  onClick,
+const CarouselModal = ({
   onOpen,
   isOpen,
-  title,
-  children,
-  buttonText,
-}: any) => {
+  images,
+}: {
+  onOpen: (val: boolean) => void;
+  isOpen: boolean;
+  images: UsablePicture[];
+}) => {
   if (!isOpen) {
     return null;
   }
@@ -19,7 +22,7 @@ const Modal = ({
 
   return (
     <div
-      id="defaultModal"
+      id="gallery-modal"
       tabIndex={-1}
       aria-hidden="true"
       className="fixed top-0 left-0 right-0 z-50 w-full p-0 md:p-4 lg:p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full bg-[rgba(0,0,0,0.7)]"
@@ -28,24 +31,26 @@ const Modal = ({
         {/* <!-- Modal content --> */}
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
           {/* <!-- Modal header --> */}
-          <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+          {/* <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
               {title}
-            </h3>
-            <button
-              type="button"
-              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-              data-modal-hide="defaultModal"
-              onClick={handleClose}
-            >
-              <MdClose size={20} />
-              <span className="sr-only">Close modal</span>
-            </button>
-          </div>
+            </h3> */}
+          <button
+            type="button"
+            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="defaultModal"
+            onClick={handleClose}
+          >
+            <MdClose size={20} />
+            <span className="sr-only">Close modal</span>
+          </button>
+          {/* </div> */}
           {/* <!-- Modal body --> */}
-          <div className="p-6 space-y-6">{children}</div>
+          <div>
+            <Carousel images={images} />
+          </div>
           {/* <!-- Modal footer --> */}
-          <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+          {/* <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
             {buttonText && (
               <button
                 onClick={onClick}
@@ -64,11 +69,11 @@ const Modal = ({
             >
               Cancel
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
   );
 };
 
-export default Modal;
+export default CarouselModal;

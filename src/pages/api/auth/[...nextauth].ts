@@ -36,7 +36,7 @@ export const authOptions = {
 
                 jwt.sign(
                   payload,
-                  jwt.secret,
+                  process.env.JWT_KEY,
                   {
                     expiresIn: 31556926
                   },
