@@ -44,3 +44,12 @@ export const updateThumbnailAction = createAsyncThunk(
   "update/user/thumbnail",
   updateThumbnail
 );
+
+export const removeGalleryImage = async (id: string) => {
+  try {
+    const response = await axiosMediaInstance.put("/model");
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+}

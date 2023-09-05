@@ -1462,12 +1462,12 @@ input:checked + .toggle-bg{
   top: -100px;
 }
 
-.bottom-\[60px\]{
-  bottom: 60px;
-}
-
 .bottom-0{
   bottom: 0px;
+}
+
+.bottom-\[60px\]{
+  bottom: 60px;
 }
 
 .-bottom-1{
@@ -1504,30 +1504,6 @@ input:checked + .toggle-bg{
 
 .-left-3{
   left: -0.75rem;
-}
-
-.top-\[\]{
-  top: ;
-}
-
-.top-\[-\]{
-  top: -;
-}
-
-.top-\[-1\.5rem\]{
-  top: -1.5rem;
-}
-
-.left-\[-1\.5rem\]{
-  left: -1.5rem;
-}
-
-.bottom-\[-1\.5rem\]{
-  bottom: -1.5rem;
-}
-
-.right-\[-1\.5rem\]{
-  right: -1.5rem;
 }
 
 .isolate{
@@ -2470,16 +2446,16 @@ input:checked + .toggle-bg{
        column-gap: 0.5rem;
 }
 
-.space-y-6 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
-}
-
 .space-x-2 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-y-6 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 
 .space-y-2 > :not([hidden]) ~ :not([hidden]){
@@ -3200,10 +3176,6 @@ input:checked + .toggle-bg{
   background-color: rgb(246 245 255 / var(--tw-bg-opacity));
 }
 
-.bg-\[rgba\(\)\]{
-  background-color: rgba();
-}
-
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
 }
@@ -3495,10 +3467,6 @@ input:checked + .toggle-bg{
 
 .\!p-2{
   padding: 0.5rem !important;
-}
-
-.p-\[-1\.5rem\]{
-  padding: -1.5rem;
 }
 
 .px-6{
@@ -3899,14 +3867,14 @@ input:checked + .toggle-bg{
   color: rgb(200 30 30 / var(--tw-text-opacity));
 }
 
-.text-blue-600{
-  --tw-text-opacity: 1;
-  color: rgb(28 100 242 / var(--tw-text-opacity));
-}
-
 .text-red-500{
   --tw-text-opacity: 1;
   color: rgb(240 82 82 / var(--tw-text-opacity));
+}
+
+.text-blue-600{
+  --tw-text-opacity: 1;
+  color: rgb(28 100 242 / var(--tw-text-opacity));
 }
 
 .text-yellow-500{
@@ -4160,14 +4128,6 @@ input:checked + .toggle-bg{
   opacity: 0.5;
 }
 
-.opacity-5{
-  opacity: 0.05;
-}
-
-.opacity-10{
-  opacity: 0.1;
-}
-
 .opacity-40{
   opacity: 0.4;
 }
@@ -4347,6 +4307,10 @@ input:checked + .toggle-bg{
   transition-duration: 200ms;
 }
 
+.duration-700{
+  transition-duration: 700ms;
+}
+
 .duration-300{
   transition-duration: 300ms;
 }
@@ -4357,10 +4321,6 @@ input:checked + .toggle-bg{
 
 .duration-500{
   transition-duration: 500ms;
-}
-
-.duration-700{
-  transition-duration: 700ms;
 }
 
 .duration-1000{

@@ -102,7 +102,10 @@ function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
                     alt={image.content.public_id}
                   />
                   {isLoggedInUser && user?.type === "Model" ? (
-                    <button className="p-4 absolute top-0 right-0 group hover:bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded">
+                    <button
+                      onClick={() => {}}
+                      className="p-4 absolute top-0 right-0 group hover:bg-[rgba(0,0,0,0.5)] hover:scale-75 transition-all duration-200 ease-in-out rounded"
+                    >
                       <AiOutlineDelete className="h-5 w-5 text-white" />
                       {/* <p>Remove</p> */}
                     </button>
@@ -135,7 +138,10 @@ function MasonryGallary({ mediaList, loading, isLoggedInUser, user }) {
 
       {/* <!-- Upload modal --> */}
       <Modal isOpen={isOpen} onOpen={setIsOpen} title={"Upload Photos"}>
-        <ImportGallery closeModal={() => setIsOpen(false)} isGalleryLimit={mediaList.length >= 10} />
+        <ImportGallery
+          closeModal={() => setIsOpen(false)}
+          isGalleryLimit={mediaList.length >= 10}
+        />
       </Modal>
     </div>
   );
