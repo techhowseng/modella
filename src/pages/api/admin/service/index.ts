@@ -23,16 +23,16 @@ export default class AdminServices {
     }
   }
 
-  static async dynamicDelete(res: NextApiResponse<any>, id: string, table) {
-    try {
-      const deleted = await this.prisma?.[table].delete({
-        where: { id }
-      });
-      return deleted;
-    } catch (err) {
-      return ResponseService.sendError(err, res);
-    }
-  }
+  // static async dynamicDelete(res: NextApiResponse<any>, id: string, table) {
+  //   try {
+  //     const deleted = await this.prisma?.[table].delete({
+  //       where: { id }
+  //     });
+  //     return deleted;
+  //   } catch (err) {
+  //     return ResponseService.sendError(err, res);
+  //   }
+  // }
 
   static async vetClientById(res: NextApiResponse<any>, id: number) {
     try {
