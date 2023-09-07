@@ -5,6 +5,10 @@ export const jobFormDataSchema = yup.object().shape({
   jobDescription: yup.string(),
   jobType: yup.string(),
   salary: yup.string(),
-  jobLength: yup.string(),
-  location: yup.string(),
+  // jobLength: yup.string(),
+  locations: yup.string(),
+  startDate: yup.string(),
+  startTime: yup.string(),
+  hours: yup.string(),
+  days: yup.string(),
 });
