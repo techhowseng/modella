@@ -1669,6 +1669,16 @@ input:checked + .toggle-bg{
   margin-right: 1rem;
 }
 
+.mx-2{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.mx-3{
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
 .mb-4{
   margin-bottom: 1rem;
 }
@@ -3232,6 +3242,11 @@ input:checked + .toggle-bg{
   background-color: rgb(63 131 248 / var(--tw-bg-opacity));
 }
 
+.\!bg-white{
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+}
+
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
 }
@@ -3638,6 +3653,16 @@ input:checked + .toggle-bg{
 .py-0{
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.px-1{
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.\!py-6{
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
 }
 
 .pr-2{
@@ -4685,6 +4710,11 @@ input:checked + .toggle-bg{
 .hover\:bg-gray-50:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-600:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(28 100 242 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-gradient-to-br:hover{
@@ -6842,6 +6872,10 @@ input:checked + .toggle-bg{
 
   .lg\:mt-16{
     margin-top: 4rem;
+  }
+
+  .lg\:mt-4{
+    margin-top: 1rem;
   }
 
   .lg\:block{
