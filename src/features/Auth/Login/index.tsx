@@ -48,10 +48,10 @@ function Login() {
   );
 
   return (
-    <div className="flex flex-col-reverse sm:flex-col-reverse md:flex-col-reverse lg:flex-row sm:h-fit lg:h-screen">
+    <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 h-[100vh]">
       <SideDisplay />
 
-      <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 h-full flex flex-col justify-center scroll-smooth overflow-y-scroll">
+      <div className="flex flex-col row-span-2/3 justify-center items-center flex-1 py-20 md:py-30 lg:py-36 px-10 md:px-20">
         <GradientBG />
         <div className="flex-1 w-full py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
           <div className="flex flex-col">
