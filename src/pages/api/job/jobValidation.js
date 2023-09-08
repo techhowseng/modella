@@ -30,14 +30,22 @@ export const validateCreateJob = initMiddleware(
       .withMessage('is not descriptive enough.'),
       check('jobDescription').isLength({min:5})
       .withMessage('is not descriptive enough.'),
-      check('location').isLength({min:3})
+      check('locations').isLength({min:3})
       .withMessage('is not descriptive enough.')
       .optional({ nullable: true }),
-      check('salary').isLength({min:3}).optional({ nullable: true })
+      check('fee').isLength({min:3}).optional({ nullable: true })
       .withMessage('is not descriptive enough.'),
       check('jobType').isIn(types).optional({ nullable: true })
       .withMessage('is not among the available options.'),
-      check('jobLength').isLength({min:2}).optional({ nullable: true })
+      check('startDate').isISO8601().toDate().optional({ nullable: true })
+      .withMessage('is not descriptive enough.'),
+      check('startTime').isISO8601().toDate().optional({ nullable: true })
+      .withMessage('is not descriptive enough.'),
+      check('hours').isLength({min:1}).isNumeric().optional({ nullable: true })
+      .withMessage('is not a valid length of time.'),
+      check('days').isLength({min:1}).isNumeric().optional({ nullable: true })
+      .withMessage('is not a valid day.'),
+      check('experience').isLength({min:5}).optional({ nullable: true })
       .withMessage('is not descriptive enough.'),
       check('isOpen').isBoolean().optional({ nullable: true })
       .withMessage('should be true or false.'),
@@ -52,14 +60,22 @@ export const validateUpdateJob = initMiddleware(
     check('jobDescription').isLength({min:5})
     .optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
-    check('location').isLength({min:3})
+    check('locations').isLength({min:3})
     .withMessage('is not descriptive enough.')
     .optional({ nullable: true }),
     check('salary').isLength({min:3}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
     check('jobType').isIn(types).optional({ nullable: true })
     .withMessage('is not among the available options.'),
-    check('jobLength').isLength({min:2}).optional({ nullable: true })
+    check('startDate').isISO8601().toDate().optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
+    check('startTime').isISO8601().toDate().optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
+    check('hours').isLength({min:1}).isNumeric().optional({ nullable: true })
+    .withMessage('is not a valid length of time.'),
+    check('days').isLength({min:1}).isNumeric().optional({ nullable: true })
+    .withMessage('is not a valid day.'),
+    check('experience').isLength({min:5}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
     check('isOpen').isBoolean().optional({ nullable: true })
     .withMessage('should be true or false.'),
@@ -75,16 +91,24 @@ export const validateSearchJob = initMiddleware(
     check('jobDescription').isLength({min:5})
     .optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
-    check('location').isLength({min:3})
+    check('locations').isLength({min:3})
     .withMessage('is not descriptive enough.')
     .optional({ nullable: true }),
     check('salary').isLength({min:3}).optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
     check('jobType').isIn(types).optional({ nullable: true })
-    .withMessage('is not among the available optoins.'),
-    check('jobLength').isLength({min:2}).optional({ nullable: true })
+    .withMessage('is not among the available options.'),
+    check('startDate').isISO8601().toDate().optional({ nullable: true })
     .withMessage('is not descriptive enough.'),
-    check('page').isLength({min:1}).isNumeric().optional({ nullable: true })
-    .withMessage('page number is not valid.'),
+    check('startTime').isISO8601().toDate().optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
+    check('hours').isLength({min:1}).isNumeric().optional({ nullable: true })
+    .withMessage('is not a valid length of time.'),
+    check('days').isLength({min:1}).isNumeric().optional({ nullable: true })
+    .withMessage('is not a valid day.'),
+    check('experience').isLength({min:5}).optional({ nullable: true })
+    .withMessage('is not descriptive enough.'),
+    check('isOpen').isBoolean().optional({ nullable: true })
+    .withMessage('should be true or false.'),
   ], validationResult)
 )

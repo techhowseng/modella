@@ -3,7 +3,8 @@ import prisma from "lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import SessionServices from "../service";
-import { checkExistingUser, existsInDB } from "../../../../helper/util";
+import AdminServices from "../../admin/service";
+import { checkExistingUser, existsInDB, profilePercentageComplete } from "../../../../helper/util";
 import { ResponseService } from "../../../../services/ResponseService";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getCookie } from "cookies-next";
@@ -37,7 +38,15 @@ export default class SessionRepository {
         const session = user
           ? await SessionServices.createSession(res, user.id, jwtToken)
           : "";
-        return session;
+        let percentageComplete = {};
+        if (user.type == "Model") {
+          const modelData = await AdminServices.getModelData(res, user.id, "model");
+          const profileCompletion = profilePercentageComplete(modelData);
+          percentageComplete = {
+            profileCompletion
+          }
+        }
+        return { session, ...percentageComplete };
       }
       throw new Error("Email or password do not match.");
     } catch (err) {

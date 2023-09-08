@@ -133,3 +133,14 @@ export const handleQuery = (params) => {
   }
   return search;
 }
+
+export const profilePercentageComplete = (modelData) => {
+  let totalColumns = 0, emptyColumns = 0;
+
+  Object.values(modelData.model).map(value => {
+    totalColumns++;
+    if (!value) emptyColumns++;
+  });
+  const percentageComplete = ((totalColumns - emptyColumns) / totalColumns * 100);
+  return percentageComplete
+}
