@@ -14,15 +14,19 @@ function SignUp() {
   const stateList = useAppSelector(getStateList);
 
   return (
-    <div className="flex flex-col-reverse sm:flex-col-reverse md:flex-col-reverse lg:flex-row sm:h-fit lg:h-screen">
+    <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 h-[100vh]">
       <SideDisplay />
 
-      <div className="flex-1 py-20 md:py-30 lg:py-36 px-10 lg:px-38 md:px-20 flex flex-col justify-center overflow-y-scroll">
+      <div className="flex flex-col row-span-2/3 justify-center items-center flex-1 py-20 md:py-30 lg:py-36 px-10 md:px-20 overflow-y-scroll">
         {type === "model" && <CreatorSignUpForm />}
         {type === "client" && <ClientSignupForm />}
         {/* @ts-ignore */}
         {verified && data?.user?.type?.toLowerCase() === "model" && (
-          <ModelCompleteForm loading={loading} userData={data.user} stateList={stateList} />
+          <ModelCompleteForm
+            loading={loading}
+            userData={data.user}
+            stateList={stateList}
+          />
         )}
         {/* @ts-ignore */}
         {verified && data?.user?.type?.toLowerCase() === "client" && (

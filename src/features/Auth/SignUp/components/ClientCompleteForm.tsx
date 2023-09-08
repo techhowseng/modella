@@ -25,9 +25,7 @@ const ClientCompleteForm = ({ stateList }: { stateList?: any[] }) => {
   } = useForm(
     {
       companyName: "",
-      phone: {
-        number_1: "",
-      },
+      phone: "",
       address: "",
       country: "",
       state: "",

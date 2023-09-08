@@ -1,4 +1,4 @@
-const jobOptions = [
+export const jobOptions = [
   "All",
   "FashionEditorial",
   "FashionCatalog",
@@ -30,7 +30,7 @@ export const JOB_FIELDS = [
   },
   {
     label: "Job Description",
-    type: "text",
+    type: "textarea",
     name: "jobDescription",
   },
   {
@@ -41,18 +41,33 @@ export const JOB_FIELDS = [
   },
   {
     label: "Salary",
-    type: "select",
+    type: "number",
     name: "salary",
     options: salaryOptions,
   },
   {
-    label: "Duration",
-    type: "datetime",
-    name: "jobLength",
+    label: "StartDate",
+    type: "date",
+    name: "startDate",
+  },
+  {
+    label: "StartTime",
+    type: "time",
+    name: "startTime",
+  },
+  {
+    label: "Hours",
+    type: "number",
+    name: "hours",
+  },
+  {
+    label: "Days",
+    type: "number",
+    name: "days",
   },
   {
     label: "Location",
-    type: "text",
-    name: "location",
+    type: "address",
+    name: "locations",
   },
 ];

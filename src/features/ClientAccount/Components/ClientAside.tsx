@@ -27,7 +27,7 @@ function ClientAside({ active }) {
         {user.address}
       </h5>
 
-      <div className="flex flex-col justify-start">
+      <div className="flex flex-col justify-start lg:w-64">
         <DashMenuList active={active} />
       </div>
     </div>

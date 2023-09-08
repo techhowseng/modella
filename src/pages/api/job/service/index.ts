@@ -45,7 +45,7 @@ export default class JobServices {
           },
         },
       });
-      if (!job) { 
+      if (!job) {
         return ResponseService.sendError(
           { message: "A job with this ID does not exist." },
           res
@@ -57,11 +57,11 @@ export default class JobServices {
     }
   }
 
-  static async getJobs(res: NextApiResponse, page: number) {
+  static async getJobs(res: NextApiResponse, page: number, perPage: number) {
     try {
       const job = await this.prisma.job.findMany({
-        take: 10,
-        skip: 10 * (page - 1),
+        take: perPage,
+        skip: perPage * (page - 1),
         include: {
           applicants: true,
           client: {
@@ -118,11 +118,16 @@ export default class JobServices {
     }
   }
 
-  static async searchJobs(res: NextApiResponse, query: TJob, page: number) {
+  static async searchJobs(
+    res: NextApiResponse,
+    query: TJob,
+    page: number,
+    perPage: number
+  ) {
     try {
       const job = await this.prisma.job.findMany({
-        take: 10,
-        skip: 10 * (page - 1),
+        take: perPage,
+        skip: perPage * (page - 1),
         where: query,
       });
       return job;

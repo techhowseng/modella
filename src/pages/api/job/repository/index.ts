@@ -69,7 +69,8 @@ export default class JobsRepository {
   static async getJobs(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const page = req.query.page ?? 1;
-      const jobs = await JobsServices.getJobs(res, ~~page);
+      const perPage = req.query.perPage ?? 10;
+      const jobs = await JobsServices.getJobs(res, ~~page, ~~perPage);
       return jobs;
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -78,10 +79,11 @@ export default class JobsRepository {
 
   static async searchJobs(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-      const { pid, page, ...allQueries } = req.query;
+      const { pid, page, perPage, ...allQueries } = req.query;
       const pageNo = page ?? 1;
+      const perPageNo = perPage ?? 10;
       const queries = handleQuery(allQueries);
-      const jobs = await JobsServices.searchJobs(res, queries, ~~pageNo);
+      const jobs = await JobsServices.searchJobs(res, queries, ~~pageNo, ~~perPageNo);
       return jobs;
     } catch (err) {
       return ResponseService.sendError(err, res);

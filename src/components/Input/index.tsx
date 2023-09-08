@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import PasswordVisibilty from "./PasswordVisibilty";
+import { usePlacesWidget } from "react-google-autocomplete";
 
 interface InputProps {
   id?: string;
@@ -18,6 +19,7 @@ interface InputProps {
   error?: string;
   className?: string;
   options?: any[];
+  initialOption?: string;
   inputRef?: any;
 }
 
@@ -33,9 +35,16 @@ function Input({
   className = "",
   autoComplete,
   options = [],
+  initialOption,
   inputRef,
 }: InputProps) {
   const [inputType, setInputType] = useState(type);
+
+  const { ref } = usePlacesWidget({
+    apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    onPlaceSelected: (place) => onChange(place),
+  });
+
   const renderInput = () => {
     if (type === "textarea") {
       return (
@@ -47,9 +56,28 @@ function Input({
           onChange={onChange}
           className={`w-full base-input p-4 rounded-lg border-2 ${
             error ? "base-border-red" : "border-gray-200"
-          } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
+          } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 max-h-[61px] ${className}`}
           placeholder={placeholder}
         ></textarea>
+      );
+    }
+
+    if (type === "address") {
+      return (
+        <input
+          ref={ref}
+          id={id}
+          type={"text"}
+          name={name}
+          style={{ width: "90%" }}
+          placeholder={placeholder}
+          value={value}
+          checked={!!value}
+          onChange={onChange}
+          className={`base-input w-full p-4 rounded-lg border-2 ${
+            error ? "base-border-red" : "border-gray-200"
+          } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
+        />
       );
     }
 
@@ -58,13 +86,14 @@ function Input({
         <select
           id={id}
           name={name}
+          placeholder={initialOption || "---- Select ----"}
           defaultValue={value || "---- Select ----"}
           onChange={onChange as any}
           className={`base-input w-full p-4 rounded-lg border-2 ${
             error ? "base-border-red" : "border-gray-200"
           } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
         >
-          <option>---- Select ----</option>
+          <option>{initialOption || "---- Select ----"}</option>
           {options.length > 0 &&
             options.map((opt, index) => {
               if (typeof opt === "object") {

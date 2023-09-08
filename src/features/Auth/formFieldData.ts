@@ -40,7 +40,7 @@ export const CLIENT_SIGNUP_COMPLETE_FORM = (stateList: any[]) => [
   {
     label: "Phone Number",
     type: "phone",
-    name: "phone.number_1",
+    name: "phone",
   },
   {
     label: "Address",

@@ -36,9 +36,7 @@ const urlTest =
 
 export const clientCompleteFormDataSchema = yup.object().shape({
   companyName: yup.string().required("Company name is required"),
-  phone: yup.object().shape({
-    number_1: yup.string(),
-  }),
+  phone: yup.string(),
   address: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
