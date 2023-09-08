@@ -10,6 +10,7 @@ import { getJobsActions } from "features/JobDetails/services";
 import React, { useEffect, useState } from "react";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "store/hooks";
+import { useSearch } from "./hooks";
 
 function Jobs() {
   const dispatch = useAppDispatch();
@@ -21,26 +22,13 @@ function Jobs() {
     loading,
     error,
   } = useAppSelector(getJobs);
-  const [search, setSearch] = useState<any>({
-    search: "",
-    jobType: "",
-    locations: "",
-  });
 
   useEffect(() => {
     dispatch(getJobsActions(null));
   }, []);
 
+  const { handleChange, handleSubmit } = useSearch();
   const [sortValue, setSortValue] = useState("");
-
-  const handleChange = (e: any) => {
-    setSearch({ ...search, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    dispatch(getJobsActions(search));
-  };
 
   return (
     <div className="flex flex-col min-h-screen p-2 w-12/12 lg:w-9/12 my-0 mx-auto relative">
