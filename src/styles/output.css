@@ -1697,6 +1697,11 @@ input:checked + .toggle-bg{
   margin-bottom: auto;
 }
 
+.\!mx-2{
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+
 .-mb-px{
   margin-bottom: -1px;
 }
@@ -3538,6 +3543,10 @@ input:checked + .toggle-bg{
   padding: 1.5rem;
 }
 
+.\!p-1{
+  padding: 0.25rem !important;
+}
+
 .px-0{
   padding-left: 0px;
   padding-right: 0px;
@@ -3651,6 +3660,16 @@ input:checked + .toggle-bg{
 .py-6{
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.\!py-1{
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.\!px-4{
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
 }
 
 .pb-12{

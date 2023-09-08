@@ -18,7 +18,11 @@ export const getJobsActions = createAsyncThunk(
   "get/jobs",
   async (search: any = null) => {
     try {
-      const url = search ? `/job?${queryString.stringify(search)}` : "/job";
+      const url = search
+        ? `/job?${queryString.stringify(search, {
+            skipNull: true,
+          })}`
+        : "/job";
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {

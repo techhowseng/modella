@@ -22,13 +22,11 @@ function Jobs() {
     loading,
     error,
   } = useAppSelector(getJobs);
+  const { handleChange, handleSubmit, search, setSearch } = useSearch();
 
   useEffect(() => {
-    dispatch(getJobsActions(null));
+    handleSubmit({ preventDefault: () => {} });
   }, []);
-
-  const { handleChange, handleSubmit } = useSearch();
-  const [sortValue, setSortValue] = useState("");
 
   return (
     <div className="flex flex-col min-h-screen p-2 w-12/12 lg:w-9/12 my-0 mx-auto relative">
@@ -47,19 +45,28 @@ function Jobs() {
             <>
               <div className="flex flex-row justify-between pb-5">
                 <h3 className="flex text-sm lg:text-lg font-semibold items-center">
-                  Showing {jobs.length} of 100 Jobs
+                  <p className="mr-2">Showing {jobs.length} of</p>
+                  <Select
+                    type="default"
+                    options={["10", "20", "30", "40", "50", "100"]}
+                    name={"perPage"}
+                    onChange={handleChange}
+                    className={"bg-transparent w-full !py-1 !px-4"}
+                    value={`${search.perPage}`}
+                  />
+                  <p className="ml-2">Jobs</p>
                 </h3>
-                <div className="flex flex-row items-center space-x-2 text-sm lg:text-lg">
+                {/* <div className="flex flex-row items-center space-x-2 text-sm lg:text-lg">
                   <p>Sort by: </p>
                   <Select
                     type="default"
                     options={["Newest", "Last 30 days"]}
                     name={"sortBy"}
-                    onChange={(val: any) => setSortValue(val.target.value)}
-                    className={"bg-transparent w-full p-1"}
-                    value={sortValue}
+                    onChange={handleChange}
+                    className={"bg-transparent w-full !py-1 !px-4"}
+                    value={search.sortBy}
                   />
-                </div>
+                </div> */}
               </div>
               <div className="grid gap-2 mb-8 md:mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {jobs.map((job: Job) => (

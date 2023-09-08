@@ -24,7 +24,7 @@ function SearchBar({
             type="text"
             placeholder="Search"
             className="pl-10 pt-3 pb-3 border-none focus:!outline-none"
-            name={"search"}
+            name={"jobRole"}
             onChange={handleChange}
           />
         </div>

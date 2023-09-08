@@ -1,14 +1,21 @@
 import { getJobsActions } from "features/JobDetails/services";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "store/hooks";
 
 export const useSearch = () => {
   const dispatch = useAppDispatch();
   const [search, setSearch] = useState<any>({
-    search: "",
-    jobType: "",
-    locations: "",
+    jobRole: null,
+    jobType: null,
+    locations: null,
+    page: 1,
+    perPage: 10,
+    // sortBy: "newest",
   });
+
+  useEffect(() => {
+    dispatch(getJobsActions(search));
+  }, [search]);
 
   const handleChange = (e: any) => {
     setSearch({ ...search, [e.target.name]: e.target.value });
@@ -19,5 +26,5 @@ export const useSearch = () => {
     dispatch(getJobsActions(search));
   };
 
-  return { search, handleChange, handleSubmit };
+  return { search, setSearch, handleChange, handleSubmit };
 };
