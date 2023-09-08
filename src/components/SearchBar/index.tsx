@@ -4,8 +4,15 @@ import { FiSearch } from "react-icons/fi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdOutlineCases } from "react-icons/md";
 import { Button } from "..";
+import { jobOptions } from "features/ClientAccount/Components/PostJobBanner/formFieldsData";
 
-function SearchBar() {
+function SearchBar({
+  handleChange,
+  handleSubmit,
+}: {
+  handleChange: any;
+  handleSubmit: any;
+}) {
   return (
     <div className="flex flex-row py-6 sm:px-6 lg:px-8 lg:sticky top-0 z-10">
       <div className="bg-white p-3 w-full flex flex-col lg:flex-row rounded-lg border justify-between">
@@ -18,7 +25,7 @@ function SearchBar() {
             placeholder="Search"
             className="pl-10 pt-3 pb-3 border-none focus:!outline-none"
             name={"search"}
-            onChange={(e: any) => console.log(e.target.value)}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-row items-center relative mb-4 lg:mb-0 w-full">
@@ -26,11 +33,11 @@ function SearchBar() {
             <HiOutlineLocationMarker size={20} />
           </div>
           <Input
-            type="text"
-            placeholder="Location"
+            type="address"
+            placeholder="Locations"
             className="pl-10 pt-3 pb-3 border-none focus:!outline-none"
-            name={"location"}
-            onChange={(e: any) => console.log(e.target.value)}
+            name={"locations"}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-row items-center relative mb-4 lg:mb-0 w-full">
@@ -38,16 +45,18 @@ function SearchBar() {
             <MdOutlineCases size={20} />
           </div>
           <Input
-            type="text"
+            type="select"
+            initialOption={"Job Type"}
+            options={jobOptions}
             placeholder="Job Type"
             className="pl-10 pt-3 pb-3 border-none focus:!outline-none"
             name={"jobType"}
-            onChange={(e: any) => console.log(e.target.value)}
+            onChange={handleChange}
           />
         </div>
         <Button
           className="ml-0 md:ml-2 lg:ml-2 !base-bg-color w-full lg:!w-[400px]"
-          onClick={() => {}}
+          onClick={handleSubmit}
         >
           Find Jobs
         </Button>

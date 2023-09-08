@@ -19,6 +19,7 @@ interface InputProps {
   error?: string;
   className?: string;
   options?: any[];
+  initialOption?: string;
   inputRef?: any;
 }
 
@@ -34,6 +35,7 @@ function Input({
   className = "",
   autoComplete,
   options = [],
+  initialOption,
   inputRef,
 }: InputProps) {
   const [inputType, setInputType] = useState(type);
@@ -84,13 +86,14 @@ function Input({
         <select
           id={id}
           name={name}
+          placeholder={initialOption || "---- Select ----"}
           defaultValue={value || "---- Select ----"}
           onChange={onChange as any}
           className={`base-input w-full p-4 rounded-lg border-2 ${
             error ? "base-border-red" : "border-gray-200"
           } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
         >
-          <option>---- Select ----</option>
+          <option>{initialOption || "---- Select ----"}</option>
           {options.length > 0 &&
             options.map((opt, index) => {
               if (typeof opt === "object") {

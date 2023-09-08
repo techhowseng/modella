@@ -1,4 +1,4 @@
-const jobOptions = [
+export const jobOptions = [
   "All",
   "FashionEditorial",
   "FashionCatalog",

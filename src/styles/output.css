@@ -3,7 +3,7 @@
 :root {
   --font-family: "Plus Jakarta Sans", sans-serif;
   --base-color: #006ef6;
-  --base-light-color: #cfe5ff;
+  --base-light-color: #006ff623;
   --base-blue: #04a4f4;
   --base-red: #ff4d5e;
   --neutral-black: #222638;
@@ -4485,6 +4485,10 @@ input:checked + .toggle-bg{
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
+.hover\:z-10:hover{
+  z-index: 10;
+}
+
 .hover\:scale-75:hover{
   --tw-scale-x: .75;
   --tw-scale-y: .75;
@@ -4511,6 +4515,11 @@ input:checked + .toggle-bg{
 
 .hover\:bg-\[rgba\(0\2c 0\2c 0\2c 0\.5\)\]:hover{
   background-color: rgba(0,0,0,0.5);
+}
+
+.hover\:bg-blue-500:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(63 131 248 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-blue-700:hover{
@@ -6747,6 +6756,10 @@ input:checked + .toggle-bg{
 
   .lg\:w-auto{
     width: auto;
+  }
+
+  .lg\:w-64{
+    width: 16rem;
   }
 
   .lg\:max-w-4xl{

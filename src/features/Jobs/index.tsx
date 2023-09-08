@@ -21,15 +21,30 @@ function Jobs() {
     loading,
     error,
   } = useAppSelector(getJobs);
+  const [search, setSearch] = useState<any>({
+    search: "",
+    jobType: "",
+    locations: "",
+  });
 
   useEffect(() => {
-    dispatch(getJobsActions());
+    dispatch(getJobsActions(null));
   }, []);
 
   const [sortValue, setSortValue] = useState("");
+
+  const handleChange = (e: any) => {
+    setSearch({ ...search, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    dispatch(getJobsActions(search));
+  };
+
   return (
     <div className="flex flex-col min-h-screen p-2 w-12/12 lg:w-9/12 my-0 mx-auto relative">
-      <SearchBar />
+      <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />
       <div className="flex flex-col item-center w-full mx-auto py-4 sm:px-6 lg:px-8 relative overflow-hidden rounded-lg ">
         {loading && (
           <div className="flex w-full justify-center item-center">
