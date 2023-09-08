@@ -91,6 +91,20 @@ export default class AdminServices {
     }
   }
 
+  static async getModelData(res: NextApiResponse<any>, id: string, includeRelation) {
+    try {
+      const data = await this.prisma.user.findFirst({
+        where: { id },
+        include: {
+          model: true
+        }
+      });
+      return data;
+    } catch (err) {
+      return ResponseService.sendError(err, res);
+    }
+  }
+
   static async getUsersContracts(res: NextApiResponse<any>, id: number, type: string) {
     const key = `${type}Id`;
     try {

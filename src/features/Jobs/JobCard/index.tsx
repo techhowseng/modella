@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import Button from "components/Button";
 import { Job } from "features/ClientAccount/types";
 import { isApplied } from "features/functions";
+import { formatCurrencyInteger } from "lib/formatCurrency";
 import { APP_ROUTES, resolveRoute } from "lib/routes";
 import Link from "next/link";
 import Router from "next/router";
@@ -23,7 +24,7 @@ function JobCard({
   const isOwner = String(job.clientId) === String(user.id);
 
   return (
-    <div className="flex flex-col p-6 bg-white rounded-lg border">
+    <div className="flex flex-col p-6 bg-white rounded-lg border justify-between">
       {!isClient && (
         <div className="flex space-x-3 items-center">
           <img
@@ -46,40 +47,45 @@ function JobCard({
         <h3 className="text-lg font-semibold text-black">{job.jobRole}</h3>
         <p className="my-2 font-light">{job.jobDescription}</p>
       </blockquote>
-      <div className="text-gray-500 flex justify-between mb-2">
-        <p className="text-sm">Type: {job.jobType}</p>
-        <p className="text-sm ml-4">{job.fee}</p>
-      </div>
-      <div className="flex -space-x-4">
-        <img
-          className="w-8 h-8 border-2 border-white rounded-full dark:border-white"
-          src="https://randomuser.me/api/portraits/women/13.jpg"
-          alt=""
-        />
-        <img
-          className="w-8 h-8 border-2 border-white rounded-full dark:border-white"
-          src="https://randomuser.me/api/portraits/women/14.jpg"
-          alt=""
-        />
-        <img
-          className="w-8 h-8 border-2 border-white rounded-full dark:border-white"
-          src="https://randomuser.me/api/portraits/women/15.jpg"
-          alt=""
-        />
-        <Link
-          className="flex items-center justify-center px-2 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full hover:bg-white-600 dark:border-white-800"
-          href="#"
-        >
-          +99 people applied
-        </Link>
-      </div>
-      <div className="mt-5">
+      <div className="flex flex-col">
+        <div className="text-gray-500 flex justify-between mb-2">
+          <p className="text-sm">Type: {job.jobType}</p>
+          <p className="text-sm ml-4 base-color font-bold">
+            {formatCurrencyInteger(Number(job.fee), "NGN")}
+          </p>
+        </div>
+        {job?.applicants?.length > 0 && (
+          <div className="flex -space-x-4 transition-all duration-200 ease-in-out">
+            <img
+              className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
+              src="https://randomuser.me/api/portraits/women/13.jpg"
+              alt=""
+            />
+            <img
+              className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
+              src="https://randomuser.me/api/portraits/women/14.jpg"
+              alt=""
+            />
+            <img
+              className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
+              src="https://randomuser.me/api/portraits/women/15.jpg"
+              alt=""
+            />
+            <Link
+              className="flex items-center justify-center px-2 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full hover:bg-white-600 dark:border-white-800"
+              href="#"
+            >
+              +99 people applied
+            </Link>
+          </div>
+        )}
+
         {user?.id ? (
           <>
             {!isClient && (
               <Button
                 type="button"
-                className="!base-bg-color !w-full"
+                className="!base-bg-color !w-full mt-5"
                 data-drawer-target="drawer-right-example"
                 data-drawer-show="drawer-right-example"
                 data-drawer-placement="right"
@@ -95,7 +101,7 @@ function JobCard({
             {isOwner && isClient && (
               <Button
                 type="button"
-                className="!base-bg-color !w-full"
+                className="!base-bg-color !w-full mt-5"
                 onClick={
                   route === "/jobs"
                     ? () => Router.push(resolveRoute(APP_ROUTES.job, job.id))
@@ -114,7 +120,7 @@ function JobCard({
         ) : (
           <Button
             type="button"
-            className="!base-bg-color !w-full"
+            className="!base-bg-color !w-full mt-5"
             onClick={() => {
               Router.push(resolveRoute(APP_ROUTES.job, job.id));
             }}

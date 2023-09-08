@@ -28,8 +28,12 @@ const PostJobCreateForm = ({ defaultValues, onClose }: any) => {
       jobDescription: defaultValues?.jobDescription || "",
       jobType: defaultValues?.jobType || "",
       salary: defaultValues?.salary || "",
-      jobLength: defaultValues?.jobLength || "",
-      location: defaultValues?.location || "",
+      // jobLength: defaultValues?.jobLength || "",
+      locations: defaultValues?.locations || "",
+      startDate: defaultValues?.startDate || "",
+      startTime: defaultValues?.startTime || "",
+      hours: defaultValues?.hours || "",
+      days: defaultValues?.days || "",
     },
     jobFormDataSchema,
     (formData: JobAttributesType) => {
@@ -42,7 +46,7 @@ const PostJobCreateForm = ({ defaultValues, onClose }: any) => {
       ).then((res) => {
         if (res.payload.error) {
           setEditing(false);
-          setErrorMessage(res.payload.data.message);
+          setErrorMessage(res.payload.message || res.payload.data.message);
         } else {
           setSuccessMessage(res.payload.message ?? res.type);
           setTimeout(() => {

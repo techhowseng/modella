@@ -207,7 +207,6 @@ model Job {
   days           Int?
   fee            Decimal?  @db.Decimal(9, 2)
   jobType        String?
-  jobLength      String?
   experience     String?
   isOpen         Boolean   @default(true)
   applicants     Model[]
