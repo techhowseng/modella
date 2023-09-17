@@ -8,7 +8,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await SessionRepository.getUserSession(req, res));
+      await SessionRepository.getUserSession(req, res);
       break;
     case "POST":
       break;

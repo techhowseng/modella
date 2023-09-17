@@ -15,22 +15,22 @@ export default async function handle(
       const searchErrors = validationResult(req)
       if (!searchErrors.isEmpty()) return res.status(422).json({ errors: searchErrors.array() });
       queryPermittedParams(req);
-      res.json(await JobsRepository.getJob(req, res));
+      await JobsRepository.getJob(req, res);
       break;
     case "POST":
-      res.json(await JobsRepository.applyForJob(req, res));
+      await JobsRepository.applyForJob(req, res);
       break;
     case "PUT":
       await validateUpdateJob(req, res)
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
       bodyPermittedParams(req);
-      res.json(await JobsRepository.updateJob(req, res));
+      await JobsRepository.updateJob(req, res);
       break;
     case "PATCH":
       break;
     case "DELETE":
-      res.json(await JobsRepository.deleteJob(req, res));
+      await JobsRepository.deleteJob(req, res);
       break;
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
