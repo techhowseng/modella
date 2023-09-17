@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "concurrently \"npm run tailwind\" \"next\" \" npm run chat\"",
-    "postinstall": "concurrently \"prisma generate\" \"next\" npm run seed",
+    "postinstall": "concurrently \"prisma generate\" \"next\" \"npm run seed\"",
     "build": "next build",
     "start": "next start",
     "chat": "node src/backend/server.js",
