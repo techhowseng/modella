@@ -21,7 +21,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -53,7 +53,7 @@ export default class JobServices {
       }
       return (({ ...client }) => ({ ...client }))(job);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -80,7 +80,7 @@ export default class JobServices {
 
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -100,7 +100,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -114,7 +114,7 @@ export default class JobServices {
       });
       return (({ jobs }) => ({ jobs }))(job);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -132,7 +132,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -144,7 +144,7 @@ export default class JobServices {
       });
       return updatedJob;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -155,7 +155,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -173,7 +173,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }
