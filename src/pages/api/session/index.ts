@@ -8,17 +8,17 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await SessionRepository.getUserSession(req, res));
+      await SessionRepository.getUserSession(req, res);
       break;
     case "POST":
-      res.json(await SessionRepository.loginUser(req, res));
+      await SessionRepository.loginUser(req, res);
       break;
     case "PUT":
       break;
     case "PATCH":
       break;
     case "DELETE":
-      res.json(await SessionRepository.deleteSession(req, res));
+      await SessionRepository.deleteSession(req, res);
       break;
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
