@@ -27,7 +27,7 @@ export default class ModelRepository {
         return ResponseService.json(res, 200, "Success", models);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
 	}
 
@@ -38,7 +38,7 @@ export default class ModelRepository {
       const models = await ModelServices.getAllModels(res, pageNo as number);
       return ResponseService.json(res, 200, "Success", models);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
 	}
 }

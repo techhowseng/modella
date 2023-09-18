@@ -34,7 +34,7 @@ export default class ModelRepository {
         return ResponseService.json(res, 200, "Success", model);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -50,7 +50,7 @@ export default class ModelRepository {
       }
       return await ModelServices.getModel(res, ~~pid);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -74,7 +74,7 @@ export default class ModelRepository {
         return ResponseService.json(res, 200, "Success", model);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -97,7 +97,7 @@ export default class ModelRepository {
         return ResponseService.json(res, 200, "Success", model);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -126,7 +126,7 @@ export default class ModelRepository {
 				})
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -143,7 +143,7 @@ export default class ModelRepository {
         return ResponseService.json(res, 200, "Success", model);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

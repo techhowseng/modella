@@ -19,7 +19,7 @@ export default class AdminServices {
       });
       return user;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -30,7 +30,7 @@ export default class AdminServices {
   //     });
   //     return deleted;
   //   } catch (err) {
-  //     return ResponseService.sendError(err, res);
+  //     throw err;
   //   }
   // }
 
@@ -44,7 +44,7 @@ export default class AdminServices {
       });
       return updatedClient;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -58,7 +58,7 @@ export default class AdminServices {
       });
       return updatedClient;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -69,7 +69,7 @@ export default class AdminServices {
       });
       return deletedUserMedia;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -87,7 +87,7 @@ export default class AdminServices {
       });
       return data;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -101,7 +101,7 @@ export default class AdminServices {
       });
       return data;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -115,7 +115,7 @@ export default class AdminServices {
       });
       return usersContracts;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

@@ -25,7 +25,7 @@ export default class ClientRepository {
       return ResponseService.json(res, 200, "Success", client);
     }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -39,7 +39,7 @@ export default class ClientRepository {
         return ResponseService.json(res, 200, "Success", updatedClient);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -49,7 +49,7 @@ export default class ClientRepository {
       const client = await ClientServices.getClient(res, ~~pid);
       return ResponseService.json(res, 200, "Success", client);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -58,7 +58,7 @@ export default class ClientRepository {
       const clients = await ClientServices.getAllClients(res);
       return ResponseService.json(res, 200, "Success", clients);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

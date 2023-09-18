@@ -28,7 +28,7 @@ export default class ClientRepository {
         return ResponseService.json(res, 200, "Success", contract);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -68,7 +68,7 @@ export default class ClientRepository {
       const contract = await ContractServices.updateContract(res, pid, data);
       return ResponseService.json(res, 200, "Success", contract);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -79,7 +79,7 @@ export default class ClientRepository {
       return ResponseService.json(res, 200, "Success", contract);
 
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -98,7 +98,7 @@ export default class ClientRepository {
       const contract = await ContractServices.getUserContracts(res, pid, colCheck);
       return ResponseService.json(res, 200, "Success", contract);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }
