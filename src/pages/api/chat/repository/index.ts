@@ -20,10 +20,10 @@ export default class ChatRepository {
       const user = await getModelOrClient(req, res);
       if (user.type == "Model") {
         const unreadChats = await ChatServices.getunreadChats(res, "modelId", ~~user.id);
-        return unreadChats;
+        return ResponseService.json(res, 200, "Success", unreadChats);
       } else {
         const unreadChats = await ChatServices.getunreadChats(res, "clientId", ~~user.id);
-        return unreadChats;
+        return ResponseService.json(res, 200, "Success", unreadChats);
       }
     } catch (err) {
       return ResponseService.sendError(err, res);

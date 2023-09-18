@@ -11,7 +11,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await UserRepository.getUserByEmail(req, res));
+      await UserRepository.getUserByEmail(req, res);
       break;
     case "POST":
       await validateUser(req, res);
@@ -20,7 +20,7 @@ export default async function handle(
         return res.status(422).json({ errors: createErrors.array() });
       }
       bodyPermittedParams(req);
-      res.json(await UserRepository.createUser(req, res));
+      await UserRepository.createUser(req, res);
       break;
     case "PUT":
       break;
@@ -31,7 +31,7 @@ export default async function handle(
         return res.status(422).json({ errors: createPatchErrors.array() });
       }
       bodyPermittedParams(req);
-      res.json(await UserRepository.verifyUser(req, res));
+      await UserRepository.verifyUser(req, res);
       break;
     case "DELETE":
       break;

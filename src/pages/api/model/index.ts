@@ -30,21 +30,21 @@ apiRoute.post(async(
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  res.json(await ModelRepository.uploadThumbnail(req, res));
+  await ModelRepository.uploadThumbnail(req, res);
 });
 
 apiRoute.put(async(
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  res.json(await ModelRepository.updateThumbnail(req, res));
+  await ModelRepository.updateThumbnail(req, res);
 });
 
 apiRoute.delete(async(
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  res.json(await ModelRepository.deleteThumbnail(req, res));
+  await ModelRepository.deleteThumbnail(req, res);
 });
 
 export default apiRoute;

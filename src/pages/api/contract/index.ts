@@ -11,14 +11,14 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await ContractRepository.getUserContracts(req, res));
+      await ContractRepository.getUserContracts(req, res);
       break;
     case "POST":
       await validateCreateContract(req, res)
       const createErrors = validationResult(req)
       if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
       bodyPermittedParams(req);
-      res.json(await ContractRepository.createContract(req, res));
+      await ContractRepository.createContract(req, res);
       break;
     case "PUT":
       break;

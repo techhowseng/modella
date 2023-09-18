@@ -25,7 +25,7 @@ export default class ClientRepository {
           data.modelId,
           data.jobId
         );
-        return contract;
+        return ResponseService.json(res, 200, "Success", contract);
       }
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -66,7 +66,7 @@ export default class ClientRepository {
       }
       delete data.pid;
       const contract = await ContractServices.updateContract(res, pid, data);
-      return contract;
+      return ResponseService.json(res, 200, "Success", contract);
     } catch(err) {
       return ResponseService.sendError(err, res);
     }
@@ -76,7 +76,7 @@ export default class ClientRepository {
     try {
       const { pid } = req.query;
       const contract = await ContractServices.getContract(res, pid as string);
-      return contract;
+      return ResponseService.json(res, 200, "Success", contract);
 
     } catch(err) {
       return ResponseService.sendError(err, res);
@@ -96,7 +96,7 @@ export default class ClientRepository {
         colCheck = "modelId";
       }
       const contract = await ContractServices.getUserContracts(res, pid, colCheck);
-      return contract;
+      return ResponseService.json(res, 200, "Success", contract);
     } catch(err) {
       return ResponseService.sendError(err, res);
     }

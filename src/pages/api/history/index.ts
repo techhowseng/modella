@@ -11,14 +11,14 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await HistoryRepository.getHistory(req, res));
+      await HistoryRepository.getHistory(req, res);
       break;
     case "POST":
       await validateCreateHistory(req, res)
       const createErrors = validationResult(req)
       if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
       bodyPermittedParams(req);
-      res.json(await HistoryRepository.createHistory(req, res));
+      await HistoryRepository.createHistory(req, res);
       break;
     case "PUT":
       break;

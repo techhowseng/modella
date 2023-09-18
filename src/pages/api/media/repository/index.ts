@@ -77,7 +77,7 @@ export default class MediaRepository {
     try {
       const { id } = req.body;
       const media = await MediaServices.getMedia(res, ~~id);
-      return media;
+      return ResponseService.json(res, 200, "Success", media);
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -87,7 +87,7 @@ export default class MediaRepository {
     try {
       const { userId, page } = req.query;
       const media = await MediaServices.getMediaByUser(res, userId, page);
-      return media;
+      return ResponseService.json(res, 200, "Success", media);
     } catch (err) {
       return ResponseService.sendError(err, res);
     }
@@ -99,9 +99,9 @@ export default class MediaRepository {
       const user = await getModelOrClient(req, res);
       if (user) {
         await cloudinary.uploader.destroy(public_id);
-        const deleteMedia = await MediaServices.deleteMedia(res, ~~id);
+        const deletedMedia = await MediaServices.deleteMedia(res, ~~id);
         await ModelServices.updateMediaCount(res, user.id, "-1");
-        return deleteMedia;
+        return ResponseService.json(res, 200, "Success", deletedMedia);
       }
     } catch (err) {
       return ResponseService.sendError(err, res);
@@ -163,7 +163,7 @@ export default class MediaRepository {
         userId,
         type
       );
-      return updatedMedia;
+      return ResponseService.json(res, 200, "Success", updatedMedia);
     } catch (err) {
       return ResponseService.sendError(err, res);
     }

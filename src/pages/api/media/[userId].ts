@@ -10,7 +10,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await MediaRepository.getMediaByUser(req, res));
+      await MediaRepository.getMediaByUser(req, res);
       break;
     case "POST":
       break;

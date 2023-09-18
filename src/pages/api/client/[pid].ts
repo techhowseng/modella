@@ -11,7 +11,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await ClientRepository.getClient(req, res));
+      await ClientRepository.getClient(req, res);
       break;
     case "POST":
       break;
@@ -20,7 +20,7 @@ export default async function handle(
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
       bodyPermittedParams(req);
-      res.json(await ClientRepository.updateClient(req, res));
+      await ClientRepository.updateClient(req, res);
       break;
     case "PATCH":
       break;
