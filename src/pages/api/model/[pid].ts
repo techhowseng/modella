@@ -11,7 +11,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await ModelRepository.getModel(req, res));
+      await ModelRepository.getModel(req, res);
       break;
     case "POST":
       await validateCreateModel(req, res);
@@ -19,7 +19,7 @@ export default async function handle(
       if (!createErrors.isEmpty())
         return res.status(422).json({ errors: createErrors.array() });
       bodyPermittedParams(req);
-      res.json(await ModelRepository.createModel(req, res));
+      await ModelRepository.createModel(req, res);
       break;
     case "PUT":
       await validateUpdateModel(req, res);
@@ -27,7 +27,7 @@ export default async function handle(
       if (!updateErrors.isEmpty())
         return res.status(422).json({ errors: updateErrors.array() });
       bodyPermittedParams(req);
-      res.json(await ModelRepository.updateModel(req, res));
+      await ModelRepository.updateModel(req, res);
       break;
     case "PATCH":
       break;

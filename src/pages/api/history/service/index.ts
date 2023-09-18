@@ -26,7 +26,7 @@ export default class HistoryServices {
       });
       return history;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -37,7 +37,7 @@ export default class HistoryServices {
       });
       return modelHistory;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -49,7 +49,7 @@ export default class HistoryServices {
       });
       return updatedJobHistory;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

@@ -16,7 +16,7 @@ export default class UserServices {
       });
       return model;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -28,7 +28,7 @@ export default class UserServices {
       });
       return models;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -41,7 +41,7 @@ export default class UserServices {
       });
       return models;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 

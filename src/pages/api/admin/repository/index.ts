@@ -22,10 +22,10 @@ export default class AdminRepository {
       if (isUserAdmin) {
         if (pid[0] == "client") {
           const models = await AdminServices.vetClientById(res, ~~pid[1]);
-          return models;
+          return ResponseService.json(res, 200, "Success", models);
         } else {
           const models = await AdminServices.vetClientByuser(res, pid[1]);
-          return models;
+          return ResponseService.json(res, 200, "Success", models);
         }
       } else {
         return ResponseService.sendError({ 
@@ -34,7 +34,7 @@ export default class AdminRepository {
         }, res);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
 	}
 
@@ -44,10 +44,10 @@ export default class AdminRepository {
       if (isUserAdmin) {
         if (pid[0] == "user") {
           const user = await AdminServices.disableUser(res, pid[1]);
-          return user;
+          return ResponseService.json(res, 200, "Success", user);
         } else if (pid[0] == "usermedia") {
           const userMedia = await AdminServices.deleteUserMedia(res, pid[1]);
-          return userMedia;
+          return ResponseService.json(res, 200, "Success", userMedia);
         } 
         // else {
         //   const deleted = await AdminServices.dynamicDelete(res, pid[0], pid[1]);
@@ -60,7 +60,7 @@ export default class AdminRepository {
         }, res);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
 	}
 
@@ -72,12 +72,12 @@ export default class AdminRepository {
           const modelData = await AdminServices.getModelFromUserId(res, pid[1], "model");
           if (modelData["model"]) {
           const userContracts = await AdminServices.getUsersContracts(res, modelData["model"]["id"], "model");
-          return userContracts;
+          return ResponseService.json(res, 200, "Success", userContracts);
           } else {
             const clientData = await AdminServices.getModelFromUserId(res, pid[1], "client");
             if (clientData["client"]) {
               const userContracts = await AdminServices.getUsersContracts(res, clientData["client"]["id"], "client");
-              return userContracts;
+              return ResponseService.json(res, 200, "Success", userContracts);
             }
           }
         } else {
@@ -93,7 +93,7 @@ export default class AdminRepository {
         }, res);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

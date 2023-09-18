@@ -23,10 +23,11 @@ export default class ModelRepository {
       if (params == "search"){
         const pageNo = page ?? 1;
         const queries = handleQueryObject(userParams);
-        return await ModelServices.searchModels(res, queries, ~~pageNo);
+        const models = await ModelServices.searchModels(res, queries, ~~pageNo);
+        return ResponseService.json(res, 200, "Success", models);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
 	}
 
@@ -35,9 +36,9 @@ export default class ModelRepository {
       const { page } = req.query;
       const pageNo = page ?? 1;
       const models = await ModelServices.getAllModels(res, pageNo as number);
-      return models;
+      return ResponseService.json(res, 200, "Success", models);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
 	}
 }

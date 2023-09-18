@@ -28,7 +28,7 @@ export default class ChatServices {
       });
       return messages;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -68,7 +68,7 @@ export default class ChatServices {
       });
       return conversation;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -102,7 +102,7 @@ export default class ChatServices {
       });
       return conversation;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

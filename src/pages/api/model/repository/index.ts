@@ -31,10 +31,10 @@ export default class ModelRepository {
           user.id,
           data
         );
-        return model;
+        return ResponseService.json(res, 200, "Success", model);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -43,20 +43,20 @@ export default class ModelRepository {
       const { pid } = req.query;
       if (pid == "user") {
         const model = await getModelOrClient(req, res);
-        return model;
+        return ResponseService.json(res, 200, "Success", model);
       } else if (pid.length == 25) {
         const model = await ModelServices.getModelByUserId(res, pid as string);
-        return model;
+        return ResponseService.json(res, 200, "Success", model);
       }
       return await ModelServices.getModel(res, ~~pid);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
   static async getAllModels(res: NextApiResponse<any>) {
 		const models = await ModelServices.getAllModels(res);
-		return models;
+    return ResponseService.json(res, 200, "Success", models);
 	}
 
   static async updateModel(req: NextApiRequest, res: NextApiResponse<any>) {
@@ -71,10 +71,10 @@ export default class ModelRepository {
           userId as string,
           data
         );
-        return model;
+        return ResponseService.json(res, 200, "Success", model);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -94,10 +94,10 @@ export default class ModelRepository {
           result.secure_url,
           result.public_id
         );
-        return model
+        return ResponseService.json(res, 200, "Success", model);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -119,14 +119,14 @@ export default class ModelRepository {
           result.secure_url,
           result.public_id
         );
-        return model
+        return ResponseService.json(res, 200, "Success", model);
       } else {
         return new Response('Unable to delete this image from cloud', {
 					status: 400
 				})
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -140,10 +140,10 @@ export default class ModelRepository {
           res,
           user.id
         );
-        return model
+        return ResponseService.json(res, 200, "Success", model);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

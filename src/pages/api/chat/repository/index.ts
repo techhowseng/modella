@@ -20,13 +20,13 @@ export default class ChatRepository {
       const user = await getModelOrClient(req, res);
       if (user.type == "Model") {
         const unreadChats = await ChatServices.getunreadChats(res, "modelId", ~~user.id);
-        return unreadChats;
+        return ResponseService.json(res, 200, "Success", unreadChats);
       } else {
         const unreadChats = await ChatServices.getunreadChats(res, "clientId", ~~user.id);
-        return unreadChats;
+        return ResponseService.json(res, 200, "Success", unreadChats);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -37,7 +37,7 @@ export default class ChatRepository {
       const conversation = await ChatServices.getOrCreateConversation(res, ~~clientId, ~~modelId);
       return conversation
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -46,7 +46,7 @@ export default class ChatRepository {
       const  { chatId } = req.body;
       if (chatId) return ChatServices.getConversationByChatId(res, chatId);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -64,7 +64,7 @@ export default class ChatRepository {
 
       return newMessage;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -72,7 +72,7 @@ export default class ChatRepository {
     try {
 
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

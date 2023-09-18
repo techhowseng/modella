@@ -39,21 +39,21 @@ apiRoute.post(async(
   req: Request,
   res: NextApiResponse
 ) => {
-  res.json(await MediaRepository.uploadMedia(req, res));
+  await MediaRepository.uploadMedia(req, res);
 });
 
 apiRoute.get(async(
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  res.json(await MediaRepository.getMedia(req, res));
+  await MediaRepository.getMedia(req, res);
 });
 
 apiRoute.put(async(
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  res.json(await MediaRepository.updateMedia(req, res));
+  await MediaRepository.updateMedia(req, res);
 });
 
 apiRoute.delete(async(
@@ -64,7 +64,7 @@ apiRoute.delete(async(
   const createErrors = validationResult(req)
   if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
   bodyPermittedParams(req);
-  res.json(await MediaRepository.deleteMedia(req, res));
+  await MediaRepository.deleteMedia(req, res);
 });
 
 export default apiRoute;

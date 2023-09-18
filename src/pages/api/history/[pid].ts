@@ -19,7 +19,7 @@ export default async function handle(
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
       bodyPermittedParams(req);
-      res.json(await HistoryRepository.updateHistory(req, res));
+      await HistoryRepository.updateHistory(req, res);
       break;
     case "PATCH":
       break;

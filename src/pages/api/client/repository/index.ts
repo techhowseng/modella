@@ -22,10 +22,10 @@ export default class ClientRepository {
           user.id,
           data
         );
-      return client;
+      return ResponseService.json(res, 200, "Success", client);
     }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -36,10 +36,10 @@ export default class ClientRepository {
       if (user) {
         const userId = user.type == "Admin" ? pid : user.id
         const updatedClient = await ClientServices.updateClient(res, userId, req.body);
-        return updatedClient;
+        return ResponseService.json(res, 200, "Success", updatedClient);
       }
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -47,18 +47,18 @@ export default class ClientRepository {
     try {
       const { pid } = req.query;
       const client = await ClientServices.getClient(res, ~~pid);
-      return client;
+      return ResponseService.json(res, 200, "Success", client);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
   static async getAllClients(res) {
     try {
       const clients = await ClientServices.getAllClients(res);
-      return clients;
+      return ResponseService.json(res, 200, "Success", clients);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

@@ -15,7 +15,7 @@ export default async function handle(
       const searchErrors = validationResult(req)
       if (!searchErrors.isEmpty()) return res.status(422).json({ errors: searchErrors.array() });
       queryPermittedParams(req);
-      res.json(await ModelRepository.getModels(req, res));
+      await ModelRepository.getModels(req, res);
       break;
     case "POST":
       break;

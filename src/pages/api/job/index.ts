@@ -21,7 +21,7 @@ export default async function handle(
         return;
       }
       bodyPermittedParams(req);
-      res.json(await JobsRepository.createJob(req, res));
+      await JobsRepository.createJob(req, res);
       return;
     case "PUT":
       return;

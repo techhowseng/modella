@@ -11,13 +11,13 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await ChatRepository.getChat(req, res));
+      await ChatRepository.getChat(req, res);
       break;
     case "POST":
-      res.json(await ChatRepository.postMessage(req, res));
+      await ChatRepository.postMessage(req, res);
       break;
     case "PUT":
-      res.json(await ChatRepository.markAsRead(req, res));
+      await ChatRepository.markAsRead(req, res);
       break;
     case "PATCH":
       break;

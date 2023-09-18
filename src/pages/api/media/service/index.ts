@@ -29,7 +29,7 @@ export default class MediaServices {
       });
       return media;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -40,7 +40,7 @@ export default class MediaServices {
       });
       return media;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -53,7 +53,7 @@ export default class MediaServices {
       });
       return media;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
   
@@ -67,7 +67,7 @@ export default class MediaServices {
       });
       return updatedMedia;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -78,7 +78,7 @@ export default class MediaServices {
       });
       return deletedMedia;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -92,7 +92,7 @@ export default class MediaServices {
       });
       return media;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

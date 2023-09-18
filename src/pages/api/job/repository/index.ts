@@ -21,7 +21,7 @@ export default class JobsRepository {
         return ResponseService.json(res, 200, "Success", jobs);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -32,7 +32,7 @@ export default class JobsRepository {
       const jobs = await JobsServices.updateJob(res, body, pid as string);
       return ResponseService.json(res, 200, "Success", jobs);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -48,7 +48,7 @@ export default class JobsRepository {
         return ResponseService.json(res, 200, "Success", job);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -64,7 +64,7 @@ export default class JobsRepository {
       const job = await JobsServices.getModelJobs(res, ~~pid[1], ~~page);
       return ResponseService.json(res, 200, "Success", job);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -75,7 +75,7 @@ export default class JobsRepository {
       const jobs = await JobsServices.getJobs(res, ~~page, ~~perPage);
       return ResponseService.json(res, 200, "Success", jobs);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -93,7 +93,7 @@ export default class JobsRepository {
       );
       return ResponseService.json(res, 200, "Success", jobs);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -103,7 +103,7 @@ export default class JobsRepository {
       const job = await JobsServices.deleteJob(res, pid as string);
       return ResponseService.json(res, 200, "Success", job);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -124,7 +124,7 @@ export default class JobsRepository {
         res
       );
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

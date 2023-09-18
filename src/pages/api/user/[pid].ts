@@ -11,7 +11,7 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await UserRepository.getUser(req, res));
+      await UserRepository.getUser(req, res);
       break;
     case "POST":
       break;
@@ -20,13 +20,13 @@ export default async function handle(
       const updateErrors = validationResult(req)
       if (!updateErrors.isEmpty()) return res.status(422).json({ errors: updateErrors.array() });
       bodyPermittedParams(req);
-      res.json(await UserRepository.updateUser(req, res));
+      await UserRepository.updateUser(req, res);
       break;
     case "PATCH":
-      res.json(await UserRepository.verifyUser(req, res));
+      await UserRepository.verifyUser(req, res);
       break;
     case "DELETE":
-      res.json(await UserRepository.deleteUser(req, res));
+      await UserRepository.deleteUser(req, res);
       break;
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);

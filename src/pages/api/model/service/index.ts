@@ -21,7 +21,7 @@ export default class ModelServices {
       });
       return model;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -46,7 +46,7 @@ export default class ModelServices {
       }
       return (({ user, ...model }) => ({ ...user, ...model }))(model);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -72,7 +72,7 @@ export default class ModelServices {
       }
       return (({ user, ...model }) => ({ ...user, ...model }))(model);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -81,7 +81,7 @@ export default class ModelServices {
       const model = await this.prisma.model.findMany();
       return model;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 

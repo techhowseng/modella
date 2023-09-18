@@ -24,11 +24,11 @@ export default class HistoryRepository {
 				job,
 				description
 			);
-			return history;
+			return ResponseService.json(res, 200, "Success", history);
 			}
 			return ResponseService.sendError({ message: "Token does not exist on database." }, res);
 		} catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
 		}
 	}
 
@@ -36,9 +36,9 @@ export default class HistoryRepository {
 		try {
 			const model = await getModelOrClient(req, res)
 			const history = await HistoryServices.getHistory(res, ~~model.id);
-			return history;
+			return ResponseService.json(res, 200, "Success", history);
 		} catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
 		}
 	}
 
@@ -53,9 +53,9 @@ export default class HistoryRepository {
 			req.body.job ? input.job = req.body.job : null;
 			req.body.description ? input.description = req.body.description : null;
 			const history = await HistoryServices.updateHistory(res, ~~pid, input);
-			return history;
+			return ResponseService.json(res, 200, "Success", history);
 		} catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
 		}
 	}
 }
