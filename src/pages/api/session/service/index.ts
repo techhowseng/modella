@@ -26,24 +26,26 @@ export default class SessionServices {
             connect: { id },
           },
         },
-      })
+      });
       return session;
-    } catch(err) {
-      return ResponseService.sendError(err, res);
+    } catch (err) {
+      throw err;
     }
   }
 
   static async getSession(res: any, sessionToken: string | null) {
     try {
       if (!sessionToken) return null;
-      const session = await this.prisma.session.findUnique({
-        where: { sessionToken },
-      }).user();
+      const session = await this.prisma.session
+        .findUnique({
+          where: { sessionToken },
+        })
+        .user();
       return session;
-    } catch(err) {
-      return ResponseService.sendError({
-        message: "There was an error retrieving the token details"
-      }, res);
+    } catch (err) {
+      throw {
+        message: "There was an error retrieving the token details",
+      };
     }
   }
 
@@ -55,15 +57,17 @@ export default class SessionServices {
         include: {
           user: {
             include: {
-              client: true
-            }
-          }
-        }
-      })
+              client: true,
+            },
+          },
+        },
+      });
       if (!session) return null;
-      return (({ email, type, client }) => ({ email, type, ...client }))(session.user)
-    } catch(err) {
-      return ResponseService.sendError({message: "There was an error retrieving the token details"}, res);
+      return (({ email, type, client }) => ({ email, type, ...client }))(
+        session.user
+      );
+    } catch (err) {
+      throw { message: "There was an error retrieving the token details" };
     }
   }
 
@@ -76,15 +80,21 @@ export default class SessionServices {
           user: {
             include: {
               model: true,
-              client: true
-            }
-          }
-        }
-      })
-      if (!session) return null
-      return (({ id: userId, email, type, model, client }) => ({ userId, email, type, ...model, ...client }))(session.user)
-    } catch(err) {
-      ResponseService.sendError({ message: 'The user does not have an associated model.' }, res);
+              client: true,
+            },
+          },
+        },
+      });
+      if (!session) return null;
+      return (({ id: userId, email, type, model, client }) => ({
+        userId,
+        email,
+        type,
+        ...model,
+        ...client,
+      }))(session.user);
+    } catch (err) {
+      throw { message: "The user does not have an associated model." };
     }
   }
 
@@ -98,20 +108,19 @@ export default class SessionServices {
         },
       });
       return updatedSession;
-    } catch(err){
-      return ResponseService.sendError({message: "Error updating token expiry."}, res);
+    } catch (err) {
+      throw { message: "Error updating token expiry." };
     }
   }
-
 
   static async deleteSession(res, sessionToken: string) {
     try {
       const session = await this.prisma.session.delete({
-        where: { sessionToken},
+        where: { sessionToken },
       });
       return session;
-    } catch(err) {
-      return ResponseService.sendError({message: "Token does not exist."}, res);
+    } catch (err) {
+      throw { message: "Token does not exist." };
     }
   }
 }

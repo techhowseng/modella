@@ -70,7 +70,7 @@ export default class SessionRepository {
       let user: any;
       let token: string;
       const cookies = JSON.parse(
-        getCookie(SESSION_NAME, { req, res }) as string
+        (getCookie(SESSION_NAME, { req, res }) as string) || ("{}" as string)
       );
       if (cookies && cookies.sessionToken) {
         token = cookies.sessionToken;
