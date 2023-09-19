@@ -36,9 +36,13 @@ export default class SessionRepository {
       );
 
       if (validPassword) {
-        const jwtToken = jwt.sign(user, process.env.JWT_KEY, {
-          expiresIn: "24hr",
-        });
+        const jwtToken = jwt.sign(
+          { id: user.id, type: user.type, email: user.email },
+          process.env.JWT_KEY,
+          {
+            expiresIn: "24hr",
+          }
+        );
         const session = user
           ? await SessionServices.createSession(res, user.id, jwtToken)
           : "";
