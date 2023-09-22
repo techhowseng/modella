@@ -76,8 +76,8 @@ export default class SessionRepository {
       const cookies = JSON.parse(
         (getCookie(SESSION_NAME, { req, res }) as string) || ("{}" as string)
       );
-      if (cookies && cookies.sessionToken) {
-        token = cookies.sessionToken;
+      if (cookies && cookies.session.sessionToken) {
+        token = cookies.session.sessionToken;
       }
       user = await SessionServices.getModelOrClient(res, token);
       return ResponseService.json(res, 200, "Success", user);

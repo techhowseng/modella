@@ -22,6 +22,7 @@ function JobCard({
   const route = location.pathname;
   const isAppliedToJob = isApplied(user, job?.applicants);
   const isOwner = String(job.clientId) === String(user.id);
+  const numberOfApplicants = job?.applicants.length;
 
   return (
     <div className="flex flex-col p-6 bg-white rounded-lg border justify-between">
@@ -45,7 +46,9 @@ function JobCard({
       )}
       <blockquote className="max-w-2xl mt-2 text-gray-500">
         <h3 className="text-lg font-semibold text-black">{job.jobRole}</h3>
-        <p className="my-2 font-light">{job.jobDescription}</p>
+        <p className="my-2 font-light leading-loose whitespace-nowrap overflow-hidden text-ellipsis">
+          {job.jobDescription}
+        </p>
       </blockquote>
       <div className="flex flex-col">
         <div className="text-gray-500 flex justify-between mb-2">
@@ -54,29 +57,36 @@ function JobCard({
             {formatCurrencyInteger(Number(job.fee), "NGN")}
           </p>
         </div>
-        {job?.applicants?.length > 0 && (
+        {numberOfApplicants > 0 && (
           <div className="flex -space-x-4 transition-all duration-200 ease-in-out">
-            <img
-              className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
-              src="https://randomuser.me/api/portraits/women/13.jpg"
-              alt=""
-            />
-            <img
-              className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
-              src="https://randomuser.me/api/portraits/women/14.jpg"
-              alt=""
-            />
-            <img
-              className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
-              src="https://randomuser.me/api/portraits/women/15.jpg"
-              alt=""
-            />
-            <Link
-              className="flex items-center justify-center px-2 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full hover:bg-white-600 dark:border-white-800"
-              href="#"
-            >
-              +99 people applied
-            </Link>
+            {numberOfApplicants > 3 ? (
+              <>
+                <img
+                  className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
+                  src="https://randomuser.me/api/portraits/women/13.jpg"
+                  alt=""
+                />
+                <img
+                  className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
+                  src="https://randomuser.me/api/portraits/women/14.jpg"
+                  alt=""
+                />
+                <img
+                  className="w-8 h-8 border-2 border-white rounded-full dark:border-white hover:z-10 hover:cursor-pointer transition-all duration-200 ease-in-out"
+                  src="https://randomuser.me/api/portraits/women/15.jpg"
+                  alt=""
+                />
+              </>
+            ) : null}
+            {numberOfApplicants && (
+              <Link
+                className="h-8 flex items-center justify-center px-2 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full hover:bg-white-600 dark:border-white-800"
+                href="#"
+              >
+                {numberOfApplicants}{" "}
+                {numberOfApplicants > 1 ? "people" : "person"} applied
+              </Link>
+            )}
           </div>
         )}
 
