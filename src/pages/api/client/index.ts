@@ -11,14 +11,14 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await ClientRepository.getAllClients(res));
+      await ClientRepository.getAllClients(res);
       break;
     case "POST":
       await validateCreateClient(req, res)
       const createErrors = validationResult(req)
       if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
       bodyPermittedParams(req);
-      res.json(await ClientRepository.createClient(req, res));
+      await ClientRepository.createClient(req, res);
       break;
     case "PUT":
       break;

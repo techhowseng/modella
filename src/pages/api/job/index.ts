@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { validationResult } from 'express-validator';
+import { validationResult } from "express-validator";
 import { validateCreateJob, validateUpdateJob } from "./jobValidation";
 import JobsRepository from "./repository";
 import { bodyPermittedParams } from "helper/util";
@@ -11,23 +11,27 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await JobsRepository.searchJobs(req, res));
-      break;
+      await JobsRepository.searchJobs(req, res);
+      return;
     case "POST":
-      await validateCreateJob(req, res)
-      const createErrors = validationResult(req)
-      if (!createErrors.isEmpty()) return res.status(422).json({ errors: createErrors.array() });
+      await validateCreateJob(req, res);
+      const createErrors = validationResult(req);
+      if (!createErrors.isEmpty()) {
+        res.status(422).json({ errors: createErrors.array() });
+        return;
+      }
       bodyPermittedParams(req);
-      res.json(await JobsRepository.createJob(req, res));
-      break;
+      await JobsRepository.createJob(req, res);
+      return;
     case "PUT":
-      break;
+      return;
     case "PATCH":
-      break;
+      return;
     case "DELETE":
-      break;
+      return;
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
+      return;
   }
 }

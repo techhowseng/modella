@@ -28,6 +28,8 @@ function Jobs() {
     handleSubmit({ preventDefault: () => {} });
   }, []);
 
+  if (typeof window === "undefined") return null;
+
   return (
     <div className="flex flex-col min-h-screen p-2 w-12/12 lg:w-9/12 my-0 mx-auto relative">
       <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />

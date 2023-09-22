@@ -34,7 +34,7 @@ export default class UserServices {
       });
       return user;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -45,7 +45,7 @@ export default class UserServices {
       });
       return user;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -56,7 +56,7 @@ export default class UserServices {
       });
       return user;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -68,7 +68,7 @@ export default class UserServices {
       });
       return updatedUser;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -152,7 +152,7 @@ export default class UserServices {
       })
       return deleteVerifications;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -168,7 +168,7 @@ export default class UserServices {
       });
       return verifiedUser;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

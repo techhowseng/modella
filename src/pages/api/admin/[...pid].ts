@@ -8,17 +8,17 @@ export default async function handle(
   const { method } = req;
   switch (method) {
     case "GET":
-      res.json(await AdminRepository.getUserContracts(req, res));
+      await AdminRepository.getUserContracts(req, res);
       break;
     case "POST":
       break;
     case "PUT":
-      res.json(await AdminRepository.vetClient(req, res));
+      await AdminRepository.vetClient(req, res);
       break;
     case "PATCH":
       break;
     case "DELETE":
-      res.json(await AdminRepository.delete(req, res));
+      await AdminRepository.delete(req, res);
       break;
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);

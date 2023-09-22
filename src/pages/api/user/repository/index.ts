@@ -54,7 +54,7 @@ export default class UserRepository {
         (({ token, email }) => ({ token, email }))(newVerification)
       );
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -86,7 +86,7 @@ export default class UserRepository {
         }))(updatedUser);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -94,9 +94,9 @@ export default class UserRepository {
     try {
       const { pid } = req.query;
 			const user = await getModelOrClient(req, res);
-      return user;
+      return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -112,7 +112,7 @@ export default class UserRepository {
         }))(user);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -132,7 +132,7 @@ export default class UserRepository {
         }))(deletedUser);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -140,9 +140,9 @@ export default class UserRepository {
     try {
       const { token } = req.body;
       const user = await SessionServices.getSession(res, token);
-      return user;
+      return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -150,9 +150,9 @@ export default class UserRepository {
     try {
       const { token } = req.body;
       const user = await SessionServices.updateSession(res, token);
-      return user;
+      return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -166,9 +166,9 @@ export default class UserRepository {
         identifier,
         token
       );
-      return user;
+      return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -184,7 +184,7 @@ export default class UserRepository {
         }))(user);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -216,14 +216,14 @@ export default class UserRepository {
           ...session,
         };
         
-        return userDetails;
+        return ResponseService.json(res, 200, "Success", userDetails);
       } else
         return ResponseService.sendError(
           { message: "This Token has expired or has already been verified." },
           res
         );
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

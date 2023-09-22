@@ -32,7 +32,7 @@ export default class ContractServices {
       });
       return contractedModel;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -45,7 +45,7 @@ export default class ContractServices {
       return contractedModel;
 
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -57,7 +57,7 @@ export default class ContractServices {
       });
       return updatedContract;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -68,7 +68,7 @@ export default class ContractServices {
       });
       return modelContracts;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -81,7 +81,7 @@ export default class ContractServices {
       });
       return modelContracts;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -109,7 +109,7 @@ export default class ContractServices {
       const contractsArray = session?.user?.model?.contracts
       return contractsArray;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -137,7 +137,7 @@ export default class ContractServices {
       const contractsArray = session?.user?.client?.contracts
       return contractsArray;
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

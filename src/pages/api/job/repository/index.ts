@@ -18,10 +18,10 @@ export default class JobsRepository {
       const client = await getModelOrClient(req, res);
       if (client) {
         const jobs = await JobsServices.createJob(res, client.id, req.body);
-        return jobs;
+        return ResponseService.json(res, 200, "Success", jobs);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -30,25 +30,25 @@ export default class JobsRepository {
       const { body } = req;
       const { pid } = req.query;
       const jobs = await JobsServices.updateJob(res, body, pid as string);
-      return jobs;
+      return ResponseService.json(res, 200, "Success", jobs);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
   static async getJob(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { pid } = req.query;
-      if (pid[0] == "client" || pid[0] == "model"){
+      if (pid[0] == "client" || pid[0] == "model") {
         return await this.getUserJobs(req, res, pid as string[]);
       } else if (pid[0] == "search") {
         return await this.searchJobs(req, res);
       } else {
         const job = await JobsServices.getJob(res, pid[0]);
-        return job;
+        return ResponseService.json(res, 200, "Success", job);
       }
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -58,11 +58,13 @@ export default class JobsRepository {
     pid: string[]
   ) {
     try {
-      const page = pid[2]?.replace(/[^0-9]/g, '') ?? 1;
-      if (pid[0] == "client") return await JobsServices.getClientJobs(res, ~~pid[1], ~~page);
-      return await JobsServices.getModelJobs(res, ~~pid[1], ~~page);
+      const page = pid[2]?.replace(/[^0-9]/g, "") ?? 1;
+      if (pid[0] == "client")
+        return await JobsServices.getClientJobs(res, ~~pid[1], ~~page);
+      const job = await JobsServices.getModelJobs(res, ~~pid[1], ~~page);
+      return ResponseService.json(res, 200, "Success", job);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -71,9 +73,9 @@ export default class JobsRepository {
       const page = req.query.page ?? 1;
       const perPage = req.query.perPage ?? 10;
       const jobs = await JobsServices.getJobs(res, ~~page, ~~perPage);
-      return jobs;
+      return ResponseService.json(res, 200, "Success", jobs);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -83,10 +85,15 @@ export default class JobsRepository {
       const pageNo = page ?? 1;
       const perPageNo = perPage ?? 10;
       const queries = handleQuery(allQueries);
-      const jobs = await JobsServices.searchJobs(res, queries, ~~pageNo, ~~perPageNo);
-      return jobs;
+      const jobs = await JobsServices.searchJobs(
+        res,
+        queries,
+        ~~pageNo,
+        ~~perPageNo
+      );
+      return ResponseService.json(res, 200, "Success", jobs);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -94,9 +101,9 @@ export default class JobsRepository {
     try {
       const { pid } = req.query;
       const job = await JobsServices.deleteJob(res, pid as string);
-      return job;
+      return ResponseService.json(res, 200, "Success", job);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -105,15 +112,19 @@ export default class JobsRepository {
       const { pid } = req.query;
       const model = await getModelOrClient(req, res);
       if (model) {
-        const jobs = await JobsServices.applyForJob(res, pid[0] as string, model.id);
-        return jobs;
+        const jobs = await JobsServices.applyForJob(
+          res,
+          pid[0] as string,
+          model.id
+        );
+        return ResponseService.json(res, 200, "Success", jobs);
       }
       return ResponseService.sendError(
         { message: "Token does not exist on database." },
         res
       );
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }

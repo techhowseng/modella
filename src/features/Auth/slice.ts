@@ -56,7 +56,7 @@ export const userSlice = createSlice({
         // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
         state.loading = false;
         state.data.user = payload.data ?? payload;
-        setCookie(SESSION_NAME, JSON.stringify(payload), {
+        setCookie(SESSION_NAME, JSON.stringify(payload.data), {
           maxAge: 60 * 60 * 24,
         });
         state.message = payload.message;

@@ -59,7 +59,7 @@ export const useGetSessionUser = (authenticate?: boolean) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (authenticate && !userData.id) {
+    if (authenticate && !userData.session.id) {
       router.push(APP_ROUTES.login);
     }
   }, [authenticate, userData]);

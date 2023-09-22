@@ -20,7 +20,7 @@ export default class ClientServices {
       });
       return client;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -45,7 +45,7 @@ export default class ClientServices {
       }
       return (({ user, ...client }) => ({ ...user, ...client }))(client);
     } catch(err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -54,7 +54,7 @@ export default class ClientServices {
       const clients = await this.prisma.client.findMany();
       return clients;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 

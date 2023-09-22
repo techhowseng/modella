@@ -13,6 +13,8 @@ function SearchBar({
   handleChange: any;
   handleSubmit: any;
 }) {
+  if (typeof window === "undefined") return null;
+
   return (
     <div className="flex flex-row py-6 sm:px-6 lg:px-8 lg:sticky top-0 z-10">
       <div className="bg-white p-3 w-full flex flex-col lg:flex-row rounded-lg border justify-between">

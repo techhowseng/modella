@@ -2,7 +2,8 @@ import axios from "axios";
 import { getSessionToken } from "features/functions";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL:
+    "http://localhost:3000/api" || "https://manikeens-lake.vercel.app/api",
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
@@ -12,7 +13,8 @@ const axiosInstance = axios.create({
 });
 
 export const axiosMediaInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL:
+    "http://localhost:3000/api" || "https://manikeens-lake.vercel.app/api",
   headers: {
     "Content-Type": "multipart/form-data",
     "Access-Control-Allow-Origin": "*",

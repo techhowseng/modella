@@ -23,6 +23,8 @@ export default function Header({ authenticate }) {
     }
   }, [authenticate, data]);
 
+  if (typeof window === "undefined") return null;
+
   return (
     <Popover className="relative bg-white">
       <div className="mx-auto max-w-7xl px-6">
@@ -41,12 +43,14 @@ export default function Header({ authenticate }) {
           </div>
 
           {userData?.userId ? (
-            <Link
-              href={APP_ROUTES.jobs}
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-            >
-              Jobs
-            </Link>
+            <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+              <Link
+                href={APP_ROUTES.jobs}
+                className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+              >
+                Jobs
+              </Link>
+            </div>
           ) : (
             <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
               <Link
@@ -100,7 +104,8 @@ export default function Header({ authenticate }) {
                     {({ active }) => (
                       <Link
                         href={
-                          (userData?.userId && userProfileRoute(userData)) ??
+                          (userData?.userId &&
+                            userProfileRoute(userData)) ??
                           "#"
                         }
                         className={classNames(

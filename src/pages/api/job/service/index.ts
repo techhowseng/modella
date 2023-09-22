@@ -6,6 +6,21 @@ import { NextApiResponse } from "next";
 // @ts-ignore
 export type TJob = PrismaClient["job"]["create"]["data"];
 
+const inCludeClient = {
+  client: {
+    select: {
+      companyName: true,
+      phone: true,
+      userId: true,
+      user: {
+        select: {
+          Media: true,
+        },
+      },
+    },
+  },
+};
+
 export default class JobServices {
   static prisma: PrismaClient = prisma;
 
@@ -21,7 +36,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -31,18 +46,7 @@ export default class JobServices {
         where: { id },
         include: {
           applicants: true,
-          client: {
-            select: {
-              companyName: true,
-              phone: true,
-              userId: true,
-              user: {
-                select: {
-                  Media: true,
-                },
-              },
-            },
-          },
+          client: inCludeClient.client,
         },
       });
       if (!job) {
@@ -53,7 +57,7 @@ export default class JobServices {
       }
       return (({ ...client }) => ({ ...client }))(job);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -64,23 +68,13 @@ export default class JobServices {
         skip: perPage * (page - 1),
         include: {
           applicants: true,
-          client: {
-            select: {
-              companyName: true,
-              userId: true,
-              user: {
-                select: {
-                  Media: true,
-                },
-              },
-            },
-          },
+          client: inCludeClient.client,
         },
       });
 
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -100,7 +94,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -114,7 +108,7 @@ export default class JobServices {
       });
       return (({ jobs }) => ({ jobs }))(job);
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -129,10 +123,14 @@ export default class JobServices {
         take: perPage,
         skip: perPage * (page - 1),
         where: query,
+        include: {
+          applicants: true,
+          client: inCludeClient.client,
+        },
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -144,7 +142,7 @@ export default class JobServices {
       });
       return updatedJob;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -155,7 +153,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 
@@ -163,6 +161,10 @@ export default class JobServices {
     try {
       const job = await this.prisma.job.update({
         where: { id },
+        include: {
+          applicants: true,
+          client: inCludeClient.client,
+        },
         data: {
           applicants: {
             connect: {
@@ -173,7 +175,7 @@ export default class JobServices {
       });
       return job;
     } catch (err) {
-      return ResponseService.sendError(err, res);
+      throw err;
     }
   }
 }
