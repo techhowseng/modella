@@ -54,7 +54,7 @@ export default class UserRepository {
         (({ token, email }) => ({ token, email }))(newVerification)
       );
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -86,7 +86,7 @@ export default class UserRepository {
         }))(updatedUser);
       }
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -96,7 +96,7 @@ export default class UserRepository {
 			const user = await getModelOrClient(req, res);
       return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -112,7 +112,7 @@ export default class UserRepository {
         }))(user);
       }
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -132,7 +132,7 @@ export default class UserRepository {
         }))(deletedUser);
       }
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -142,7 +142,7 @@ export default class UserRepository {
       const user = await SessionServices.getSession(res, token);
       return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -152,7 +152,7 @@ export default class UserRepository {
       const user = await SessionServices.updateSession(res, token);
       return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -168,7 +168,7 @@ export default class UserRepository {
       );
       return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -184,7 +184,7 @@ export default class UserRepository {
         }))(user);
       }
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -223,7 +223,7 @@ export default class UserRepository {
           res
         );
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 }

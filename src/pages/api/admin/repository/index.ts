@@ -34,7 +34,7 @@ export default class AdminRepository {
         }, res);
       }
     } catch(err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
 	}
 
@@ -60,7 +60,7 @@ export default class AdminRepository {
         }, res);
       }
     } catch(err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
 	}
 
@@ -93,7 +93,7 @@ export default class AdminRepository {
         }, res);
       }
     } catch(err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 }

@@ -69,7 +69,7 @@ export default class MediaRepository {
         );
       }
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -79,7 +79,7 @@ export default class MediaRepository {
       const media = await MediaServices.getMedia(res, ~~id);
       return ResponseService.json(res, 200, "Success", media);
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -89,7 +89,7 @@ export default class MediaRepository {
       const media = await MediaServices.getMediaByUser(res, userId, page);
       return ResponseService.json(res, 200, "Success", media);
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -104,7 +104,7 @@ export default class MediaRepository {
         return ResponseService.json(res, 200, "Success", deletedMedia);
       }
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -145,7 +145,7 @@ export default class MediaRepository {
         );
       }
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -165,7 +165,7 @@ export default class MediaRepository {
       );
       return ResponseService.json(res, 200, "Success", updatedMedia);
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 }
