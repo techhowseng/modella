@@ -65,7 +65,7 @@ export default class SessionRepository {
       }
       throw new Error("Email or password do not match.");
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -82,7 +82,7 @@ export default class SessionRepository {
       user = await SessionServices.getModelOrClient(res, token);
       return ResponseService.json(res, 200, "Success", user);
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 
@@ -95,7 +95,7 @@ export default class SessionRepository {
       await SessionServices.deleteSession(res, token);
       return ResponseService.json(res, 200, "This user has been logged out.");
     } catch (err) {
-      throw err;
+      return ResponseService.sendError(err, res);
     }
   }
 }
