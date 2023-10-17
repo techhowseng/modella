@@ -3839,16 +3839,16 @@ input:checked + .toggle-bg{
   line-height: 2.25rem;
 }
 
+.leading-loose{
+  line-height: 2;
+}
+
 .leading-none{
   line-height: 1;
 }
 
 .leading-tight{
   line-height: 1.25;
-}
-
-.leading-loose{
-  line-height: 2;
 }
 
 .tracking-tight{
