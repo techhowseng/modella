@@ -3,11 +3,13 @@
 :root {
   --font-family: "Plus Jakarta Sans", sans-serif;
   --base-color: #006ef6;
+  --base-hover: #79a4d8;
   --base-light-color: #006ff623;
   --base-blue: #04a4f4;
   --base-red: #ff4d5e;
   --neutral-black: #222638;
   --base-yellow: #ffbb54;
+  --dim-yellow: #ffc70e33;
   --off-white: #fcfcfc;
   --base-grey: #9c9ca4;
 
@@ -65,6 +67,44 @@ button {
 .base-light-border-color,
 .hover\:base-light-border-color:hover {
   border-color: var(--base-light-color);
+}
+/*************************************/
+.base-hover,
+.hover\:base-hover:hover {
+  color: var(--base-hover);
+}
+.\!base-hover,
+.\!hover\:base-hover:hover {
+  color: var(--base-hover) !important;
+}
+.base-hover,
+.hover\:base-hover:hover {
+  background-color: var(--base-hover);
+}
+.\!base-hover,
+.\!hover\:base-hover:hover {
+  background-color: var(--base-hover) !important;
+}
+.base-hoverr-color,
+.hover\:base-hoverr-color:hover {
+  border-color: var(--base-hover);
+}
+.\!base-hoverr-color,
+.\!hover\:base-hoverr-color:hover {
+  border-color: var(--base-hover) !important;
+}
+
+.base-hover-color,
+.hover\:base-hover-color:hover {
+  color: var(--base-hover-color);
+}
+.base-hover-bg-color,
+.hover\:base-hover-bg-color:hover {
+  background-color: var(--base-hover-color);
+}
+.base-hover-border-color,
+.hover\:base-hover-border-color:hover {
+  border-color: var(--base-hover-color);
 }
 
 .base-grey,
@@ -143,6 +183,19 @@ button {
 .base-border-yellow,
 .hover\:base-border-yellow:hover {
   border-color: var(--base-yellow);
+}
+
+.dim-yellow,
+.hover\:dim-yellow:hover {
+  color: var(--dim-yellow);
+}
+.dim-bg-yellow,
+.hover\:dim-bg-yellow:hover {
+  background-color: var(--dim-yellow);
+}
+.dim-border-yellow,
+.hover\:dim-border-yellow:hover {
+  border-color: var(--dim-yellow);
 }
 
 /*---------Base---------*/

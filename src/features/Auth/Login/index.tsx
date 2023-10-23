@@ -1,7 +1,5 @@
 import AlertMessage from "components/AlertMessage";
-import SideDisplay from "components/Auth/SideDisplay";
 import Button from "components/Button";
-import GradientBG from "components/GradientBG";
 import Input from "components/Input";
 import { useForm } from "features/hooks";
 import { APP_ROUTES } from "lib/routes";
@@ -14,107 +12,97 @@ import { loginFormDataSchema } from "../schema";
 import { createSession } from "../services";
 import { getSessionUser } from "../slice";
 import { LoginSessionType } from "../types";
+import LoginSideDisplay from "components/Auth/LoginSidebar";
 
 function Login() {
-  const dispatch = useAppDispatch();
-  const { loading } = useAppSelector(getSessionUser);
-  const { query } = useRouter();
-  const {
-    handleChange,
-    handleSubmit,
-    errorMessage,
-    setErrorMessage,
-    setSuccessMessage,
-  } = useForm(
-    {
-      email: "",
-      password: "",
-    },
-    loginFormDataSchema,
-    (formData: LoginSessionType) => {
-      dispatch(createSession(formData)).then((res) => {
-        if (res.payload.error) {
-          setErrorMessage(res.payload.data.message);
-        } else {
-          setSuccessMessage(res.payload.message || res.type);
-          if (query.redirect) {
-            location.href = query.redirect as string;
-          } else {
-            location.href = APP_ROUTES.jobs;
-          }
-        }
-      });
-    }
-  );
+   const dispatch = useAppDispatch();
+   const { loading } = useAppSelector(getSessionUser);
+   const { query } = useRouter();
+   const {
+      handleChange,
+      handleSubmit,
+      errorMessage,
+      setErrorMessage,
+      setSuccessMessage,
+   } = useForm(
+      {
+         email: "",
+         password: "",
+      },
+      loginFormDataSchema,
+      (formData: LoginSessionType) => {
+         dispatch(createSession(formData)).then((res) => {
+            if (res.payload.error) {
+               setErrorMessage(res.payload.data.message);
+            } else {
+               setSuccessMessage(res.payload.message || res.type);
+               if (query.redirect) {
+                  location.href = query.redirect as string;
+               } else {
+                  location.href = APP_ROUTES.dashboard;
+               }
+            }
+         });
+      }
+   );
 
-  return (
-    <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 h-[100vh]">
-      <SideDisplay />
+   return (
+      <div className="w-full md:flex">
+         <LoginSideDisplay />
 
-      <div className="flex flex-col row-span-2/3 justify-center items-center flex-1 py-20 md:py-30 lg:py-36 px-10 md:px-20">
-        <GradientBG />
-        <div className="flex-1 w-full py-10 lg:py-20 md:py-24 px-0 lg:px-38 md:px-20 h-full flex flex-col justify-center">
-          <div className="flex flex-col">
-            <h1 className="text-3xl mb-10 font-bold">Sign In</h1>
-            <div className="flex flex-row">
-              <p className="mr-1">New User?</p>
-              <Link href={APP_ROUTES.auth} className="base-blue">
-                Create Account
-              </Link>
+         <div className="flex max-w-[800px] md:w-[65%] mx-auto justify-center items-center py-10 md:py-30 lg:py-36 px-10 md:px-20">
+            <div className="w-full">
+               <div className="flex flex-col">
+                  <h1 className="text-4xl mb-10 font-bold">Hello, Welcome Back</h1>
+               </div>
+
+               <form className="flex flex-col mt-10">
+                  {errorMessage && (
+                     <AlertMessage type="error" message={errorMessage} />
+                  )}
+
+                  <div className="flex flex-col space-y-4">
+                     {LOGIN_FORM.map((field, index) => (
+                        <div key={index} className="col-span-6 font-bold sm:col-span-6">
+                           <Input
+                              className="bg-gray-200 rounded-xl border-0 outline-0"
+                              type={field.type}
+                              onChange={handleChange}
+                              label={field.label}
+                              placeholder={field.label}
+                              name={field.name}
+                              id={field.name}
+                           />
+                        </div>
+                     ))}
+                     <Link href="#" className="base-grey mb-10 ml-auto hover:base-color -mt-6">Forget Password?</Link>
+                  </div>
+
+                  <div className="w-[100%] flex flex-col md:flex-col lg:w-[100%] mt-10 justify-between items-center">
+                     <Button
+                        onClick={handleSubmit}
+                        loading={loading}
+                        loadingText={"Loading..."}
+                     >
+                        Sign In
+                     </Button>
+                     <div className="flex flex-row mt-9">
+                        <p className="mr-1">Not Registered Yet? </p>
+                        <Link href={APP_ROUTES.auth} className="base-blue">
+                           Register Here
+                        </Link>
+                     </div>
+                  </div>
+               </form>
+
+               {/* <!---dskdlksld---> */}
             </div>
-          </div>
+            {/* <!---dskdlksld---> */}
+         </div>
 
-          <div className="flex flex-col mt-10">
-            {errorMessage && (
-              <AlertMessage type="error" message={errorMessage} />
-            )}
-
-            <div className="grid grid-cols-6 gap-6">
-              {LOGIN_FORM.map((field, index) => (
-                <div key={index} className="col-span-6 sm:col-span-6">
-                  <Input
-                    type={field.type}
-                    onChange={handleChange}
-                    label={field.label}
-                    name={field.name}
-                    id={field.name}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* <div className="flex flex-col mt-10">
-              <label className="mb-2">Password</label>
-              <div className="relative w-full">
-                <input
-                  type="password"
-                  placeholder="Enter Your Password"
-                  className="base-input w-full p-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-                />
-                <HiOutlineEye className="absolute top-4 right-4" size={24} />
-              </div>
-            </div> */}
-
-            <div className="w-full flex flex-col md:flex-col lg:flex-row mt-10 justify-between items-center">
-              <p className="base-grey mb-10">Forget Password?</p>
-              <Button
-                onClick={handleSubmit}
-                loading={loading}
-                loadingText={"Loading..."}
-              >
-                <p className="text-white">Sign In</p>
-              </Button>
-            </div>
-          </div>
-
-          {/* <!---dskdlksld---> */}
-        </div>
-        {/* <!---dskdlksld---> */}
+         {/* <!---dskdlksld---> */}
       </div>
-
-      {/* <!---dskdlksld---> */}
-    </div>
-  );
+   );
 }
 
 export default Login;
