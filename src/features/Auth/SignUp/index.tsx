@@ -19,7 +19,7 @@ function SignUp() {
       <div className="flex w-full">
          <SideDisplay image={AuthImageGirl.src} />
 
-         <div className="flex max-w-[800px] md:w-[65%] mx-auto justify-center items-center py-10 md:py-10 lg:py-26 px-10 md:px-20">
+         <div className="flex md:ml-[35%] md:w-[65%] mx-auto justify-center items-center py-10 md:py-10 lg:pt-20 px-10 md:px-20">
             {/* <Stepper /> */}
             {type === "model" && <CreatorSignUpForm />}
             {type === "client" && <ClientSignupForm />}

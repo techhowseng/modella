@@ -1,8 +1,8 @@
 import React from 'react'
-import { Recommendations } from '../../../types'
+import { Recommendations } from '../../types'
 
 
-const index = ({ models }) => {
+const RowCard = ({ models }) => {
    const { id, firstname, lastname, img, country } = models
    return (
       <div className='flex items-center p-2 w-full h-[60px] bg-white rounded-xl mb-2'>
@@ -20,4 +20,4 @@ const index = ({ models }) => {
    )
 }
 
-export default index
+export default RowCard

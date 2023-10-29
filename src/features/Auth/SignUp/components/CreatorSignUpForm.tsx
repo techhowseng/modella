@@ -5,7 +5,7 @@ import { useForm } from "features/hooks";
 import { signUpFormDataSchema } from "features/Auth/schema";
 import { registerUser } from "features/Auth/services";
 import { getSessionUser } from "features/Auth/slice";
-import { AuthRegistrationFormType } from "features/Auth/types";
+import { AuthRegistrationFormType } from "types";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
 import React from "react";

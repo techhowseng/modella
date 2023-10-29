@@ -6,7 +6,7 @@ import { useForm } from "features/hooks";
 import { signUpFormDataSchema } from "features/Auth/schema";
 import { registerUser } from "features/Auth/services";
 import { getSessionUser } from "features/Auth/slice";
-import { AuthRegistrationFormType } from "features/Auth/types";
+import { AuthRegistrationFormType } from "../../../../types";
 import { SITE_NAME } from "lib/constants";
 import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
@@ -48,7 +48,7 @@ function ClientSignupForm({ verified }: { verified?: boolean }) {
    return (
       <div className="">
          {!error && message ? null : (
-            <div className="flex flex-col mb-16 text-center">
+            <div className="flex flex-col items-center justify-center mx-auto mb-16 text-center">
                <h1 className="text-3xl  mx-auto mb-3 w-[80%] font-bold">Welcome, You Are A <span className="base-color">Step Ahead</span> To Great Services </h1>
                <p className="mr-1 text-sm text-gray-400">Please fill out the form</p>
             </div>

@@ -51,11 +51,11 @@ function Input({
             <textarea
                id={id}
                name={name}
-               rows={4}
+               rows={20}
                value={value}
                onChange={onChange}
-               className={`w-full base-input p-4 rounded-lg border-1 ${error ? "base-border-red" : "border-gray-200"
-                  } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 max-h-[61px] ${className}`}
+               className={`w-full base-input p-4 rounded-2xl border-1 ${error ? "base-border-red" : "border-gray-200"
+                  } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 max-h-[150px] ${className}`}
                placeholder={placeholder}
             ></textarea>
          );
@@ -73,7 +73,7 @@ function Input({
                value={value}
                checked={!!value}
                onChange={onChange}
-               className={`base-input w-full p-4 rounded-lg border-1 ${error ? "base-border-red" : "border-gray-200"
+               className={`base-input w-full p-4 rounded-2xl border-1 ${error ? "base-border-red" : "border-gray-200"
                   } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
             />
          );
@@ -87,7 +87,7 @@ function Input({
                placeholder={initialOption || "---- Select ----"}
                defaultValue={value || "---- Select ----"}
                onChange={onChange as any}
-               className={`base-input w-full p-4 rounded-lg border-1 ${error ? "base-border-red" : "border-gray-200"
+               className={`base-input w-full p-4 rounded-2xl border-1 ${error ? "base-border-red" : "border-gray-200"
                   } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
             >
                <option>{initialOption || "---- Select ----"}</option>
@@ -123,7 +123,7 @@ function Input({
             autoComplete={autoComplete}
             onChange={onChange}
             className={`base-input ${type === "checkbox" ? "w-2/2" : "w-full"
-               } p-4 rounded-lg border-1 ${error ? "base-border-red" : "border-gray-200"
+               } p-4 rounded-2xl border-1 ${error ? "base-border-red" : "border-gray-200"
                } focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${className}`}
          />
       );

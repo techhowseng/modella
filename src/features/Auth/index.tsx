@@ -3,8 +3,7 @@ import { APP_ROUTES } from "lib/routes";
 import Link from "next/link";
 import React from "react";
 import { FaUserCheck, FaUserFriends } from "react-icons/fa";
-import { AuthComponenetType } from "./types";
-import { SITE_NAME } from "lib/constants";
+import { AuthComponenetType } from "../../types";
 import AuthImageGuy from "assets/3927.svg";
 
 function Auth({ user }: AuthComponenetType) {
@@ -12,14 +11,8 @@ function Auth({ user }: AuthComponenetType) {
       <div className="flex ">
          <SideDisplay image={AuthImageGuy.src} />
 
-         <div className="flex flex-col row-span-2/3 justify-center items-center flex-1 py-20 md:py-30 lg:py-36 px-10 md:px-20">
+         <div className="md:ml-[35%] flex flex-col justify-center items-center flex-1 py-20 md:py-30 lg:pt-[20%] px-10 md:px-20">
             <div>
-               <div className="mb-10 text-center md:hidden lg:hidden flex flex-col">
-                  <h1 className="base-color text-4xl font-bold">{SITE_NAME}</h1>
-                  <p className="text-black font-light">
-                     Your access to top notch proffesional services.
-                  </p>
-               </div>
                <div className="lg:-mt-[20%]">
                   <h1 className="text-center text-2xl md:text-3xl lg:text-4xl mb-10 font-bold text-black">
                      Hello, we’re <span className="base-color">pleased</span> to have you

@@ -16,16 +16,7 @@ const navigation = [
 
 const Home = () => {
    const { userData } = useGetSessionUser();
-   const [scrollNav, setScrollNav] = useState(false)
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-   const changeNav = () => {
-      if (window.scrollY >= 80) {
-         setScrollNav(true)
-      } else {
-         setScrollNav(false)
-      }
-   }
 
    return (
       <div className="isolate bg-white">
@@ -55,7 +46,7 @@ const Home = () => {
             </svg>
          </div>
          <div className="px-6 pt-6 lg:px-8">
-            <nav className={`${scrollNav ? 'scroll-header' : ''} flex items-center justify-between`} aria-label="Global">
+            <nav className="flex items-center justify-between" aria-label="Global">
                <div className="flex lg:flex-1">
                   <Link href={APP_ROUTES.home} className="-m-1.5 p-1.5">
                      <span className="sr-only">{SITE_NAME}</span>

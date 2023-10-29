@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { IoIosArrowForward } from 'react-icons/io'
-import { BsThreeDotsVertical, BsPeople, BsPlusLg } from 'react-icons/bs'
-import { IoIosArrowDropdown } from 'react-icons/io'
 
 const index = ({ item }) => {
    const [open, setOpen] = useState(false)

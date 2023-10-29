@@ -11,10 +11,8 @@ function HeaderFooter({ title, children, authenticate = true }) {
             <title>{title}</title>
          </Head>
          <main className="flex">
-            <Sidebar />
-            {/* <Header authenticate={authenticate} />
+            <Sidebar user={'model'} />
             {children}
-            <Footer /> */}
          </main>
       </div>
    );

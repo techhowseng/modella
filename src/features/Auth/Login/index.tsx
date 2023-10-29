@@ -11,7 +11,7 @@ import { LOGIN_FORM } from "../formFieldData";
 import { loginFormDataSchema } from "../schema";
 import { createSession } from "../services";
 import { getSessionUser } from "../slice";
-import { LoginSessionType } from "../types";
+import { LoginSessionType } from "../../../types";
 import LoginSideDisplay from "components/Auth/LoginSidebar";
 
 function Login() {
@@ -39,7 +39,10 @@ function Login() {
                if (query.redirect) {
                   location.href = query.redirect as string;
                } else {
-                  location.href = APP_ROUTES.dashboard;
+                  // for Client
+                  location.href = APP_ROUTES.hire;
+                  // for models
+                  // location.href = APP_ROUTES.jobs
                }
             }
          });
@@ -47,10 +50,10 @@ function Login() {
    );
 
    return (
-      <div className="w-full md:flex">
+      <div className="w-full h-full md:flex items-center justify-center">
          <LoginSideDisplay />
 
-         <div className="flex max-w-[800px] md:w-[65%] mx-auto justify-center items-center py-10 md:py-30 lg:py-36 px-10 md:px-20">
+         <div className="flex md:ml-[35%] lg:px-[10%] mx-auto w-[100%] justify-center items-center py-10 h-full md:py-30 lg:py-36 px-10 md:px-20">
             <div className="w-full">
                <div className="flex flex-col">
                   <h1 className="text-4xl mb-10 font-bold">Hello, Welcome Back</h1>

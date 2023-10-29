@@ -13,7 +13,7 @@ function Congrats() {
       <div className="flex ">
          <SideDisplay image={AuthImageGuy.src} />
 
-         <div className="flex flex-col row-span-2/3 justify-center items-center flex-1 py-20 md:py-30 lg:py-36 px-10 md:px-20">
+         <div className="md:ml-[35%] md:mt-[15%] flex flex-col row-span-2/3 justify-center items-center flex-1 py-20 md:py-30 lg:py-36 px-10 md:px-20">
             <div>
                <div className="mb-10 text-center md:hidden lg:hidden flex flex-col">
                   <h1 className="base-color text-4xl font-bold">{SITE_NAME}</h1>

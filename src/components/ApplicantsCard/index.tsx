@@ -4,7 +4,6 @@ import { BsThreeDotsVertical, BsPeople, BsPlusLg } from 'react-icons/bs'
 import { IoIosArrowDropdown } from 'react-icons/io'
 
 const index = ({ item }) => {
-   const [open, setOpen] = useState(false)
    const { id, firstname, lastname, img, country } = item
    return (
       <div className="relative flex cursor-pointer hover:dim-bg-yellow transition items-center w-[100%] mb-3 p-2 mx-auto rounded-xl h-[70px] border">
@@ -15,11 +14,7 @@ const index = ({ item }) => {
             <p className="text-sm font-bold mb-1 base-color">{firstname + ' ' + lastname}</p>
             <span className="flex items-center text-xs text-gray-500">{country}</span>
          </div>
-         <span onClick={() => setOpen(prev => !prev)} className='ml-auto cursor-pointer active:opacity-70 pr-2' ><IoIosArrowForward /></span>
-         {open && (<div onMouseLeave={() => setOpen(false)} className='shadow z-10 absolute right-10 flex flex-col rounded-xl overflow-hidden bg-gray-100 w-[10rem]'>
-            <span className='h-full w-full p-4 pl-6 hover:dim-bg-yellow cursor-pointer text-sm border-b'>View</span>
-            <span className='h-full w-full p-4 pl-6 hover:dim-bg-yellow cursor-pointer text-sm'>Delete Job</span>
-         </div>)}
+         <span className='ml-auto cursor-pointer active:opacity-70 pr-2' ><IoIosArrowForward /></span>
       </div>
    )
 }

@@ -10,10 +10,10 @@ import { BsPlus } from "react-icons/bs";
 
 function Uploads() {
    return (
-      <div className="flex ">
+      <div className="flex h-screen">
          <SideDisplay image={AuthImageGuy.src} />
 
-         <div className="flex flex-col row-span-2/3 items-center flex-1 py-20 md:py-30 lg:py-14 px-10 md:px-20">
+         <div className="md:ml-[35%] flex flex-col row-span-2/3 items-center flex-1 py-20 md:py-30 lg:py-14 px-10 md:px-20">
             <div className="flex flex-col mb-16 text-center">
                <h1 className="text-3xl  mx-auto mb-3 w-[80%] font-bold">Welcome, Greate Step To <span className="base-color">Showcase</span> Your Skill </h1>
                <p className="mr-1 text-sm text-gray-400">Please fill out the form</p>

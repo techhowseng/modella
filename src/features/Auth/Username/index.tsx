@@ -11,12 +11,12 @@ import Input from "components/Input";
 
 function Username() {
    return (
-      <div className="flex bg-white">
+      <div className="flex h-screen bg-white">
          <SideDisplay image={AuthImageGuy.src} />
 
-         <div className="flex flex-col row-span-2/3 items-center max-w-[800px] mx-auto flex-1 py-20 md:py-30 lg:py-14 px-10 md:px-20">
+         <div className="md:ml-[35%] lg:px-[10%] flex flex-col row-span-2/3 items-center flex-1 py-20 lg:py-14 px-10 md:px-20 h-full">
             <div className="flex flex-col mb-16 text-center">
-               <h1 className="text-3xl  mx-auto mb-3 w-[80%] font-bold">Welcome, Greate Step To <span className="base-color">Showcase</span> Your Skill </h1>
+               <h1 className="text-3xl mx-auto mb-3 w-[80%] font-bold">Welcome, Greate Step To <span className="base-color">Showcase</span> Your Skill </h1>
                <p className="mr-1 text-sm text-gray-400">Please fill out the form</p>
                <Stepper />
             </div>
@@ -35,7 +35,7 @@ function Username() {
                />
             </div>
             <Link className="flex mt-14 items-center justify-center text-white w-full py-4 rounded-2xl lg:mt-auto mb-5 base-bg-color" href="/auth/congrats">
-               Continue
+               Finish
             </Link>
          </div>
       </div>
