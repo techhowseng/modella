@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import profileImg from 'assets/Rectangle 4153.png'
 import { BsFillSendFill } from 'react-icons/bs'
 import { useRef } from 'react';
 import { useEffect } from 'react';
@@ -28,21 +27,21 @@ const Chat = () => {
    }, [message])
    return (
       <div className="ml-[5rem] text-gray-700 lg:ml-[17rem] relative min-h-screen px-2 md:px-6 py-4 md:py-6 w-[100%] my-0 flex flex-col items-center">
-         <h1 className='text-xl w-full md:w-[95%] max-w-[900px] font-bold mt-8 text-left mb-2'>Message: {chatId}</h1>
+         <h1 className='text-xl w-full md:w-[90%] max-w-[900px] font-bold mt-8 text-left mb-2'>Message</h1>
          <div className='relative w-full md:w-[95%] max-w-[900px] h-[85vh] overflow-hidden bg-white p-10 lg:px-6 lg:py-12 rounded-2xl'>
-            <div className="overflow-y-scroll h-[75%] space-y-4 md:space-y-8 lg:space-y-16 w-full h-full mb-[40px] border-b">
+            <div className="overflow-y-scroll space-y-4 md:space-y-8 lg:space-y-16 w-full h-[80%] mb-[40px] border-b">
                <div className='flex gap-x-2 ml-auto pl-4 lg:pl-6'>
                   <p className='p-4 lg:p-6 ml-auto border text-sm rounded-tl-xl rounded-tr-xl rounded-bl-xl'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minus nostrum quia cupiditate vel deserunt molestiae officiis ipsam optio quis placeat.</p>
-                  <img className='bg-gray-200 rounded-lg h-[2rem] w-[2rem] mt-auto' src={profileImg.src} alt="Your Profile" />
+                  <img className='bg-gray-200 rounded-lg h-[2rem] w-[2rem] mt-auto' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpRlSVVcnT988ksu89xvG1b_-1hU5jct5sXEahmrXSuGlrZUZ0eLcCJbl5VBtIGpjnwxo&usqp=CAU' alt="Your Profile" />
                </div>
                <div className='flex gap-x-2 mr-auto'>
-                  <img className='bg-gray-200 rounded-lg h-[2rem] w-[2rem] mt-auto' src={profileImg.src} alt="Your Profile" />
+                  <img className='bg-gray-200 rounded-lg h-[2rem] w-[2rem] mt-auto' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzbq4kBjnVFn97ChSVEZFnExzxRUNG-nG5LA&usqp=CAU' alt="Your Profile" />
                   <p className='p-4 lg:p-6 mr-auto border text-sm rounded-tl-xl rounded-tr-xl rounded-br-xl'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima vero illo aliquid ut enim corporis quia obcaecati quisquam animi perspiciatis magni quaerat accusamus ipsa, possimus suscipit quae laborum totam doloribus!</p>
                </div>
                {message.map(item => {
                   return <div className='flex gap-x-2 ml-auto pl-4 lg:pl-6'>
                      <p className='p-4 lg:p-6 border ml-auto text-sm rounded-tl-xl rounded-tr-xl rounded-bl-xl'>{item.text}</p>
-                     <img className='bg-gray-200 rounded-lg h-[2rem] w-[2rem] mt-auto' src={profileImg.src} alt="Your Profile" />
+                     <img className='bg-gray-200 rounded-lg h-[2rem] w-[2rem] mt-auto' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpRlSVVcnT988ksu89xvG1b_-1hU5jct5sXEahmrXSuGlrZUZ0eLcCJbl5VBtIGpjnwxo&usqp=CAU' alt="Your Profile" />
                   </div>
                })}
                <div ref={scrollRef} />

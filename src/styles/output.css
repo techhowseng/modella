@@ -2005,6 +2005,10 @@ input:checked + .toggle-bg{
   margin-top: auto;
 }
 
+.ml-\[17rem\]{
+  margin-left: 17rem;
+}
+
 .block{
   display: block;
 }
@@ -2205,12 +2209,8 @@ input:checked + .toggle-bg{
   height: 70px;
 }
 
-.h-\[75\%\]{
-  height: 75%;
-}
-
-.h-\[85vh\]{
-  height: 85vh;
+.h-\[80vh\]{
+  height: 80vh;
 }
 
 .h-\[90\%\]{
@@ -2249,6 +2249,18 @@ input:checked + .toggle-bg{
 
 .h-screen{
   height: 100vh;
+}
+
+.h-\[70vh\]{
+  height: 70vh;
+}
+
+.h-\[85vh\]{
+  height: 85vh;
+}
+
+.h-\[80\%\]{
+  height: 80%;
 }
 
 .max-h-48{
@@ -4032,6 +4044,11 @@ input:checked + .toggle-bg{
   padding-right: 0px;
 }
 
+.px-1{
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
 .px-10{
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -4160,11 +4177,6 @@ input:checked + .toggle-bg{
 .py-8{
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-
-.px-1{
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
 }
 
 .pb-12{
@@ -7625,11 +7637,6 @@ input:checked + .toggle-bg{
   .lg\:px-0{
     padding-left: 0px;
     padding-right: 0px;
-  }
-
-  .lg\:px-10{
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
   }
 
   .lg\:px-5{

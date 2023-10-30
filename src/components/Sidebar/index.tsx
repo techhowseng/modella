@@ -30,7 +30,7 @@ function Sidebar({ user }) {
             <div className="lg:w-[80px] w-[50px] lg:h-[80px] h-[50px] bg-gray-300 rounded-2xl overflow-hidden mb-4">
                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpRlSVVcnT988ksu89xvG1b_-1hU5jct5sXEahmrXSuGlrZUZ0eLcCJbl5VBtIGpjnwxo&usqp=CAU' className="w-full h-full object-cover" alt="user profile" />
             </div>
-            <p className="hidden lg:block base-color text-xl mb-1 font-black">Andela.Com</p>
+            <p className="hidden lg:block base-color text-xl mb-1 font-black">Kanye West</p>
             <p className="hidden lg:flex items-center text-sm text-gray-400"><SlLocationPin className="text-xl mr-1" /> Capetown, South  Africa</p>
          </div>
          <nav className="flex flex-col justify-center w-[100%] mt-3 lg:mt-10 items-center ">

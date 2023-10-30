@@ -8,6 +8,7 @@ function ChatPage() {
    return (
       <HeaderFooter title={`Message | ${SITE_NAME}`}>
          <Chat />
+         {/* <div className="ml-[17rem] text-4xl">hello world</div> */}
       </HeaderFooter>
    );
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import bannerImg from 'assets/Group 3928.png'
 import profileImg from 'assets/Rectangle 4153.png'
-import { BsPlusLg } from 'react-icons/bs'
+import { BsClock, BsPlusLg } from 'react-icons/bs'
 import { SlLocationPin } from 'react-icons/sl'
 import { AiOutlineDollar } from 'react-icons/ai'
 import { modelData, recomData } from "../../dummyData"
@@ -17,19 +17,19 @@ const index = () => {
             <img src={bannerImg.src} className='w-full h-full object-cover' alt="banner image" />
             <div className='absolute top-[45%] flex items-center gap-x-2 cursor-pointer text-white'>Andela.com</div>
          </div>
-         <div className='flex flex-col lg:flex-row gap-x-6  w-full px-2 lg:px-10 lg:px-6'>
+         <div className='flex flex-col lg:flex-row gap-x-6  w-full px-2 lg:px-6'>
             <div className='w-full lg:w-[35%]'>
                <div className="py-6 px-3 flex flex-col items-center justify-center bg-white rounded-2xl w-full -translate-y-14">
                   <div className='mx-auto text-center'>
                      <div className="w-[70px] mx-auto h-[70px] bg-gray-300 rounded-2xl overflow-hidden mb-4">
-                        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpRlSVVcnT988ksu89xvG1b_-1hU5jct5sXEahmrXSuGlrZUZ0eLcCJbl5VBtIGpjnwxo&usqp=CAU' className="w-full h-full object-cover" alt="user profile" />
+                        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzbq4kBjnVFn97ChSVEZFnExzxRUNG-nG5LA&usqp=CAU' className="w-full h-full object-cover" alt="user profile" />
                      </div>
                      <p className="base-color text-xl mb-1 font-black">Face Photoshop</p>
                      <p className="flex items-center text-sm text-gray-400"><SlLocationPin className="text-xl mr-1" /> Capetown, South  Africa</p>
                   </div>
                   <div className='mt-6 w-[100%] flex justify-between gap-x-4 px-[25%] py-3 rounded-xl border'>
                      <div className='flex flex-col items-center justify-center gap-y-2'>
-                        <FaRegHandshake className='text-gray-400 text-xl' />
+                        <BsClock className='text-gray-400 text-xl' />
                         <span className='text-sm text-gray-400'>Duration</span>
                         <p className='font-bold base-color'>2 weeks</p>
                      </div>

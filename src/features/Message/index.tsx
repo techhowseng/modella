@@ -17,7 +17,7 @@ const index = () => {
                <>
                   {
                      recomData.map((item) => (
-                        <Link href={`${APP_ROUTES.message}/${item.firstname}-${item.lastname}`}>
+                        <Link href={`${APP_ROUTES.message}/${item.id}`}>
                            <MessageCard key={item.id} item={item} />
                         </Link>
                      ))

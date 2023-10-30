@@ -7,7 +7,7 @@ import { AiOutlineDollar } from 'react-icons/ai'
 import { FaFacebook, FaInstagram, FaRegHandshake, FaTwitter, FaWhatsapp } from 'react-icons/fa'
 import Link from 'next/link'
 
-const index = () => {
+const Profile = () => {
    return (
       <div className="ml-[5rem] lg:ml-[17rem] relative min-h-screen w-[100%] my-0">
          <div className='relative w-full h-[10rem] flex justify-center overflow-hidden'>
@@ -15,13 +15,12 @@ const index = () => {
             <img src={bannerImg.src} className='w-full h-full object-cover' alt="banner image" />
             <div className='absolute top-[45%] flex items-center gap-x-2 cursor-pointer text-white'><BsPlusLg className='text-white text-xl cursor-pointer' /> Add A Banner Image</div>
          </div>
-         <div className='flex flex-col lg:flex-row gap-x-6  w-full px-2 lg:px-10 lg:px-6'>
+         <div className='flex flex-col lg:flex-row gap-x-6  w-full px-2 lg:px-6'>
             <div className='w-full lg:w-[35%]'>
                <div className="py-6 px-3 flex flex-col items-center justify-center bg-white rounded-2xl w-full -translate-y-14">
                   <div className='mx-auto text-center'>
                      <div className="w-[70px] mx-auto h-[70px] bg-gray-300 rounded-2xl overflow-hidden mb-4">
-                        {/* <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpRlSVVcnT988ksu89xvG1b_-1hU5jct5sXEahmrXSuGlrZUZ0eLcCJbl5VBtIGpjnwxo&usqp=CAU' className="w-full h-full object-cover" alt="user profile" /> */}
-                        <img src={profileImg.src} className="w-full h-full object-cover" alt="user profile" />
+                        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpRlSVVcnT988ksu89xvG1b_-1hU5jct5sXEahmrXSuGlrZUZ0eLcCJbl5VBtIGpjnwxo&usqp=CAU' className="w-full h-full object-cover" alt="user profile" />
                      </div>
                      <p className="base-color text-xl mb-1 font-black">Kanye West</p>
                      <p className="flex items-center text-sm text-gray-400"><SlLocationPin className="text-xl mr-1" /> Capetown, South  Africa</p>
@@ -107,4 +106,4 @@ const index = () => {
    )
 }
 
-export default index
+export default Profile

@@ -40,9 +40,9 @@ function Login() {
                   location.href = query.redirect as string;
                } else {
                   // for Client
-                  location.href = APP_ROUTES.hire;
+                  // location.href = APP_ROUTES.hire;
                   // for models
-                  // location.href = APP_ROUTES.jobs
+                  location.href = APP_ROUTES.jobs
                }
             }
          });

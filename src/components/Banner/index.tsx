@@ -15,7 +15,6 @@ const Banner = () => {
             <div className="absolute top-0 left-0 w-full h-full bg-black opacity-10"></div>
             <div className='absolute h-[90%] sm:h-[70%]  top-0 pl-6 lg:pl-4 w-[100%] sm:w-[90%] md:w-[80%] lg:w-[90%] xl:w-[70%] p-3 md:p-4 lg:p-6'>
                <h1 className='text-3xl sm:text-4xl lg:text-4xl font-black text-white'>Explore the World of Creativity</h1>
-               <p className='hidden md:block md-flex mb-3 text-white text-xs md:text-sm mt-3'>Welcome Onboard Please Fill Out Your Biodata To Enrich Your Profile</p>
                <Link href={APP_ROUTES.bioData} className='absolute bottom-0 sm:-bottom-10 lg:mb-29 py-4 px-6 text-center hover:bg-blue-100 transition rounded-xl lg:rounded-2xl bg-white base-color'>
                   Complete Biodata
                </Link>
@@ -26,7 +25,7 @@ const Banner = () => {
             <div className='absolute top-5 xl:px-2 mx-auto'>
                <h1 className='md:text-xl lg:text-2xl xl:text-3xl font-black text-white'>Want To Share The Feeling</h1>
                <p className='hidden md-flex lg:block text-white text-xs  md:text-sm'>Help {SITE_NAME} Grow</p>
-               <Link href={APP_ROUTES.bioData} className='w-[100%] mx-auto'>
+               <Link href='#' className='w-[100%] mx-auto'>
                   <p className='flex items-center justify-center w-[70%] py-4 mx-auto hover:bg-blue-100 transition rounded-xl lg:rounded-2xl bg-white base-color mt-4'> <BsLink45Deg className='text-2xl mr-2' />  Invite friend</p>
                </Link>
             </div>
