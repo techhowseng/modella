@@ -5,66 +5,42 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdOutlineCases } from "react-icons/md";
 import { Button } from "..";
 import { jobOptions } from "features/ClientAccount/Components/PostJobBanner/formFieldsData";
+import { FaSearch } from "react-icons/fa";
+import { SlLocationPin } from "react-icons/sl";
 
 function SearchBar({
-  handleChange,
-  handleSubmit,
+   handleChange,
+   handleSubmit,
 }: {
-  handleChange: any;
-  handleSubmit: any;
+   handleChange: any;
+   handleSubmit: any;
 }) {
-  if (typeof window === "undefined") return null;
+   if (typeof window === "undefined") return null;
 
-  return (
-    <div className="flex flex-row py-6 sm:px-6 lg:px-8 lg:sticky top-0 z-10">
-      <div className="bg-white p-3 w-full flex flex-col lg:flex-row rounded-lg border justify-between">
-        <div className="flex flex-row items-center relative border-r w-full mb-4 lg:mb-0">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <FiSearch size={20} />
-          </div>
-          <Input
-            type="text"
-            placeholder="Search"
-            className="pl-10 pt-3 pb-3 border-none focus:!outline-none"
-            name={"jobRole"}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex flex-row items-center relative mb-4 lg:mb-0 w-full">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <HiOutlineLocationMarker size={20} />
-          </div>
-          <Input
-            type="address"
-            placeholder="Locations"
-            className="pl-10 pt-3 pb-3 border-none focus:!outline-none"
-            name={"locations"}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex flex-row items-center relative mb-4 lg:mb-0 w-full">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <MdOutlineCases size={20} />
-          </div>
-          <Input
-            type="select"
-            initialOption={"Job Type"}
-            options={jobOptions}
-            placeholder="Job Type"
-            className="pl-10 pt-3 pb-3 border-none focus:!outline-none"
-            name={"jobType"}
-            onChange={handleChange}
-          />
-        </div>
-        <Button
-          className="ml-0 md:ml-2 lg:ml-2 !base-bg-color w-full lg:!w-[400px]"
-          onClick={handleSubmit}
-        >
-          Find Jobs
-        </Button>
+   return (
+      <div className="flex items-center justify-between h-[50px] gap-6">
+         <div className="bg-white rounded-xl h-full flex items-center w-full px-3 border">
+            <FaSearch className="base-color" />
+            <input
+               type="text"
+               name="search"
+               placeholder="search..."
+               onChange={() => { }}
+               className="border-none rounded-lg"
+            />
+         </div>
+         <div className="bg-white rounded-xl h-full flex items-center w-full px-3 border">
+            <SlLocationPin className="text-xl base-color" />
+            <input
+               type="text"
+               name="search"
+               placeholder="South Africa"
+               onChange={() => { }}
+               className="border-none rounded-lg"
+            />
+         </div>
       </div>
-    </div>
-  );
+   );
 }
 
 export default SearchBar;

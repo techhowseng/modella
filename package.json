@@ -12,7 +12,7 @@
     "tailwind": "npx tailwindcss -i ./src/styles/input.css -o ./src/styles/output.css --watch"
   },
   "keywords": [],
-  "author": "",
+  "author": "DevIsraelHub <devisrael01@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@headlessui/react": "^1.7.7",
@@ -61,6 +61,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/hast": "^3.0.1",
     "@types/is-html": "^2.0.0",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^17.0.14",
@@ -73,5 +74,7 @@
   },
   "prisma": {
     "seed": "node prisma/seed.js"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/techhowseng/modella.git"
 }
